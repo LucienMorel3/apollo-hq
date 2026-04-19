@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Apollo HQ — Flashback FA</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d0f14;--bg2:#141720;--bg3:#1c2030;--bg4:#242840;--txt:#e8eaf0;--txt2:#8b90a8;--txt3:#555a70;--acc:#7f77dd;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--sun:#f5c842;--moon:#7fc8f8;--r:8px;--rl:12px}
+.light{--bg:#f5f6fa;--bg2:#ffffff;--bg3:#eef0f7;--bg4:#e2e5f0;--txt:#1a1d2e;--txt2:#5a5f7a;--txt3:#9298b0;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12)}
+body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+.wrap{padding:16px;max-width:960px;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.logo{width:38px;height:38px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#fff;flex-shrink:0}
+.org-name{font-size:17px;font-weight:500;color:var(--txt)}.org-sub{font-size:12px;color:var(--txt2)}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.theme-btn{padding:5px 12px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg2);color:var(--txt2);cursor:pointer;font-size:12px}
+.theme-btn:hover{color:var(--txt);border-color:var(--acc)}
+.date-badge{font-size:12px;color:var(--txt3);padding:5px 10px;border-radius:var(--r);background:var(--bg3);border:0.5px solid var(--border)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#555a70;display:inline-block;margin-right:5px;transition:background .3s}
+.sync-dot.live{background:#1d9e75;animation:pulse 2s infinite}.sync-dot.error{background:#d85a30}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.sync-label{font-size:12px;color:var(--txt3)}
+.nav{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap}
+.nav-btn{padding:7px 16px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;transition:all .15s}
+.nav-btn:hover{background:var(--bg3);color:var(--txt)}.nav-btn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.page{display:none}.page.active{display:block}
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px}
+.card-title{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;font-weight:500}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:14px 16px}
+.kpi-label{font-size:11px;color:var(--txt3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.kpi-val{font-size:22px;font-weight:500;color:var(--txt)}.kpi-val.green{color:#1d9e75}.kpi-val.red{color:#d85a30}.kpi-val.amber{color:#ef9f27}
+.kpi-sub{font-size:11px;color:var(--txt3);margin-top:3px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--border)}.row:last-child{border-bottom:none}
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.av-sun{background:rgba(245,200,66,.18);color:var(--sun)}.av-moon{background:rgba(127,200,248,.18);color:var(--moon)}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500}
+.tag-depense{background:rgba(127,119,221,.15);color:#afa9ec}
+.badge-propre{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(29,158,117,.15);color:#5dcaa5}
+.badge-sale{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(239,159,39,.15);color:#ef9f27}
+.inner-tab{padding:6px 16px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;transition:all .15s}
+.inner-tab:hover{background:var(--bg3);color:var(--txt)}.inner-tab.active{background:var(--bg3);color:var(--txt);border-color:var(--border2)}
+.fish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.fish-card{background:var(--bg3);border-radius:var(--r);padding:12px;border:0.5px solid var(--border)}
+.fish-name{font-size:12px;color:var(--txt2);margin-bottom:2px}.fish-price{font-size:14px;font-weight:500;color:var(--txt)}.fish-type{font-size:10px;margin-top:2px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:12px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:8px 10px;font-size:13px;color:var(--txt);width:100%}
+.field input:focus,.field select:focus{outline:none;border-color:var(--acc)}
+.btn{padding:8px 18px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg3);color:var(--txt);cursor:pointer;font-size:13px;transition:all .15s}
+.btn:hover{border-color:var(--acc);color:var(--acc)}.btn-primary{background:var(--acc);color:#fff;border-color:var(--acc)}.btn-primary:hover{background:#6860c8;color:#fff}.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{padding:5px 12px;font-size:12px}.btn-del{color:#d85a30;border-color:transparent;background:transparent;padding:4px 8px;font-size:12px;cursor:pointer}
+.htable{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.htable th{font-size:11px;color:var(--txt3);text-align:left;padding:8px 10px;border-bottom:0.5px solid var(--border);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.htable td{padding:9px 10px;border-bottom:0.5px solid var(--border);color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.htable tr:last-child td{border-bottom:none}
+.alert-box{border-radius:var(--r);padding:10px 14px;font-size:13px;margin-bottom:8px;border:0.5px solid}.alert-box:last-child{margin-bottom:0}
+.alert-warn{background:rgba(239,159,39,.1);border-color:rgba(239,159,39,.3);color:#ef9f27}
+.alert-ok{background:rgba(29,158,117,.1);border-color:rgba(29,158,117,.3);color:#5dcaa5}
+.alert-danger{background:rgba(216,90,48,.12);border-color:rgba(216,90,48,.3);color:#f0997b}
+.fish-counter{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border)}.fish-counter:last-child{border-bottom:none}
+.cbtn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);background:var(--bg3);color:var(--txt);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.cbtn:hover{border-color:var(--acc);color:var(--acc)}.cval{font-size:14px;font-weight:500;color:var(--txt);min-width:28px;text-align:center}
+.progress-bg{background:var(--bg3);border-radius:4px;height:5px;width:100%}.progress-fill{height:5px;border-radius:4px;transition:width .4s}
+.obj-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border)}.obj-row:last-child{border-bottom:none}
+.empty-state{text-align:center;padding:2rem;color:var(--txt3);font-size:13px}
+.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px}
+.loading-overlay.hide{display:none}
+.spinner{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--rl);padding:12px 18px;font-size:13px;color:var(--txt);z-index:1000;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.chart-wrap{position:relative;width:100%}
+.legend-row{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--txt2);margin-bottom:8px}
+.legend-row span{display:flex;align-items:center;gap:5px}.ldot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.emploi-header{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:0.5px solid var(--border)}.emploi-header:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div style="color:var(--txt2);font-size:13px">Connexion à Apollo HQ...</div></div>
+<div class="toast" id="toast"></div>
+<div class="wrap" id="root">
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="logo">A</div>
+    <div><div class="org-name">Apollo HQ</div><div class="org-sub">Sun & Moon — Flashback FA</div></div>
+  </div>
+  <div class="topbar-right">
+    <div class="date-badge" id="dateBadge"></div>
+    <div style="display:flex;align-items:center;padding:5px 10px;border-radius:var(--r);background:var(--bg3);border:0.5px solid var(--border)">
+      <span class="sync-dot" id="syncDot"></span><span class="sync-label" id="syncLabel">Connexion...</span>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()">Thème</button>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showPage('hq')">Apollo HQ</button>
+  <button class="nav-btn" onclick="showPage('peche')">Pêche</button>
+  <button class="nav-btn" onclick="showPage('emplois')">Emplois</button>
+  <button class="nav-btn" onclick="showPage('historique')">Historique</button>
+  <button class="nav-btn" onclick="showPage('objectifs')">Objectifs</button>
+</div>
+
+<!-- HQ -->
+<div class="page active" id="page-hq">
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:20px 24px;margin-bottom:14px;text-align:center">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Total Apollo</div>
+    <div style="font-size:42px;font-weight:500;color:var(--txt);letter-spacing:-.5px" id="totalApolloVal">$0</div>
+    <div style="display:flex;justify-content:center;gap:32px;margin-top:14px">
+      <div style="text-align:center"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">PROPRE</div><div style="font-size:20px;font-weight:500;color:#1d9e75" id="totalPropreVal">$0</div></div>
+      <div style="width:0.5px;background:var(--border)"></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">SALE</div><div style="font-size:20px;font-weight:500;color:#ef9f27" id="totalSaleVal">$0</div></div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Participation — Sun vs Moon</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center">
+      <div style="position:relative;height:180px"><canvas id="hqPieChart" role="img" aria-label="Participation">Participation</canvas></div>
+      <div id="participationBlock"></div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Aujourd'hui</div>
+    <div style="display:grid;grid-template-columns:1fr 0.5px 1fr 0.5px 1fr;align-items:center">
+      <div style="text-align:center;padding:0 12px"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">NET DU JOUR</div><div style="font-size:22px;font-weight:500" id="netJourVal">$0</div></div>
+      <div style="background:var(--border);height:40px"></div>
+      <div style="text-align:center;padding:0 12px"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">PROPRE DU JOUR</div><div style="font-size:22px;font-weight:500;color:#1d9e75" id="propreJourVal">$0</div></div>
+      <div style="background:var(--border);height:40px"></div>
+      <div style="text-align:center;padding:0 12px"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">SALE DU JOUR</div><div style="font-size:22px;font-weight:500;color:#ef9f27" id="saleJourVal">$0</div></div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Évolution Apollo — 14 jours</div>
+    <div style="display:flex;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:12px">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(29,158,117,0.6);display:inline-block"></span>Net du jour</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:22px;height:2px;background:#7f77dd;display:inline-block;border-radius:2px"></span>Total cumulé</span>
+    </div>
+    <div class="chart-wrap" style="height:220px"><canvas id="hqComboChart" role="img" aria-label="Évolution Apollo">Graphique</canvas></div>
+  </div>
+
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Mise à jour des soldes</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div class="av av-sun" style="width:24px;height:24px;font-size:10px">SU</div><span style="font-size:13px;color:var(--txt2)">Sun — <span style="color:#1d9e75;font-weight:500" id="sunSoldeSmall">$0</span></span></div>
+        <div style="display:flex;gap:6px"><input type="number" id="sunSolde" placeholder="Solde réel en jeu" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updateSolde('sun')" style="padding:7px 12px;font-size:12px">Màj</button></div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div class="av av-moon" style="width:24px;height:24px;font-size:10px">MO</div><span style="font-size:13px;color:var(--txt2)">Moon — <span style="color:#1d9e75;font-weight:500" id="moonSoldeSmall">$0</span></span></div>
+        <div style="display:flex;gap:6px"><input type="number" id="moonSolde" placeholder="Solde réel en jeu" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updateSolde('moon')" style="padding:7px 12px;font-size:12px">Màj</button></div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div style="width:24px;height:24px;border-radius:50%;background:rgba(239,159,39,.18);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:#ef9f27">$S</div><span style="font-size:13px;color:var(--txt2)">Sale — <span style="color:#ef9f27;font-weight:500" id="saleSmall">$0</span></span></div>
+        <div style="display:flex;gap:6px"><input type="number" id="potCommun" placeholder="Nouveau solde" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updatePotCommun()" style="padding:7px 12px;font-size:12px">Màj</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Alertes & stocks</div>
+    <div id="alertsBlock"></div>
+  </div>
+
+  <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Dernières opérations</div>
+    <div id="recentOps"></div>
+  </div>
+</div>
+
+<!-- PÊCHE -->
+<div class="page" id="page-peche">
+  <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
+    <button class="inner-tab active" id="itab-stats" onclick="switchInnerTab('stats')">Stats & graphiques</button>
+    <button class="inner-tab" id="itab-saisie" onclick="switchInnerTab('saisie')">Saisie de session</button>
+  </div>
+  <div id="inner-stats">
+    <div class="card"><div class="card-title">Catalogue — espèces & prix</div><div class="fish-grid" id="fishCatalog"></div></div>
+    <div class="kpi-row" id="pecheKpis"></div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Stock actuel</div>
+        <div id="stockBlock"></div>
+        <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Corriger le stock</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Appâts en inventaire</div>
+              <div style="display:flex;gap:6px">
+                <input type="number" id="fixAppats" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
+                <button class="btn btn-primary" onclick="fixStock('appats')" style="padding:7px 12px;font-size:12px">Màj</button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Cannes en inventaire</div>
+              <div style="display:flex;gap:6px">
+                <input type="number" id="fixCannes" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
+                <button class="btn btn-primary" onclick="fixStock('cannes')" style="padding:7px 12px;font-size:12px">Màj</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-title">Bénéfice net — sessions</div><div class="chart-wrap" style="height:180px"><canvas id="lineChart" role="img" aria-label="Sessions">Sessions</canvas></div></div>
+    </div>
+    <div class="card"><div class="card-title">Répartition espèces</div><div class="legend-row" id="pieLegend"></div><div class="chart-wrap" style="height:180px"><canvas id="pieChart" role="img" aria-label="Espèces">Espèces</canvas></div></div>
+    <div class="card"><div class="card-title">Sun vs Moon — contribution pêche</div><div class="chart-wrap" style="height:160px"><canvas id="teamChart" role="img" aria-label="Comparaison">Comparaison</canvas></div></div>
+  </div>
+  <div id="inner-saisie" style="display:none">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff">1</div>
+        <div class="card-title" style="margin-bottom:0">Achat matériel — avant la session</div>
+      </div>
+      <div style="margin-bottom:12px;padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Stock actuel — <span id="stockResume" style="color:var(--txt);font-weight:500">chargement...</span></div>
+      <div class="form-grid">
+        <div class="field"><label>Type</label><select id="matType" onchange="document.getElementById('monnaieField').style.display=this.value==='canne'?'flex':'none'"><option value="appat">Appâts</option><option value="canne">Cannes à pêche</option></select></div>
+        <div class="field"><label>Quantité reçue</label><input type="number" id="matQty" placeholder="Ex: 275" min="1" step="1"/></div>
+        <div class="field"><label>Coût payé ($)</label><input type="number" id="matCost" placeholder="Ex: 7500" min="0" step="1"/></div>
+        <div class="field"><label>Acheteur</label><select id="matPerson"><option value="sun">Sun</option><option value="moon">Moon</option></select></div>
+        <div class="field" id="monnaieField" style="display:none"><label>Monnaie</label><select id="matMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select></div>
+      </div>
+      <button class="btn btn-primary" id="btnAchat" onclick="saveAchat()">Enregistrer l'achat</button>
+    </div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff">2</div>
+        <div class="card-title" style="margin-bottom:0">Session de pêche — gains & consommation</div>
+      </div>
+      <div class="form-grid" style="margin-bottom:12px">
+        <div class="field"><label>Pêcheur(s)</label><select id="qPeche"><option value="sun">Sun (Lucien Morel)</option><option value="moon">Moon (Oscar Marchemont)</option><option value="both">Sun + Moon ensemble</option></select></div>
+        <div class="field"><label>Appâts utilisés</label><input type="number" id="qAppats" placeholder="Ex: 50" min="0" step="1" oninput="checkStockLive()"/></div>
+        <div class="field"><label>Cannes utilisées</label><input type="number" id="qCannes" placeholder="Ex: 2" min="0" step="1" oninput="checkStockLive()"/></div>
+        <div class="field"><label>Vendu à</label><select id="qVente"><option value="ltd">LTD Cayo (illégal)</option><option value="pnj">PNJ Canal (légal)</option><option value="both">Les deux</option></select></div>
+        <div class="field"><label>Revenus session ($)</label><input type="number" id="qRevenu" placeholder="Total encaissé" min="0" step="1"/></div>
+        <div class="field"><label>Note</label><input type="text" id="qNote" placeholder="Optionnel..."/></div>
+      </div>
+      <div id="stockWarning" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:var(--r);background:rgba(216,90,48,.12);border:0.5px solid rgba(216,90,48,.3);color:#f0997b;font-size:13px"></div>
+      <div class="card-title" style="margin-bottom:8px">Poissons pêchés</div>
+      <div id="fishCounters"></div>
+      <div style="margin-top:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" id="btnSession" onclick="saveSession()">Enregistrer la session</button>
+        <span id="sessionEstim" style="font-size:12px;color:var(--txt3)"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMPLOIS -->
+<div class="page" id="page-emplois">
+  <div class="kpi-row" id="emploisKpis"></div>
+  <div class="card">
+    <div class="emploi-header">
+      <div class="av av-sun">SU</div>
+      <div style="flex:1"><div style="font-size:15px;font-weight:500;color:var(--txt)">Lucien Morel <span style="color:var(--sun);font-size:12px">Sun</span></div><div style="font-size:12px;color:var(--txt2)">Technicien runner — Biotech & Horizon</div></div>
+      <span class="badge-propre">100% propre</span>
+    </div>
+    <div style="background:var(--bg3);border-radius:var(--r);padding:12px;margin:12px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
+      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">PAR RUN</span><div style="font-size:15px;font-weight:500;color:var(--txt)">$4 480</div><div style="font-size:11px;color:var(--txt3)">140 composants → 560 jetons</div></div>
+      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">DURÉE</span><div style="font-size:15px;font-weight:500;color:var(--txt)">~35 min</div><div style="font-size:11px;color:var(--txt3)">Collecte 30min + transfo 5min</div></div>
+      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">PLAFOND HEBDO</span><div style="font-size:15px;font-weight:500;color:var(--txt)">$240 000</div><div style="font-size:11px;color:var(--txt3)">Reset chaque semaine</div></div>
+    </div>
+    <div class="card-title" style="margin-bottom:10px">Enregistrer un shift</div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field"><label>Nombre de runs</label><input type="number" id="sunRuns" placeholder="Ex: 3" min="1" step="1" oninput="updateSunEstim()"/></div>
+      <div class="field"><label>Gains réels ($)</label><input type="number" id="sunGains" placeholder="Auto-calculé ou forcer" min="0" step="1"/></div>
+      <div class="field"><label>Note</label><input type="text" id="sunNote" placeholder="Optionnel..."/></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-primary" onclick="saveShift('sun')">Enregistrer le shift</button>
+      <span id="sunEstim" style="font-size:12px;color:var(--txt3)"></span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="emploi-header">
+      <div class="av av-moon">MO</div>
+      <div style="flex:1"><div style="font-size:15px;font-weight:500;color:var(--txt)">Oscar Marchemont <span style="color:var(--moon);font-size:12px">Moon</span></div><div style="font-size:12px;color:var(--txt2)">Runner — Club 77</div></div>
+      <span style="background:rgba(136,135,128,.15);color:#b4b2a9;padding:2px 8px;border-radius:999px;font-size:11px">À configurer</span>
+    </div>
+    <div style="padding:24px;text-align:center;color:var(--txt3);font-size:13px">Mécanisme de salaire à définir</div>
+  </div>
+  <div class="card"><div class="card-title">Historique des shifts</div><div id="shiftsHisto"></div></div>
+</div>
+
+<!-- HISTORIQUE -->
+<div class="page" id="page-historique">
+  <div class="card" style="padding:12px 16px;margin-bottom:14px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <select id="filtType" style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--txt)"><option value="">Tout</option><option value="session">Sessions pêche</option><option value="achat">Achats matériel</option></select>
+      <select id="filtPerson" style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--txt)"><option value="">Tous les joueurs</option><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Ensemble</option></select>
+      <button class="btn btn-sm" onclick="renderHistorique()">Filtrer</button>
+      <button class="btn btn-sm" style="color:#d85a30;margin-left:auto" onclick="confirmReset()">Reset tout</button>
+    </div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto">
+    <table class="htable"><thead><tr><th style="width:80px">Date</th><th style="width:80px">Type</th><th style="width:70px">Joueur</th><th style="width:90px">Revenu</th><th style="width:90px">Dépense</th><th style="width:80px">Net</th><th>Détail</th><th style="width:36px"></th></tr></thead><tbody id="histoBody"></tbody></table>
+  </div></div>
+</div>
+
+<!-- OBJECTIFS -->
+<div class="page" id="page-objectifs">
+
+  <!-- Nouvel objectif -->
+  <div class="card">
+    <div class="card-title">Nouvel objectif</div>
+    <div class="form-grid">
+      <div class="field"><label>Nom</label><input type="text" id="objName" placeholder="Ex: Bateau de pêche"/></div>
+      <div class="field"><label>Montant cible ($)</label><input type="number" id="objTarget" placeholder="Ex: 500000" min="0" step="1"/></div>
+      <div class="field"><label>Catégorie</label>
+        <select id="objCat">
+          <option value="vehicule">Véhicule</option>
+          <option value="immobilier">Immobilier</option>
+          <option value="business">Business</option>
+          <option value="equipement">Équipement</option>
+          <option value="divers">Divers</option>
+        </select>
+      </div>
+      <div class="field"><label>Type d'argent</label>
+        <select id="objMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select>
+      </div>
+      <div class="field"><label>Concerne</label>
+        <select id="objJoueur"><option value="both">Sun + Moon</option><option value="sun">Sun uniquement</option><option value="moon">Moon uniquement</option></select>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="addObjectif()">Ajouter l'objectif</button>
+  </div>
+
+  <!-- Objectifs actifs -->
+  <div class="card">
+    <div class="card-title">Objectifs en cours</div>
+    <div id="objList"></div>
+  </div>
+
+  <!-- Dépense directe (achat sans objectif préalable) -->
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:0" onclick="toggleDepenseForm()">
+      <div class="card-title" style="margin-bottom:0">Dépense directe — achat non planifié</div>
+      <span id="depenseToggleIcon" style="font-size:12px;color:var(--txt3)">▼ ouvrir</span>
+    </div>
+    <div id="depenseForm" style="display:none;margin-top:14px">
+      <div class="form-grid">
+        <div class="field"><label>Nom / description</label><input type="text" id="depNom" placeholder="Ex: Pistolet custom"/></div>
+        <div class="field"><label>Montant ($)</label><input type="number" id="depMontant" placeholder="Ex: 25000" min="0" step="1"/></div>
+        <div class="field"><label>Catégorie</label>
+          <select id="depCat">
+            <option value="vehicule">Véhicule</option>
+            <option value="immobilier">Immobilier</option>
+            <option value="business">Business</option>
+            <option value="equipement">Équipement</option>
+            <option value="divers">Divers</option>
+          </select>
+        </div>
+        <div class="field"><label>Type d'argent</label>
+          <select id="depMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select>
+        </div>
+        <div class="field"><label>Payé par</label>
+          <select id="depJoueur"><option value="both">Sun + Moon (50/50)</option><option value="sun">Sun</option><option value="moon">Moon</option></select>
+        </div>
+        <div class="field"><label>Note</label><input type="text" id="depNote" placeholder="Optionnel..."/></div>
+      </div>
+      <button class="btn btn-primary" onclick="saveDepenseDirecte()">Enregistrer la dépense</button>
+    </div>
+  </div>
+
+  <!-- Historique achats -->
+  <div class="card">
+    <div class="card-title">Historique des achats</div>
+    <div id="achatsHisto"></div>
+  </div>
+
+</div>
+
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = { apiKey:"AIzaSyCjgzUN_7lMuThJ992NYr8uwJ8vdj01Ey8", authDomain:"apollo-hq-a4a8a.firebaseapp.com", projectId:"apollo-hq-a4a8a", storageBucket:"apollo-hq-a4a8a.firebasestorage.app", messagingSenderId:"673101576451", appId:"1:673101576451:web:3c8fff73dba95ee1209136" };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const FISH = [
+  {id:'requin',name:'Requin',price:250,type:'illegal',icon:'🦈'},
+  {id:'dauphin',name:'Dauphin',price:575,type:'illegal',icon:'🐬'},
+  {id:'espadon',name:'Espadon',price:325,type:'illegal',icon:'🐟'},
+  {id:'piranha',name:'Piranha',price:415,type:'illegal',icon:'🦷'},
+  {id:'anchois',name:'Anchois',price:null,type:'legal',icon:'🐟'},
+  {id:'esturgeon',name:'Esturgeon',price:null,type:'legal',icon:'🐡'},
+  {id:'thon',name:'Thon rouge',price:null,type:'legal',icon:'🐠'},
+];
+const FC = {requin:'#7f77dd',dauphin:'#1d9e75',espadon:'#378add',piranha:'#d85a30',anchois:'#ba7517',esturgeon:'#d4537e',thon:'#0f6e56'};
+const PNAMES = {sun:'Sun',moon:'Moon',both:'Sun+Moon'};
+
+let state = { sessions:[], achats:[], shifts:[], objectifs:[], stock:{appats:0,cannes:0}, soldes:{sun:0,moon:0,potCommun:0} };
+const tmpFish = {}; FISH.forEach(f => tmpFish[f.id]=0);
+let isDark = true;
+let CH = {};
+
+const fmt = n => '$'+Math.round(n).toLocaleString('fr-FR');
+const fmtDate = ts => { if(!ts) return '—'; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}); };
+const today = () => new Date().toISOString().split('T')[0];
+const $ = id => document.getElementById(id);
+
+function showToast(msg,ok=true){ const t=$('toast'); t.textContent=msg; t.style.borderColor=ok?'rgba(29,158,117,.4)':'rgba(216,90,48,.4)'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+function setSyncStatus(s){ const dot=$('syncDot'),lbl=$('syncLabel'); dot.className='sync-dot'; if(s==='live'){dot.classList.add('live');lbl.textContent='Sync en direct';}else if(s==='error'){dot.classList.add('error');lbl.textContent='Hors ligne';}else{lbl.textContent='Connexion...';} }
+function playerTag(p){ if(p==='sun') return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(245,200,66,.15);color:#f5c842">Sun</span>'; if(p==='moon') return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,200,248,.15);color:#7fc8f8">Moon</span>'; return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,119,221,.15);color:#afa9ec">Sun+Moon</span>'; }
+
+window.toggleTheme = () => { isDark=!isDark; $('root').classList.toggle('light',!isDark); document.body.classList.toggle('light',!isDark); };
+window.showPage = id => {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  $('page-'+id).classList.add('active');
+  ['hq','peche','emplois','historique','objectifs'].forEach((n,i)=>{ if(n===id) document.querySelectorAll('.nav-btn')[i].classList.add('active'); });
+  if(id==='peche') setTimeout(renderPecheCharts,80);
+};
+window.switchInnerTab = tab => {
+  $('inner-stats').style.display=tab==='stats'?'block':'none';
+  $('inner-saisie').style.display=tab==='saisie'?'block':'none';
+  $('itab-stats').classList.toggle('active',tab==='stats');
+  $('itab-saisie').classList.toggle('active',tab==='saisie');
+  if(tab==='stats') setTimeout(renderPecheCharts,80);
+};
+
+function startListeners(){
+  let loaded=0; const TOTAL=4; let rt=null;
+  const sr = () => { if(rt) clearTimeout(rt); rt=setTimeout(renderAll,80); };
+  const ol = () => { loaded++; if(loaded>=TOTAL){ setSyncStatus('live'); $('loadingOverlay').classList.add('hide'); } };
+  const eh = n => err => { console.error(n,err); setSyncStatus('error'); $('loadingOverlay').classList.add('hide'); };
+  onSnapshot(query(collection(db,'sessions'),orderBy('ts','desc')), snap=>{ state.sessions=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('sessions'));
+  onSnapshot(query(collection(db,'achats'),orderBy('ts','desc')), snap=>{ state.achats=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('achats'));
+  onSnapshot(query(collection(db,'shifts'),orderBy('ts','desc')), snap=>{ state.shifts=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('shifts'));
+  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; } ol(); sr(); }, eh('state'));
+  onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')), snap=>{ state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('depenses',err));
+}
+
+window.fixStock = async type => {
+  const val = parseInt(document.getElementById(type==='appats'?'fixAppats':'fixCannes').value);
+  if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
+  state.stock[type] = val;
+  await saveState();
+  document.getElementById(type==='appats'?'fixAppats':'fixCannes').value = '';
+  showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
+};
+
+async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, updatedAt:serverTimestamp() }); }
+
+// Calcule le solde automatique d'un joueur (shifts + sessions - achats)
+function calcSoldeAuto(player){
+  const shifts = state.shifts||[];
+  const pecheSolo = state.sessions.filter(s=>s.peche===player).reduce((a,s)=>a+s.revenu,0);
+  const pecheEnsemble = state.sessions.filter(s=>s.peche==='both').reduce((a,s)=>a+s.revenu/2,0);
+  const shiftsRev = shifts.filter(s=>s.player===player).reduce((a,s)=>a+s.gains,0);
+  const achats = state.achats.filter(a=>a.person===player).reduce((a,x)=>a+x.cost,0);
+  const adj = (state.ajustements||{})[player]||0;
+  return pecheSolo + pecheEnsemble + shiftsRev - achats + adj;
+}
+
+window.updateSolde = async player => {
+  const val=parseFloat($(player+'Solde').value);
+  if(isNaN(val)||val<0){showToast('Montant invalide',false);return;}
+  // Calculer le solde auto actuel pour stocker l'ajustement
+  const autoVal = calcSoldeAuto(player);
+  state.ajustements = state.ajustements||{sun:0,moon:0};
+  state.ajustements[player] = val - autoVal;
+  await saveState();
+  $(player+'Solde').value='';
+  showToast(`Solde ${player==='sun'?'Sun':'Moon'} corrigé : ${fmt(val)} (ajustement : ${val-autoVal>=0?'+':''}${fmt(val-autoVal)})`);
+};
+window.updatePotCommun = async () => { const val=parseFloat($('potCommun').value); if(isNaN(val)||val<0){showToast('Montant invalide',false);return;} state.soldes=state.soldes||{sun:0,moon:0,potCommun:0}; state.soldes.potCommun=val; await saveState(); $('potCommun').value=''; showToast(`Pot commun sale mis à jour : ${fmt(val)}`); };
+
+window.checkStockLive = () => { const a=parseInt($('qAppats').value)||0, c=parseInt($('qCannes').value)||0, w=$('stockWarning'), errs=[]; if(a>state.stock.appats) errs.push(`Appâts insuffisants — stock: ${state.stock.appats}`); if(c>state.stock.cannes) errs.push(`Cannes insuffisantes — stock: ${state.stock.cannes}`); w.style.display=errs.length?'block':'none'; if(errs.length) w.innerHTML=errs.join('<br>'); };
+window.chg = (id,d) => { tmpFish[id]=Math.max(0,(tmpFish[id]||0)+d); $('fc-'+id).textContent=tmpFish[id]; let est=0; FISH.forEach(f=>{if(f.price) est+=(tmpFish[f.id]||0)*f.price;}); $('sessionEstim').textContent=est>0?'Estimation : '+fmt(est):''; };
+
+window.saveSession = async () => {
+  const btn=$('btnSession'); btn.disabled=true;
+  try {
+    const revenu=parseFloat($('qRevenu').value)||0, fish={};
+    FISH.forEach(f=>fish[f.id]=tmpFish[f.id]||0);
+    const totalFish=Object.values(fish).reduce((a,v)=>a+v,0);
+    if(!revenu&&!totalFish){showToast('Renseigne les revenus ou les poissons pêchés',false);btn.disabled=false;return;}
+    const appats=parseInt($('qAppats').value)||0, cannes=parseInt($('qCannes').value)||0;
+    const errs=[];
+    if(appats>state.stock.appats) errs.push('Appâts insuffisants');
+    if(cannes>state.stock.cannes) errs.push('Cannes insuffisantes');
+    if(errs.length){$('stockWarning').style.display='block';$('stockWarning').innerHTML='Impossible — '+errs.join(' / ');showToast('Stock insuffisant !',false);btn.disabled=false;return;}
+    await addDoc(collection(db,'sessions'),{peche:$('qPeche').value,appats,cannes,vente:$('qVente').value,revenu,monnaie:'propre',note:$('qNote').value,fish,ts:serverTimestamp(),date:today()});
+    state.stock.appats-=appats; state.stock.cannes-=cannes; await saveState();
+    FISH.forEach(f=>{tmpFish[f.id]=0;$('fc-'+f.id).textContent='0';}); ['qRevenu','qAppats','qCannes','qNote'].forEach(id=>$(id).value=''); $('sessionEstim').textContent=''; $('stockWarning').style.display='none';
+    showToast('Session enregistrée !'); showPage('peche'); switchInnerTab('stats');
+  } catch(e){showToast('Erreur: '+e.message,false);}
+  btn.disabled=false;
+};
+
+window.saveAchat = async () => {
+  const btn=$('btnAchat'); btn.disabled=true;
+  try {
+    const qty=parseInt($('matQty').value)||0, cost=parseFloat($('matCost').value)||0;
+    if(!qty||!cost){showToast('Quantité et coût requis',false);btn.disabled=false;return;}
+    const matType=$('matType').value, monnaie=matType==='canne'?$('matMonnaie').value:'propre';
+    await addDoc(collection(db,'achats'),{matType,qty,cost,monnaie,person:$('matPerson').value,ts:serverTimestamp(),date:today()});
+    if(matType==='appat') state.stock.appats+=qty; else state.stock.cannes+=qty;
+    await saveState(); $('matQty').value=''; $('matCost').value=''; showToast('Achat enregistré !');
+  } catch(e){showToast('Erreur: '+e.message,false);}
+  btn.disabled=false;
+};
+
+window.delSession = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'sessions',id)); showToast('Supprimé'); };
+window.delAchat   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'achats',id)); showToast('Supprimé'); };
+window.delShift   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'shifts',id)); showToast('Supprimé'); };
+window.confirmReset = () => { if(!confirm('Supprimer TOUTES les données ?')) return; state.sessions.forEach(s=>deleteDoc(doc(db,'sessions',s._id))); state.achats.forEach(a=>deleteDoc(doc(db,'achats',a._id))); state.shifts.forEach(s=>deleteDoc(doc(db,'shifts',s._id))); state.stock={appats:0,cannes:0}; state.objectifs=[]; state.soldes={sun:0,moon:0,potCommun:0}; saveState(); showToast('Données réinitialisées'); };
+
+window.updateSunEstim = () => { const r=parseInt($('sunRuns').value)||0, e=r*4480; $('sunEstim').textContent=r>0?'Estimation : '+fmt(e):''; if(r>0) $('sunGains').placeholder=String(e); };
+window.saveShift = async player => {
+  const runs=parseInt($(player+'Runs').value)||0, gains=parseFloat($(player+'Gains').value)||(runs*4480);
+  if(!gains){showToast('Renseigne les gains ou le nombre de runs',false);return;}
+  await addDoc(collection(db,'shifts'),{player,runs,gains,note:$(player+'Note').value,monnaie:'propre',activite:player==='sun'?'Biotech & Horizon':'Club 77',ts:serverTimestamp(),date:today()});
+  $(player+'Runs').value=''; $(player+'Gains').value=''; $(player+'Note').value='';
+  if(player==='sun') $('sunEstim').textContent='';
+  showToast('Shift enregistré !');
+};
+
+window.addObjectif = async () => { const name=$('objName').value.trim(), target=parseFloat($('objTarget').value)||0; if(!name||!target){showToast('Nom et montant requis',false);return;} state.objectifs.push({id:Date.now(),name,target,cat:$('objCat').value,monnaie:$('objMonnaie').value,joueur:$('objJoueur').value}); await saveState(); $('objName').value=''; $('objTarget').value=''; showToast('Objectif ajouté !'); };
+window.delObj = async id => { state.objectifs=state.objectifs.filter(o=>o.id!==id); await saveState(); };
+
+window.toggleDepenseForm = () => {
+  const f = $('depenseForm'), icon = $('depenseToggleIcon');
+  const open = f.style.display === 'none';
+  f.style.display = open ? 'block' : 'none';
+  icon.textContent = open ? '▲ fermer' : '▼ ouvrir';
+};
+
+window.validerAchat = async id => {
+  const o = state.objectifs.find(x=>x.id===id);
+  if(!o) return;
+  if(!confirm(`Valider l'achat "${o.name}" pour ${fmt(o.target)} ?`)) return;
+  await enregistrerDepense({ nom:o.name, montant:o.target, cat:o.cat, monnaie:o.monnaie||'propre', joueur:o.joueur||'both', note:'Objectif atteint', fromObjectif:true });
+  state.objectifs = state.objectifs.filter(x=>x.id!==id);
+  await saveState();
+  showToast(`Achat "${o.name}" validé — ${fmt(o.target)} déduits !`);
+};
+
+window.saveDepenseDirecte = async () => {
+  const nom = $('depNom').value.trim();
+  const montant = parseFloat($('depMontant').value)||0;
+  if(!nom||!montant){ showToast('Nom et montant requis', false); return; }
+  await enregistrerDepense({ nom, montant, cat:$('depCat').value, monnaie:$('depMonnaie').value, joueur:$('depJoueur').value, note:$('depNote').value });
+  $('depNom').value=''; $('depMontant').value=''; $('depNote').value='';
+  showToast('Dépense enregistrée !');
+};
+
+async function enregistrerDepense({nom, montant, cat, monnaie, joueur, note, fromObjectif=false}){
+  await addDoc(collection(db,'depenses'), { nom, montant, cat, monnaie, joueur, note:note||'', fromObjectif, ts:serverTimestamp(), date:today() });
+  // Déduire des soldes
+  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
+  if(monnaie==='sale'){
+    state.soldes.potCommun = Math.max(0, (state.soldes.potCommun||0) - montant);
+  } else {
+    if(joueur==='sun' || joueur==='both'){
+      const part = joueur==='both' ? montant/2 : montant;
+      state.ajustements = state.ajustements||{sun:0,moon:0};
+      state.ajustements.sun = (state.ajustements.sun||0) - part;
+    }
+    if(joueur==='moon' || joueur==='both'){
+      const part = joueur==='both' ? montant/2 : montant;
+      state.ajustements = state.ajustements||{sun:0,moon:0};
+      state.ajustements.moon = (state.ajustements.moon||0) - part;
+    }
+  }
+  await saveState();
+}
+
+function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); }
+
+function renderHQ(){
+  const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  // Soldes calculés automatiquement (shifts + pêche - achats + ajustements)
+  const soldeSun  = calcSoldeAuto('sun');
+  const soldeMoon = calcSoldeAuto('moon');
+  const totalSale = soldes.potCommun||0;
+  const totalPropre = soldeSun + soldeMoon;
+  const totalApollo = totalPropre + totalSale;
+
+  // Participation (toutes activités depuis le début)
+  const sunPartic=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0);
+  const moonPartic=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0);
+  const totalPartic=sunPartic+moonPartic, sunPct=totalPartic>0?Math.round(sunPartic/totalPartic*100):50, moonPct=totalPartic>0?Math.round(moonPartic/totalPartic*100):50;
+  const todaySess=state.sessions.filter(s=>s.date===today()), todayShifts=shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
+  const propreJour=todaySess.reduce((a,s)=>a+s.revenu,0)+todayShifts.reduce((a,s)=>a+s.gains,0), depJour=todayAchats.reduce((a,x)=>a+x.cost,0), netJour=propreJour-depJour;
+
+  $('totalApolloVal').textContent=fmt(totalApollo); $('totalPropreVal').textContent=fmt(totalPropre); $('totalSaleVal').textContent=fmt(totalSale);
+  const ne=$('netJourVal'); ne.textContent=fmt(netJour); ne.style.color=netJour>=0?'#1d9e75':'#d85a30';
+  $('propreJourVal').textContent=fmt(propreJour); $('saleJourVal').textContent='$0';
+  $('sunSoldeSmall').textContent=fmt(soldeSun); $('moonSoldeSmall').textContent=fmt(soldeMoon); $('saleSmall').textContent=fmt(soldes.potCommun||0);
+
+  $('participationBlock').innerHTML=`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div class="av av-sun" style="width:28px;height:28px;font-size:10px">SU</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">Sun</div></div>
+        <div style="text-align:right"><div style="font-size:15px;font-weight:500;color:var(--sun)">${fmt(sunPartic)}</div><div style="font-size:11px;color:var(--txt3)">${sunPct}%</div></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill" style="width:${sunPct}%;background:#f5c842"></div></div>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div class="av av-moon" style="width:28px;height:28px;font-size:10px">MO</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">Moon</div></div>
+        <div style="text-align:right"><div style="font-size:15px;font-weight:500;color:var(--moon)">${fmt(moonPartic)}</div><div style="font-size:11px;color:var(--txt3)">${moonPct}%</div></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill" style="width:${moonPct}%;background:#7fc8f8"></div></div>
+    </div>`;
+
+  if($('hqPieChart')){ if(CH.pie) CH.pie.destroy(); CH.pie=new Chart($('hqPieChart'),{type:'doughnut',data:{labels:['Sun '+sunPct+'%','Moon '+moonPct+'%'],datasets:[{data:totalPartic>0?[sunPartic,moonPartic]:[1,1],backgroundColor:['rgba(245,200,66,0.75)','rgba(127,200,248,0.75)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>totalPartic>0?' '+ctx.label+' — '+fmt(ctx.raw):ctx.label}}}}}); }
+
+  const last14=[]; for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().split('T')[0]);}
+  const comboLabels=last14.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
+  const netParJour=last14.map(day=>{const rev=state.sessions.filter(s=>s.date===day).reduce((a,s)=>a+s.revenu,0)+shifts.filter(s=>s.date===day).reduce((a,s)=>a+s.gains,0);const dep=state.achats.filter(a=>a.date===day).reduce((a,x)=>a+x.cost,0);return Math.round(rev-dep);});
+  const allOps=[...state.sessions.map(s=>({date:s.date,val:s.revenu})),...shifts.map(s=>({date:s.date,val:s.gains})),...state.achats.map(a=>({date:a.date,val:-a.cost}))];
+  const totalParJour=last14.map(day=>allOps.filter(o=>o.date<=day).reduce((a,o)=>a+o.val,0));
+  if($('hqComboChart')){ if(CH.combo) CH.combo.destroy(); CH.combo=new Chart($('hqComboChart'),{type:'bar',data:{labels:comboLabels,datasets:[{type:'bar',label:'Net du jour',data:netParJour,backgroundColor:netParJour.map(v=>v>=0?'rgba(29,158,117,0.55)':'rgba(216,90,48,0.55)'),borderColor:netParJour.map(v=>v>=0?'#1d9e75':'#d85a30'),borderWidth:1,yAxisID:'y'},{type:'line',label:'Total cumulé',data:totalParJour,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.08)',fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#7f77dd',yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#8b90a8',font:{size:10},autoSkip:false,maxRotation:0}},y:{position:'left',grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#1d9e75',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}},y2:{position:'right',grid:{display:false},ticks:{color:'#7f77dd',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}}}}}); }
+
+  let alerts='';
+  if(state.stock.appats===0) alerts+='<div class="alert-box alert-danger">Rupture appâts !</div>';
+  else if(state.stock.appats<50) alerts+=`<div class="alert-box alert-danger">Appâts critiques — ${state.stock.appats} restants</div>`;
+  else if(state.stock.appats<100) alerts+=`<div class="alert-box alert-warn">Appâts à renouveler — ${state.stock.appats}</div>`;
+  else alerts+=`<div class="alert-box alert-ok">Appâts OK — ${state.stock.appats}</div>`;
+  if(state.stock.cannes===0) alerts+='<div class="alert-box alert-danger">Plus de cannes !</div>';
+  else if(state.stock.cannes<3) alerts+=`<div class="alert-box alert-warn">Cannes basses — ${state.stock.cannes}</div>`;
+  else alerts+=`<div class="alert-box alert-ok">Cannes OK — ${state.stock.cannes}</div>`;
+  $('alertsBlock').innerHTML=alerts;
+
+  const recent=[...state.sessions.map(s=>({...s,kind:'session',_ts:s.ts?.seconds||0})),...state.achats.map(a=>({...a,kind:'achat',_ts:a.ts?.seconds||0})),...shifts.map(s=>({...s,kind:'shift',_ts:s.ts?.seconds||0}))].sort((a,b)=>b._ts-a._ts).slice(0,6);
+  if(!recent.length){$('recentOps').innerHTML='<div class="empty-state">Aucune opération — commencez à saisir !</div>';return;}
+  $('recentOps').innerHTML=recent.map(op=>{
+    if(op.kind==='session') return `<div class="row">${playerTag(op.peche)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">Session pêche${op.note?' · '+op.note:''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.revenu)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+    if(op.kind==='shift') return `<div class="row">${playerTag(op.player)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">${op.activite}${op.runs?' · '+op.runs+' run(s)':''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+    return `<div class="row"><span class="tag tag-depense">${op.person}</span><span style="flex:1;font-size:13px;color:var(--txt2)">Achat ${op.matType==='appat'?'appâts':'cannes'} ×${op.qty}</span><span class="${op.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:4px">${op.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(op.cost)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+  }).join('');
+}
+
+function renderPechePage(){
+  const FISH_BY_VALUE=[...FISH].sort((a,b)=>{if(a.price===null&&b.price===null)return 0;if(a.price===null)return 1;if(b.price===null)return -1;return b.price-a.price;});
+  $('fishCatalog').innerHTML=FISH_BY_VALUE.map(f=>`<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">${f.icon}</div><div class="fish-name">${f.name}</div><div class="fish-price">${f.price?fmt(f.price):'variable'}</div><div class="fish-type" style="color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD Cayo':'PNJ Canal'}</div></div>`).join('');
+  const totalRev=state.sessions.reduce((a,s)=>a+s.revenu,0), totalDep=state.achats.reduce((a,x)=>a+x.cost,0), net=totalRev-totalDep;
+  const totalPoissons=state.sessions.reduce((a,s)=>{FISH.forEach(f=>{a+=(s.fish?.[f.id]||0);});return a;},0);
+  $('pecheKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts</div><div class="kpi-val green">${fmt(totalRev)}</div></div><div class="kpi"><div class="kpi-label">Dépenses</div><div class="kpi-val red">${fmt(totalDep)}</div></div><div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val ${net>=0?'green':'red'}">${fmt(net)}</div></div><div class="kpi"><div class="kpi-label">Poissons pêchés</div><div class="kpi-val">${totalPoissons}</div></div><div class="kpi"><div class="kpi-label">Moy. / session</div><div class="kpi-val amber">${fmt(state.sessions.length?totalRev/state.sessions.length:0)}</div></div>`;
+  const ap=Math.min(100,state.stock.appats>0?Math.round(state.stock.appats/300*100):0), cp=Math.min(100,state.stock.cannes>0?Math.round(state.stock.cannes/12*100):0);
+  $('stockBlock').innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Appâts</span><span style="color:var(--txt);font-weight:500">${state.stock.appats} restants</span></div><div class="progress-bg"><div class="progress-fill" style="width:${ap}%;background:${ap<20?'#d85a30':ap<40?'#ef9f27':'#1d9e75'}"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Cannes</span><span style="color:var(--txt);font-weight:500">${state.stock.cannes} restantes</span></div><div class="progress-bg"><div class="progress-fill" style="width:${cp}%;background:${cp<20?'#d85a30':cp<40?'#ef9f27':'#1d9e75'}"></div></div></div>`;
+  const sr=$('stockResume'); if(sr) sr.textContent=`${state.stock.appats} appâts · ${state.stock.cannes} cannes`;
+}
+
+function renderPecheCharts(){
+  const last8=[...state.sessions].slice(0,8).reverse(), labels=last8.map((_,i)=>'S'+(state.sessions.length-last8.length+i+1)), nets=last8.map(s=>Math.round(s.revenu));
+  if(CH.line) CH.line.destroy();
+  CH.line=new Chart($('lineChart'),{type:'line',data:{labels,datasets:[{label:'Revenu',data:nets,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.12)',fill:true,tension:0.3,pointBackgroundColor:'#7f77dd',pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}});
+  const ft={};FISH.forEach(f=>{ft[f.id]=state.sessions.reduce((a,s)=>a+(s.fish?.[f.id]||0),0);});const hF=Object.values(ft).some(v=>v>0);
+  $('pieLegend').innerHTML=FISH.map(f=>`<span><span class="ldot" style="background:${FC[f.id]}"></span>${f.name} ${hF?ft[f.id]:0}</span>`).join('');
+  if(CH.pie2) CH.pie2.destroy();
+  CH.pie2=new Chart($('pieChart'),{type:'doughnut',data:{labels:FISH.map(f=>f.name),datasets:[{data:hF?FISH.map(f=>ft[f.id]):FISH.map(()=>1),backgroundColor:FISH.map(f=>FC[f.id]),borderWidth:2,borderColor:'rgba(0,0,0,0.2)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+  const sR=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0), mR=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0);
+  if(CH.team) CH.team.destroy();
+  CH.team=new Chart($('teamChart'),{type:'bar',data:{labels:['Sun (Lucien)','Moon (Oscar)'],datasets:[{data:[sR,mR],backgroundColor:['rgba(245,200,66,0.7)','rgba(127,200,248,0.7)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}},y:{grid:{display:false},ticks:{color:'#8b90a8',font:{size:11}}}}}});
+}
+
+function renderSaisieCounters(){
+  const el=$('fishCounters');
+  const FISH_SORTED = [...FISH].sort((a,b)=>{
+    if(a.price===null&&b.price===null) return 0;
+    if(a.price===null) return 1;
+    if(b.price===null) return -1;
+    return b.price-a.price;
+  });
+  if(el&&!el.children.length) el.innerHTML=FISH_SORTED.map(f=>`<div class="fish-counter"><span style="font-size:15px;margin-right:4px">${f.icon}</span><span style="flex:1;font-size:13px;color:var(--txt)">${f.name} <span style="font-size:10px;color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD':'PNJ'}</span></span><div style="display:flex;align-items:center;gap:6px"><button class="cbtn" onclick="chg('${f.id}',-1)">−</button><span class="cval" id="fc-${f.id}">0</span><button class="cbtn" onclick="chg('${f.id}',1)">+</button></div></div>`).join('');
+}
+
+function renderEmplois(){
+  const shifts=state.shifts||[], tS=shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0), tM=shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0), tdS=shifts.filter(s=>s.date===today()).reduce((a,s)=>a+s.gains,0);
+  $('emploisKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Total emplois</div><div class="kpi-val green">${fmt(tS+tM)}</div><div class="kpi-sub">${shifts.length} shifts</div></div><div class="kpi"><div class="kpi-label">Sun — Horizon</div><div class="kpi-val" style="color:var(--sun)">${fmt(tS)}</div><div class="kpi-sub">${shifts.filter(s=>s.player==='sun').length} shifts</div></div><div class="kpi"><div class="kpi-label">Moon — Club 77</div><div class="kpi-val" style="color:var(--moon)">${fmt(tM)}</div></div><div class="kpi"><div class="kpi-label">Aujourd'hui</div><div class="kpi-val green">${fmt(tdS)}</div></div>`;
+  const el=$('shiftsHisto');
+  if(!shifts.length){el.innerHTML='<div class="empty-state">Aucun shift enregistré</div>';return;}
+  el.innerHTML=[...shifts].sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0)).slice(0,10).map(s=>`<div class="row"><div class="av ${s.player==='sun'?'av-sun':'av-moon'}" style="width:28px;height:28px;font-size:10px">${s.player==='sun'?'SU':'MO'}</div><span style="flex:1;font-size:13px;color:var(--txt2)">${s.activite}${s.runs?' · '+s.runs+' run(s)':''}${s.note?' · '+s.note:''}</span><span class="badge-propre">propre</span><span style="color:#1d9e75;font-weight:500;margin-left:8px">${fmt(s.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(s.ts)}</span><button class="btn-del" onclick="delShift('${s._id}')">✕</button></div>`).join('');
+}
+
+function renderHistorique(){
+  const fT=$('filtType').value,fP=$('filtPerson').value;let rows=[];
+  if(!fT||fT==='session'){let s=[...state.sessions];if(fP)s=s.filter(x=>x.peche===fP);rows.push(...s.map(x=>({...x,kind:'session'})));}
+  if(!fT||fT==='achat'){let a=[...state.achats];if(fP&&fP!=='both')a=a.filter(x=>x.person===fP);rows.push(...a.map(x=>({...x,kind:'achat'})));}
+  rows.sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0));
+  if(!rows.length){$('histoBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txt3)">Aucune entrée</td></tr>';return;}
+  $('histoBody').innerHTML=rows.map(r=>{
+    if(r.kind==='session') return `<tr><td>${fmtDate(r.ts)}</td><td><span class="badge-propre">Pêche</span></td><td>${PNAMES[r.peche]||r.peche}</td><td style="color:#1d9e75">${fmt(r.revenu)}</td><td style="color:var(--txt3)">—</td><td style="color:#1d9e75;font-weight:500">${fmt(r.revenu)}</td><td style="color:var(--txt3)">${r.note||'—'}</td><td><button class="btn-del" onclick="delSession('${r._id}')">✕</button></td></tr>`;
+    return `<tr><td>${fmtDate(r.ts)}</td><td><span class="tag tag-depense">Achat</span></td><td>${r.person}</td><td style="color:var(--txt3)">—</td><td style="color:#d85a30">-${fmt(r.cost)}</td><td style="color:#d85a30;font-weight:500">-${fmt(r.cost)}</td><td style="color:var(--txt3)">${r.matType==='appat'?'Appâts':'Cannes'} ×${r.qty} <span class="${r.monnaie==='sale'?'badge-sale':'badge-propre'}">${r.monnaie||'propre'}</span></td><td><button class="btn-del" onclick="delAchat('${r._id}')">✕</button></td></tr>`;
+  }).join('');
+}
+
+const CAT_ICONS = {vehicule:'🚗',immobilier:'🏠',business:'🏭',equipement:'🔫',divers:'📦',peche:'🎣',cagnotte:'💰'};
+const JOUEUR_LABELS = {both:'Sun + Moon', sun:'Sun', moon:'Moon'};
+
+function renderAchatsHisto(){
+  const el = $('achatsHisto');
+  if(!el) return;
+  const deps = state.depenses||[];
+  if(!deps.length){ el.innerHTML='<div class="empty-state">Aucun achat enregistré</div>'; return; }
+  el.innerHTML = deps.slice(0,10).map(d=>`
+    <div class="row">
+      <span style="font-size:18px">${CAT_ICONS[d.cat]||'📦'}</span>
+      <div style="flex:1;margin-left:6px">
+        <div style="font-size:13px;font-weight:500;color:var(--txt)">${d.nom}</div>
+        <div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur} · ${d.note||''}</div>
+      </div>
+      <span class="${d.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:6px">${d.monnaie||'propre'}</span>
+      <span style="color:#d85a30;font-weight:500">-${fmt(d.montant)}</span>
+      <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(d.ts)}</span>
+    </div>`).join('');
+}
+
+function renderObjectifs(){
+  const soldeSun  = calcSoldeAuto('sun');
+  const soldeMoon = calcSoldeAuto('moon');
+  const potSale   = (state.soldes||{}).potCommun||0;
+  const totalPropre = soldeSun + soldeMoon;
+  const totalSale   = potSale;
+
+  if(!state.objectifs.length){$('objList').innerHTML='<div class="empty-state">Aucun objectif défini</div>';return;}
+  $('objList').innerHTML=state.objectifs.map(o=>{
+    const monnaie = o.monnaie||'propre';
+    const joueur  = o.joueur||'both';
+    const budget  = monnaie==='sale' ? totalSale : totalPropre;
+    const budgetLabel = monnaie==='sale' ? 'Propre total' : 'Propre total';
+
+    const pct      = o.target > 0 ? Math.round(budget / o.target * 100) : 0;
+    const barWidth = Math.min(100, Math.round(Math.min(pct,120) / 120 * 100));
+    const resteApres = budget - o.target;
+
+    let col, label, labelCol;
+    if(pct >= 120){
+      col='#1d9e75'; label='Prêt à acheter ✓'; labelCol='#1d9e75';
+    } else if(pct >= 100){
+      col='#ef9f27'; label='Finançable — cash limité'; labelCol='#ef9f27';
+    } else {
+      col='#7f77dd'; label='En cours'; labelCol='var(--txt3)';
+    }
+
+    const monnaieTag = monnaie==='sale'
+      ? '<span class="badge-sale">sale</span>'
+      : '<span class="badge-propre">propre</span>';
+    const joueurTag = joueur==='both'
+      ? '<span style="font-size:11px;color:var(--txt3)">Sun + Moon</span>'
+      : joueur==='sun'
+        ? '<span style="font-size:11px;color:var(--sun)">Sun</span>'
+        : '<span style="font-size:11px;color:var(--moon)">Moon</span>';
+
+    return `<div style="padding:12px 0;border-bottom:0.5px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="font-size:18px">${CAT_ICONS[o.cat]||'📦'}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500;color:var(--txt)">${o.name}</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:2px">${monnaieTag}${joueurTag}<span style="font-size:11px;color:var(--txt3)">${o.cat}</span></div>
+        </div>
+        <div style="font-size:11px;font-weight:500;color:${labelCol};padding:2px 8px;border-radius:999px;border:0.5px solid ${labelCol};white-space:nowrap">${label}</div>
+        ${pct>=120?`<button class="btn btn-primary" onclick="validerAchat(${o.id})" style="padding:5px 12px;font-size:12px">Valider l'achat</button>`:''}
+        <button class="btn-del" onclick="delObj(${o.id})">✕</button>
+      </div>
+      <div class="progress-bg" style="height:6px;margin-bottom:8px">
+        <div class="progress-fill" style="width:${barWidth}%;background:${col};height:6px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:4px">
+        <span style="color:var(--txt3)">Disponible : <span style="color:var(--txt);font-weight:500">${fmt(budget)}</span> / <span style="font-weight:500">${fmt(o.target)}</span> <span style="color:${labelCol}">(${pct}%)</span></span>
+        <span style="color:var(--txt3)">Reste après : <span style="color:${resteApres>=0?'#1d9e75':'#d85a30'};font-weight:500">${fmt(resteApres)}</span></span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+$('dateBadge').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+startListeners();
+</script>
+</body>
+</html>
