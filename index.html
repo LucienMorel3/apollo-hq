@@ -507,6 +507,11 @@ window.saveAchat = async () => {
 window.delSession = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'sessions',id)); showToast('Supprimé'); };
 window.delAchat   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'achats',id)); showToast('Supprimé'); };
 window.delShift   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'shifts',id)); showToast('Supprimé'); };
+window.delDepense = async id => {
+  if(!confirm('Supprimer cet achat ? Les soldes ne seront pas recalculés automatiquement.')) return;
+  await deleteDoc(doc(db,'depenses',id));
+  showToast('Achat supprimé');
+};
 window.confirmReset = () => { if(!confirm('Supprimer TOUTES les données ?')) return; state.sessions.forEach(s=>deleteDoc(doc(db,'sessions',s._id))); state.achats.forEach(a=>deleteDoc(doc(db,'achats',a._id))); state.shifts.forEach(s=>deleteDoc(doc(db,'shifts',s._id))); state.stock={appats:0,cannes:0}; state.objectifs=[]; state.soldes={sun:0,moon:0,potCommun:0}; saveState(); showToast('Données réinitialisées'); };
  
 window.updateSunEstim = () => { const r=parseInt($('sunRuns').value)||0, e=r*4480; $('sunEstim').textContent=r>0?'Estimation : '+fmt(e):''; if(r>0) $('sunGains').placeholder=String(e); };
@@ -701,16 +706,17 @@ function renderAchatsHisto(){
   if(!el) return;
   const deps = state.depenses||[];
   if(!deps.length){ el.innerHTML='<div class="empty-state">Aucun achat enregistré</div>'; return; }
-  el.innerHTML = deps.slice(0,10).map(d=>`
+  el.innerHTML = deps.slice(0,20).map(d=>`
     <div class="row">
       <span style="font-size:18px">${CAT_ICONS[d.cat]||'📦'}</span>
       <div style="flex:1;margin-left:6px">
         <div style="font-size:13px;font-weight:500;color:var(--txt)">${d.nom}</div>
-        <div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur} · ${d.note||''}</div>
+        <div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur}${d.note?' · '+d.note:''}</div>
       </div>
       <span class="${d.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:6px">${d.monnaie||'propre'}</span>
       <span style="color:#d85a30;font-weight:500">-${fmt(d.montant)}</span>
       <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(d.ts)}</span>
+      <button class="btn-del" onclick="delDepense('${d._id}')" style="margin-left:6px">✕</button>
     </div>`).join('');
 }
  
