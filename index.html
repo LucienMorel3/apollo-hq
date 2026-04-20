@@ -7,11 +7,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0d0f14;--bg2:#141720;--bg3:#1c2030;--bg4:#242840;--txt:#e8eaf0;--txt2:#8b90a8;--txt3:#555a70;--acc:#7f77dd;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--sun:#f5c842;--moon:#7fc8f8;--r:8px;--rl:12px}
-.light{--bg:#f5f6fa;--bg2:#ffffff;--bg3:#eef0f7;--bg4:#e2e5f0;--txt:#1a1d2e;--txt2:#5a5f7a;--txt3:#9298b0;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12)}
-body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+:root{
+  --bg:#07091a;--bg2:#0d1128;--bg3:#131830;--bg4:#1a2040;
+  --txt:#dde2f0;--txt2:#7a82a8;--txt3:#424868;
+  --acc:#6c6fcf;--acc2:#4a4fa8;
+  --border:rgba(100,120,255,0.1);--border2:rgba(100,120,255,0.18);
+  --sun:#f5c842;--moon:#7fc8f8;--r:8px;--rl:12px
+}
+.light{--bg:#f0f2fa;--bg2:#ffffff;--bg3:#e8eaf5;--bg4:#dde0f0;--txt:#0d1030;--txt2:#4a5070;--txt3:#8890b0;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12)}
+body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;position:relative}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(1px 1px at 15% 20%,rgba(255,255,255,0.55) 0%,transparent 100%),radial-gradient(1px 1px at 73% 8%,rgba(255,255,255,0.45) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 88% 35%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 42% 55%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 6% 68%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 60% 78%,rgba(255,255,255,0.35) 0%,transparent 100%),radial-gradient(1px 1px at 31% 88%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 95% 62%,rgba(255,255,255,0.45) 0%,transparent 100%),radial-gradient(1px 1px at 52% 15%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 22% 44%,rgba(255,255,255,0.35) 0%,transparent 100%),radial-gradient(1px 1px at 80% 90%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 4% 38%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 67% 48%,rgba(255,255,255,0.25) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 45% 72%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 92% 15%,rgba(255,255,255,0.35) 0%,transparent 100%)}
+.light body::before{display:none}
+.wrap{position:relative;z-index:1}
 .wrap{padding:16px;max-width:960px;margin:0 auto}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap;padding:12px 16px;background:rgba(13,17,40,0.8);border-radius:var(--rl);border:0.5px solid var(--border);backdrop-filter:blur(8px);margin:-16px -16px 20px -16px}
 .logo{width:38px;height:38px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#fff;flex-shrink:0}
 .org-name{font-size:17px;font-weight:500;color:var(--txt)}.org-sub{font-size:12px;color:var(--txt2)}
 .topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -24,12 +33,12 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
 .sync-label{font-size:12px;color:var(--txt3)}
 .nav{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap}
 .nav-btn{padding:7px 16px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;transition:all .15s}
-.nav-btn:hover{background:var(--bg3);color:var(--txt)}.nav-btn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.nav-btn:hover{background:var(--bg3);color:var(--txt)}.nav-btn.active{background:linear-gradient(135deg,#6c6fcf,#4a4fa8);color:#fff;border-color:#6c6fcf;box-shadow:0 0 12px rgba(108,111,207,0.35)}
 .page{display:none}.page.active{display:block}
-.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px}
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px;backdrop-filter:blur(4px)}
 .card-title{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;font-weight:500}
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
-.kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:14px 16px}
+.kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:14px 16px;position:relative;overflow:hidden}
 .kpi-label{font-size:11px;color:var(--txt3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
 .kpi-val{font-size:22px;font-weight:500;color:var(--txt)}.kpi-val.green{color:#1d9e75}.kpi-val.red{color:#d85a30}.kpi-val.amber{color:#ef9f27}
 .kpi-sub{font-size:11px;color:var(--txt3);margin-top:3px}
@@ -53,7 +62,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
 .field input,.field select{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:8px 10px;font-size:13px;color:var(--txt);width:100%}
 .field input:focus,.field select:focus{outline:none;border-color:var(--acc)}
 .btn{padding:8px 18px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg3);color:var(--txt);cursor:pointer;font-size:13px;transition:all .15s}
-.btn:hover{border-color:var(--acc);color:var(--acc)}.btn-primary{background:var(--acc);color:#fff;border-color:var(--acc)}.btn-primary:hover{background:#6860c8;color:#fff}.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn:hover{border-color:var(--acc);color:var(--acc)}.btn-primary{background:linear-gradient(135deg,#6c6fcf,#4a4fa8);color:#fff;border-color:#6c6fcf}.btn-primary:hover{background:linear-gradient(135deg,#7c7fdf,#5a5fb8);color:#fff}.btn-primary:disabled{opacity:.5;cursor:not-allowed}
 .btn-sm{padding:5px 12px;font-size:12px}.btn-del{color:#d85a30;border-color:transparent;background:transparent;padding:4px 8px;font-size:12px;cursor:pointer}
 .htable{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 .htable th{font-size:11px;color:var(--txt3);text-align:left;padding:8px 10px;border-bottom:0.5px solid var(--border);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
@@ -84,11 +93,20 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
 <div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div style="color:var(--txt2);font-size:13px">Connexion à Apollo HQ...</div></div>
 <div class="toast" id="toast"></div>
 <div class="wrap" id="root">
- 
+
 <div class="topbar">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="logo">A</div>
-    <div><div class="org-name">Apollo HQ</div><div class="org-sub">Sun & Moon — Flashback FA</div></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="18" r="18" fill="#0d1128"/>
+      <path d="M22 6c0 0-8 4-10 12-0.8 3 0.5 5.5 2.5 7 2 1.5 4.8 2 7.5 0.5 3.5-2 4-6 3-9C23.5 11 22 6 22 6z" fill="#6c6fcf" opacity="0.9"/>
+      <path d="M22 6 L24 10 L20 9 Z" fill="#9a9ee8"/>
+      <ellipse cx="15" cy="24" rx="3" ry="1.5" fill="#4a4fa8" opacity="0.7" transform="rotate(-30 15 24)"/>
+      <circle cx="21" cy="16" r="1.5" fill="#dde2f0" opacity="0.6"/>
+    </svg>
+    <div>
+      <div style="font-size:18px;font-weight:600;color:var(--txt);letter-spacing:.02em;font-family:Georgia,serif;font-style:italic">Apollo</div>
+      <div class="org-sub">Sun & Moon — Flashback FA</div>
+    </div>
   </div>
   <div class="topbar-right">
     <div class="date-badge" id="dateBadge"></div>
@@ -98,7 +116,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
     <button class="theme-btn" onclick="toggleTheme()">Thème</button>
   </div>
 </div>
- 
+
 <div class="nav">
   <button class="nav-btn active" onclick="showPage('hq')">Apollo HQ</button>
   <button class="nav-btn" onclick="showPage('peche')">Pêche</button>
@@ -106,7 +124,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
   <button class="nav-btn" onclick="showPage('historique')">Historique</button>
   <button class="nav-btn" onclick="showPage('objectifs')">Objectifs</button>
 </div>
- 
+
 <!-- HQ -->
 <div class="page active" id="page-hq">
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:20px 24px;margin-bottom:14px;text-align:center">
@@ -118,7 +136,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
       <div style="text-align:center"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">SALE</div><div style="font-size:20px;font-weight:500;color:#ef9f27" id="totalSaleVal">$0</div></div>
     </div>
   </div>
- 
+
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Participation — Sun vs Moon</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center">
@@ -126,7 +144,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
       <div id="participationBlock"></div>
     </div>
   </div>
- 
+
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Aujourd'hui</div>
     <div style="display:grid;grid-template-columns:1fr 0.5px 1fr 0.5px 1fr;align-items:center">
@@ -137,7 +155,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
       <div style="text-align:center;padding:0 12px"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">SALE DU JOUR</div><div style="font-size:22px;font-weight:500;color:#ef9f27" id="saleJourVal">$0</div></div>
     </div>
   </div>
- 
+
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Évolution Apollo — 14 jours</div>
     <div style="display:flex;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:12px">
@@ -146,7 +164,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
     </div>
     <div class="chart-wrap" style="height:220px"><canvas id="hqComboChart" role="img" aria-label="Évolution Apollo">Graphique</canvas></div>
   </div>
- 
+
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Mise à jour des soldes</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
@@ -164,18 +182,18 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
       </div>
     </div>
   </div>
- 
+
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Alertes & stocks</div>
     <div id="alertsBlock"></div>
   </div>
- 
+
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Dernières opérations</div>
     <div id="recentOps"></div>
   </div>
 </div>
- 
+
 <!-- PÊCHE -->
 <div class="page" id="page-peche">
   <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
@@ -253,7 +271,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
     </div>
   </div>
 </div>
- 
+
 <!-- EMPLOIS -->
 <div class="page" id="page-emplois">
   <div class="kpi-row" id="emploisKpis"></div>
@@ -289,7 +307,7 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
   </div>
   <div class="card"><div class="card-title">Historique des shifts</div><div id="shiftsHisto"></div></div>
 </div>
- 
+
 <!-- HISTORIQUE -->
 <div class="page" id="page-historique">
   <div class="card" style="padding:12px 16px;margin-bottom:14px">
@@ -304,10 +322,10 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
     <table class="htable"><thead><tr><th style="width:80px">Date</th><th style="width:80px">Type</th><th style="width:70px">Joueur</th><th style="width:90px">Revenu</th><th style="width:90px">Dépense</th><th style="width:80px">Net</th><th>Détail</th><th style="width:36px"></th></tr></thead><tbody id="histoBody"></tbody></table>
   </div></div>
 </div>
- 
+
 <!-- OBJECTIFS -->
 <div class="page" id="page-objectifs">
- 
+
   <!-- Nouvel objectif -->
   <div class="card">
     <div class="card-title">Nouvel objectif</div>
@@ -332,13 +350,13 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
     </div>
     <button class="btn btn-primary" onclick="addObjectif()">Ajouter l'objectif</button>
   </div>
- 
+
   <!-- Objectifs actifs -->
   <div class="card">
     <div class="card-title">Objectifs en cours</div>
     <div id="objList"></div>
   </div>
- 
+
   <!-- Dépense directe (achat sans objectif préalable) -->
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:0" onclick="toggleDepenseForm()">
@@ -369,24 +387,24 @@ body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,s
       <button class="btn btn-primary" onclick="saveDepenseDirecte()">Enregistrer la dépense</button>
     </div>
   </div>
- 
+
   <!-- Historique achats -->
   <div class="card">
     <div class="card-title">Historique des achats</div>
     <div id="achatsHisto"></div>
   </div>
- 
+
 </div>
- 
+
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
- 
+
 const firebaseConfig = { apiKey:"AIzaSyCjgzUN_7lMuThJ992NYr8uwJ8vdj01Ey8", authDomain:"apollo-hq-a4a8a.firebaseapp.com", projectId:"apollo-hq-a4a8a", storageBucket:"apollo-hq-a4a8a.firebasestorage.app", messagingSenderId:"673101576451", appId:"1:673101576451:web:3c8fff73dba95ee1209136" };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
- 
+
 const FISH = [
   {id:'requin',name:'Requin',price:250,type:'illegal',icon:'🦈'},
   {id:'dauphin',name:'Dauphin',price:575,type:'illegal',icon:'🐬'},
@@ -398,21 +416,21 @@ const FISH = [
 ];
 const FC = {requin:'#7f77dd',dauphin:'#1d9e75',espadon:'#378add',piranha:'#d85a30',anchois:'#ba7517',esturgeon:'#d4537e',thon:'#0f6e56'};
 const PNAMES = {sun:'Sun',moon:'Moon',both:'Sun+Moon'};
- 
+
 let state = { sessions:[], achats:[], shifts:[], objectifs:[], stock:{appats:0,cannes:0}, soldes:{sun:0,moon:0,potCommun:0} };
 const tmpFish = {}; FISH.forEach(f => tmpFish[f.id]=0);
 let isDark = true;
 let CH = {};
- 
+
 const fmt = n => '$'+Math.round(n).toLocaleString('fr-FR');
 const fmtDate = ts => { if(!ts) return '—'; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}); };
 const today = () => new Date().toISOString().split('T')[0];
 const $ = id => document.getElementById(id);
- 
+
 function showToast(msg,ok=true){ const t=$('toast'); t.textContent=msg; t.style.borderColor=ok?'rgba(29,158,117,.4)':'rgba(216,90,48,.4)'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
 function setSyncStatus(s){ const dot=$('syncDot'),lbl=$('syncLabel'); dot.className='sync-dot'; if(s==='live'){dot.classList.add('live');lbl.textContent='Sync en direct';}else if(s==='error'){dot.classList.add('error');lbl.textContent='Hors ligne';}else{lbl.textContent='Connexion...';} }
 function playerTag(p){ if(p==='sun') return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(245,200,66,.15);color:#f5c842">Sun</span>'; if(p==='moon') return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,200,248,.15);color:#7fc8f8">Moon</span>'; return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,119,221,.15);color:#afa9ec">Sun+Moon</span>'; }
- 
+
 window.toggleTheme = () => { isDark=!isDark; $('root').classList.toggle('light',!isDark); document.body.classList.toggle('light',!isDark); };
 window.showPage = id => {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -428,7 +446,7 @@ window.switchInnerTab = tab => {
   $('itab-saisie').classList.toggle('active',tab==='saisie');
   if(tab==='stats') setTimeout(renderPecheCharts,80);
 };
- 
+
 function startListeners(){
   let loaded=0; const TOTAL=4; let rt=null;
   const sr = () => { if(rt) clearTimeout(rt); rt=setTimeout(renderAll,80); };
@@ -440,7 +458,7 @@ function startListeners(){
   onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; } ol(); sr(); }, eh('state'));
   onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')), snap=>{ state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('depenses',err));
 }
- 
+
 window.fixStock = async type => {
   const val = parseInt(document.getElementById(type==='appats'?'fixAppats':'fixCannes').value);
   if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
@@ -449,14 +467,14 @@ window.fixStock = async type => {
   document.getElementById(type==='appats'?'fixAppats':'fixCannes').value = '';
   showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
 };
- 
+
 async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, updatedAt:serverTimestamp() }); }
- 
+
 // Calcule le solde automatique d'un joueur (shifts + sessions - achats)
 function calcSoldeAuto(player){
   return (state.soldes||{})[player]||0;
 }
- 
+
 window.updateSolde = async player => {
   const val=parseFloat($(player+'Solde').value);
   if(isNaN(val)||val<0){showToast('Montant invalide',false);return;}
@@ -467,10 +485,10 @@ window.updateSolde = async player => {
   showToast(`Solde ${player==='sun'?'Sun':'Moon'} mis à jour : ${fmt(val)}`);
 };
 window.updatePotCommun = async () => { const val=parseFloat($('potCommun').value); if(isNaN(val)||val<0){showToast('Montant invalide',false);return;} state.soldes=state.soldes||{sun:0,moon:0,potCommun:0}; state.soldes.potCommun=val; await saveState(); $('potCommun').value=''; showToast(`Pot commun sale mis à jour : ${fmt(val)}`); };
- 
+
 window.checkStockLive = () => { const a=parseInt($('qAppats').value)||0, c=parseInt($('qCannes').value)||0, w=$('stockWarning'), errs=[]; if(a>state.stock.appats) errs.push(`Appâts insuffisants — stock: ${state.stock.appats}`); if(c>state.stock.cannes) errs.push(`Cannes insuffisantes — stock: ${state.stock.cannes}`); w.style.display=errs.length?'block':'none'; if(errs.length) w.innerHTML=errs.join('<br>'); };
 window.chg = (id,d) => { tmpFish[id]=Math.max(0,(tmpFish[id]||0)+d); $('fc-'+id).textContent=tmpFish[id]; let est=0; FISH.forEach(f=>{if(f.price) est+=(tmpFish[f.id]||0)*f.price;}); $('sessionEstim').textContent=est>0?'Estimation : '+fmt(est):''; };
- 
+
 window.saveSession = async () => {
   const btn=$('btnSession'); btn.disabled=true;
   try {
@@ -490,7 +508,7 @@ window.saveSession = async () => {
   } catch(e){showToast('Erreur: '+e.message,false);}
   btn.disabled=false;
 };
- 
+
 window.saveAchat = async () => {
   const btn=$('btnAchat'); btn.disabled=true;
   try {
@@ -503,7 +521,7 @@ window.saveAchat = async () => {
   } catch(e){showToast('Erreur: '+e.message,false);}
   btn.disabled=false;
 };
- 
+
 window.delSession = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'sessions',id)); showToast('Supprimé'); };
 window.delAchat   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'achats',id)); showToast('Supprimé'); };
 window.delShift   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'shifts',id)); showToast('Supprimé'); };
@@ -513,7 +531,7 @@ window.delDepense = async id => {
   showToast('Achat supprimé');
 };
 window.confirmReset = () => { if(!confirm('Supprimer TOUTES les données ?')) return; state.sessions.forEach(s=>deleteDoc(doc(db,'sessions',s._id))); state.achats.forEach(a=>deleteDoc(doc(db,'achats',a._id))); state.shifts.forEach(s=>deleteDoc(doc(db,'shifts',s._id))); state.stock={appats:0,cannes:0}; state.objectifs=[]; state.soldes={sun:0,moon:0,potCommun:0}; saveState(); showToast('Données réinitialisées'); };
- 
+
 window.updateSunEstim = () => { const r=parseInt($('sunRuns').value)||0, e=r*4480; $('sunEstim').textContent=r>0?'Estimation : '+fmt(e):''; if(r>0) $('sunGains').placeholder=String(e); };
 window.saveShift = async player => {
   const runs=parseInt($(player+'Runs').value)||0, gains=parseFloat($(player+'Gains').value)||(runs*4480);
@@ -523,17 +541,17 @@ window.saveShift = async player => {
   if(player==='sun') $('sunEstim').textContent='';
   showToast('Shift enregistré !');
 };
- 
+
 window.addObjectif = async () => { const name=$('objName').value.trim(), target=parseFloat($('objTarget').value)||0; if(!name||!target){showToast('Nom et montant requis',false);return;} state.objectifs.push({id:Date.now(),name,target,cat:$('objCat').value,monnaie:$('objMonnaie').value,joueur:$('objJoueur').value}); await saveState(); $('objName').value=''; $('objTarget').value=''; showToast('Objectif ajouté !'); };
 window.delObj = async id => { state.objectifs=state.objectifs.filter(o=>o.id!==id); await saveState(); };
- 
+
 window.toggleDepenseForm = () => {
   const f = $('depenseForm'), icon = $('depenseToggleIcon');
   const open = f.style.display === 'none';
   f.style.display = open ? 'block' : 'none';
   icon.textContent = open ? '▲ fermer' : '▼ ouvrir';
 };
- 
+
 window.validerAchat = async id => {
   const o = state.objectifs.find(x=>x.id===id);
   if(!o) return;
@@ -543,7 +561,7 @@ window.validerAchat = async id => {
   await saveState();
   showToast(`Achat "${o.name}" validé — ${fmt(o.target)} déduits !`);
 };
- 
+
 window.saveDepenseDirecte = async () => {
   const nom = $('depNom').value.trim();
   const montant = parseFloat($('depMontant').value)||0;
@@ -552,7 +570,7 @@ window.saveDepenseDirecte = async () => {
   $('depNom').value=''; $('depMontant').value=''; $('depNote').value='';
   showToast('Dépense enregistrée !');
 };
- 
+
 async function enregistrerDepense({nom, montant, cat, monnaie, joueur, note, fromObjectif=false}){
   await addDoc(collection(db,'depenses'), { nom, montant, cat, monnaie, joueur, note:note||'', fromObjectif, ts:serverTimestamp(), date:today() });
   // Déduire des soldes
@@ -573,9 +591,9 @@ async function enregistrerDepense({nom, montant, cat, monnaie, joueur, note, fro
   }
   await saveState();
 }
- 
+
 function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); }
- 
+
 function renderHQ(){
   const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
   // Soldes calculés automatiquement (shifts + pêche - achats + ajustements)
@@ -584,19 +602,19 @@ function renderHQ(){
   const totalSale = soldes.potCommun||0;
   const totalPropre = soldeSun + soldeMoon;
   const totalApollo = totalPropre + totalSale;
- 
+
   // Participation (toutes activités depuis le début)
   const sunPartic=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0);
   const moonPartic=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0);
   const totalPartic=sunPartic+moonPartic, sunPct=totalPartic>0?Math.round(sunPartic/totalPartic*100):50, moonPct=totalPartic>0?Math.round(moonPartic/totalPartic*100):50;
   const todaySess=state.sessions.filter(s=>s.date===today()), todayShifts=shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
   const propreJour=todaySess.reduce((a,s)=>a+s.revenu,0)+todayShifts.reduce((a,s)=>a+s.gains,0), depJour=todayAchats.reduce((a,x)=>a+x.cost,0), netJour=propreJour-depJour;
- 
+
   $('totalApolloVal').textContent=fmt(totalApollo); $('totalPropreVal').textContent=fmt(totalPropre); $('totalSaleVal').textContent=fmt(totalSale);
   const ne=$('netJourVal'); ne.textContent=fmt(netJour); ne.style.color=netJour>=0?'#1d9e75':'#d85a30';
   $('propreJourVal').textContent=fmt(propreJour); $('saleJourVal').textContent='$0';
   $('sunSoldeSmall').textContent=fmt(soldeSun); $('moonSoldeSmall').textContent=fmt(soldeMoon); $('saleSmall').textContent=fmt(soldes.potCommun||0);
- 
+
   $('participationBlock').innerHTML=`
     <div style="margin-bottom:14px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -614,16 +632,16 @@ function renderHQ(){
       </div>
       <div class="progress-bg"><div class="progress-fill" style="width:${moonPct}%;background:#7fc8f8"></div></div>
     </div>`;
- 
+
   if($('hqPieChart')){ if(CH.pie) CH.pie.destroy(); CH.pie=new Chart($('hqPieChart'),{type:'doughnut',data:{labels:['Sun '+sunPct+'%','Moon '+moonPct+'%'],datasets:[{data:totalPartic>0?[sunPartic,moonPartic]:[1,1],backgroundColor:['rgba(245,200,66,0.75)','rgba(127,200,248,0.75)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>totalPartic>0?' '+ctx.label+' — '+fmt(ctx.raw):ctx.label}}}}}); }
- 
+
   const last14=[]; for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().split('T')[0]);}
   const comboLabels=last14.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
   const netParJour=last14.map(day=>{const rev=state.sessions.filter(s=>s.date===day).reduce((a,s)=>a+s.revenu,0)+shifts.filter(s=>s.date===day).reduce((a,s)=>a+s.gains,0);const dep=state.achats.filter(a=>a.date===day).reduce((a,x)=>a+x.cost,0);return Math.round(rev-dep);});
   const allOps=[...state.sessions.map(s=>({date:s.date,val:s.revenu})),...shifts.map(s=>({date:s.date,val:s.gains})),...state.achats.map(a=>({date:a.date,val:-a.cost}))];
   const totalParJour=last14.map(day=>allOps.filter(o=>o.date<=day).reduce((a,o)=>a+o.val,0));
   if($('hqComboChart')){ if(CH.combo) CH.combo.destroy(); CH.combo=new Chart($('hqComboChart'),{type:'bar',data:{labels:comboLabels,datasets:[{type:'bar',label:'Net du jour',data:netParJour,backgroundColor:netParJour.map(v=>v>=0?'rgba(29,158,117,0.55)':'rgba(216,90,48,0.55)'),borderColor:netParJour.map(v=>v>=0?'#1d9e75':'#d85a30'),borderWidth:1,yAxisID:'y'},{type:'line',label:'Total cumulé',data:totalParJour,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.08)',fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#7f77dd',yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#8b90a8',font:{size:10},autoSkip:false,maxRotation:0}},y:{position:'left',grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#1d9e75',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}},y2:{position:'right',grid:{display:false},ticks:{color:'#7f77dd',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}}}}}); }
- 
+
   let alerts='';
   if(state.stock.appats===0) alerts+='<div class="alert-box alert-danger">Rupture appâts !</div>';
   else if(state.stock.appats<50) alerts+=`<div class="alert-box alert-danger">Appâts critiques — ${state.stock.appats} restants</div>`;
@@ -633,7 +651,7 @@ function renderHQ(){
   else if(state.stock.cannes<3) alerts+=`<div class="alert-box alert-warn">Cannes basses — ${state.stock.cannes}</div>`;
   else alerts+=`<div class="alert-box alert-ok">Cannes OK — ${state.stock.cannes}</div>`;
   $('alertsBlock').innerHTML=alerts;
- 
+
   const recent=[...state.sessions.map(s=>({...s,kind:'session',_ts:s.ts?.seconds||0})),...state.achats.map(a=>({...a,kind:'achat',_ts:a.ts?.seconds||0})),...shifts.map(s=>({...s,kind:'shift',_ts:s.ts?.seconds||0}))].sort((a,b)=>b._ts-a._ts).slice(0,6);
   if(!recent.length){$('recentOps').innerHTML='<div class="empty-state">Aucune opération — commencez à saisir !</div>';return;}
   $('recentOps').innerHTML=recent.map(op=>{
@@ -642,7 +660,7 @@ function renderHQ(){
     return `<div class="row"><span class="tag tag-depense">${op.person}</span><span style="flex:1;font-size:13px;color:var(--txt2)">Achat ${op.matType==='appat'?'appâts':'cannes'} ×${op.qty}</span><span class="${op.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:4px">${op.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(op.cost)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
   }).join('');
 }
- 
+
 function renderPechePage(){
   const FISH_BY_VALUE=[...FISH].sort((a,b)=>{if(a.price===null&&b.price===null)return 0;if(a.price===null)return 1;if(b.price===null)return -1;return b.price-a.price;});
   $('fishCatalog').innerHTML=FISH_BY_VALUE.map(f=>`<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">${f.icon}</div><div class="fish-name">${f.name}</div><div class="fish-price">${f.price?fmt(f.price):'variable'}</div><div class="fish-type" style="color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD Cayo':'PNJ Canal'}</div></div>`).join('');
@@ -653,7 +671,7 @@ function renderPechePage(){
   $('stockBlock').innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Appâts</span><span style="color:var(--txt);font-weight:500">${state.stock.appats} restants</span></div><div class="progress-bg"><div class="progress-fill" style="width:${ap}%;background:${ap<20?'#d85a30':ap<40?'#ef9f27':'#1d9e75'}"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Cannes</span><span style="color:var(--txt);font-weight:500">${state.stock.cannes} restantes</span></div><div class="progress-bg"><div class="progress-fill" style="width:${cp}%;background:${cp<20?'#d85a30':cp<40?'#ef9f27':'#1d9e75'}"></div></div></div>`;
   const sr=$('stockResume'); if(sr) sr.textContent=`${state.stock.appats} appâts · ${state.stock.cannes} cannes`;
 }
- 
+
 function renderPecheCharts(){
   const last8=[...state.sessions].slice(0,8).reverse(), labels=last8.map((_,i)=>'S'+(state.sessions.length-last8.length+i+1)), nets=last8.map(s=>Math.round(s.revenu));
   if(CH.line) CH.line.destroy();
@@ -666,7 +684,7 @@ function renderPecheCharts(){
   if(CH.team) CH.team.destroy();
   CH.team=new Chart($('teamChart'),{type:'bar',data:{labels:['Sun (Lucien)','Moon (Oscar)'],datasets:[{data:[sR,mR],backgroundColor:['rgba(245,200,66,0.7)','rgba(127,200,248,0.7)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}},y:{grid:{display:false},ticks:{color:'#8b90a8',font:{size:11}}}}}});
 }
- 
+
 function renderSaisieCounters(){
   const el=$('fishCounters');
   const FISH_SORTED = [...FISH].sort((a,b)=>{
@@ -677,7 +695,7 @@ function renderSaisieCounters(){
   });
   if(el&&!el.children.length) el.innerHTML=FISH_SORTED.map(f=>`<div class="fish-counter"><span style="font-size:15px;margin-right:4px">${f.icon}</span><span style="flex:1;font-size:13px;color:var(--txt)">${f.name} <span style="font-size:10px;color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD':'PNJ'}</span></span><div style="display:flex;align-items:center;gap:6px"><button class="cbtn" onclick="chg('${f.id}',-1)">−</button><span class="cval" id="fc-${f.id}">0</span><button class="cbtn" onclick="chg('${f.id}',1)">+</button></div></div>`).join('');
 }
- 
+
 function renderEmplois(){
   const shifts=state.shifts||[], tS=shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0), tM=shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0), tdS=shifts.filter(s=>s.date===today()).reduce((a,s)=>a+s.gains,0);
   $('emploisKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Total emplois</div><div class="kpi-val green">${fmt(tS+tM)}</div><div class="kpi-sub">${shifts.length} shifts</div></div><div class="kpi"><div class="kpi-label">Sun — Horizon</div><div class="kpi-val" style="color:var(--sun)">${fmt(tS)}</div><div class="kpi-sub">${shifts.filter(s=>s.player==='sun').length} shifts</div></div><div class="kpi"><div class="kpi-label">Moon — Club 77</div><div class="kpi-val" style="color:var(--moon)">${fmt(tM)}</div></div><div class="kpi"><div class="kpi-label">Aujourd'hui</div><div class="kpi-val green">${fmt(tdS)}</div></div>`;
@@ -685,7 +703,7 @@ function renderEmplois(){
   if(!shifts.length){el.innerHTML='<div class="empty-state">Aucun shift enregistré</div>';return;}
   el.innerHTML=[...shifts].sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0)).slice(0,10).map(s=>`<div class="row"><div class="av ${s.player==='sun'?'av-sun':'av-moon'}" style="width:28px;height:28px;font-size:10px">${s.player==='sun'?'SU':'MO'}</div><span style="flex:1;font-size:13px;color:var(--txt2)">${s.activite}${s.runs?' · '+s.runs+' run(s)':''}${s.note?' · '+s.note:''}</span><span class="badge-propre">propre</span><span style="color:#1d9e75;font-weight:500;margin-left:8px">${fmt(s.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(s.ts)}</span><button class="btn-del" onclick="delShift('${s._id}')">✕</button></div>`).join('');
 }
- 
+
 function renderHistorique(){
   const fT=$('filtType').value,fP=$('filtPerson').value;let rows=[];
   if(!fT||fT==='session'){let s=[...state.sessions];if(fP)s=s.filter(x=>x.peche===fP);rows.push(...s.map(x=>({...x,kind:'session'})));}
@@ -697,10 +715,10 @@ function renderHistorique(){
     return `<tr><td>${fmtDate(r.ts)}</td><td><span class="tag tag-depense">Achat</span></td><td>${r.person}</td><td style="color:var(--txt3)">—</td><td style="color:#d85a30">-${fmt(r.cost)}</td><td style="color:#d85a30;font-weight:500">-${fmt(r.cost)}</td><td style="color:var(--txt3)">${r.matType==='appat'?'Appâts':'Cannes'} ×${r.qty} <span class="${r.monnaie==='sale'?'badge-sale':'badge-propre'}">${r.monnaie||'propre'}</span></td><td><button class="btn-del" onclick="delAchat('${r._id}')">✕</button></td></tr>`;
   }).join('');
 }
- 
+
 const CAT_ICONS = {vehicule:'🚗',immobilier:'🏠',business:'🏭',equipement:'🔫',divers:'📦',peche:'🎣',cagnotte:'💰'};
 const JOUEUR_LABELS = {both:'Sun + Moon', sun:'Sun', moon:'Moon'};
- 
+
 function renderAchatsHisto(){
   const el = $('achatsHisto');
   if(!el) return;
@@ -719,25 +737,25 @@ function renderAchatsHisto(){
       <button class="btn-del" onclick="delDepense('${d._id}')" style="margin-left:6px">✕</button>
     </div>`).join('');
 }
- 
+
 function renderObjectifs(){
   const soldeSun  = calcSoldeAuto('sun');
   const soldeMoon = calcSoldeAuto('moon');
   const potSale   = (state.soldes||{}).potCommun||0;
   const totalPropre = soldeSun + soldeMoon;
   const totalSale   = potSale;
- 
+
   if(!state.objectifs.length){$('objList').innerHTML='<div class="empty-state">Aucun objectif défini</div>';return;}
   $('objList').innerHTML=state.objectifs.map(o=>{
     const monnaie = o.monnaie||'propre';
     const joueur  = o.joueur||'both';
     const budget  = monnaie==='sale' ? totalSale : totalPropre;
     const budgetLabel = monnaie==='sale' ? 'Propre total' : 'Propre total';
- 
+
     const pct      = o.target > 0 ? Math.round(budget / o.target * 100) : 0;
     const barWidth = Math.min(100, Math.round(Math.min(pct,120) / 120 * 100));
     const resteApres = budget - o.target;
- 
+
     let col, label, labelCol;
     if(pct >= 120){
       col='#1d9e75'; label='Prêt à acheter ✓'; labelCol='#1d9e75';
@@ -746,7 +764,7 @@ function renderObjectifs(){
     } else {
       col='#7f77dd'; label='En cours'; labelCol='var(--txt3)';
     }
- 
+
     const monnaieTag = monnaie==='sale'
       ? '<span class="badge-sale">sale</span>'
       : '<span class="badge-propre">propre</span>';
@@ -755,7 +773,7 @@ function renderObjectifs(){
       : joueur==='sun'
         ? '<span style="font-size:11px;color:var(--sun)">Sun</span>'
         : '<span style="font-size:11px;color:var(--moon)">Moon</span>';
- 
+
     return `<div style="padding:12px 0;border-bottom:0.5px solid var(--border)">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
         <span style="font-size:18px">${CAT_ICONS[o.cat]||'📦'}</span>
@@ -777,10 +795,9 @@ function renderObjectifs(){
     </div>`;
   }).join('');
 }
- 
+
 $('dateBadge').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 startListeners();
 </script>
 </body>
 </html>
- 
