@@ -472,72 +472,94 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 <!-- OBJECTIFS -->
 <div class="page" id="page-objectifs">
 
-  <!-- Nouvel objectif -->
-  <div class="card">
-    <div class="card-title">Nouvel objectif</div>
-    <div class="form-grid">
-      <div class="field"><label>Nom</label><input type="text" id="objName" placeholder="Ex: Bateau de pêche"/></div>
-      <div class="field"><label>Montant cible ($)</label><input type="number" id="objTarget" placeholder="Ex: 500000" min="0" step="1"/></div>
-      <div class="field"><label>Catégorie</label>
-        <select id="objCat">
-          <option value="vehicule">Véhicule</option>
-          <option value="immobilier">Immobilier</option>
-          <option value="business">Business</option>
-          <option value="equipement">Équipement</option>
-          <option value="divers">Divers</option>
-        </select>
-      </div>
-      <div class="field"><label>Type d'argent</label>
-        <select id="objMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select>
-      </div>
-      <div class="field"><label>Concerne</label>
-        <select id="objJoueur"><option value="both">Sun + Moon</option><option value="sun">Sun uniquement</option><option value="moon">Moon uniquement</option></select>
-      </div>
-    </div>
-    <button class="btn btn-primary" onclick="addObjectif()">Ajouter l'objectif</button>
+  <!-- Tabs internes -->
+  <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
+    <button class="inner-tab active" id="otab-achat" onclick="switchObjTab('achat')">🛒 Achats</button>
+    <button class="inner-tab" id="otab-commande" onclick="switchObjTab('commande')">📦 Commandes</button>
   </div>
 
-  <!-- Objectifs actifs -->
-  <div class="card">
-    <div class="card-title">Objectifs en cours</div>
-    <div id="objList"></div>
-  </div>
-
-  <!-- Dépense directe (achat sans objectif préalable) -->
-  <div class="card">
-    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:0" onclick="toggleDepenseForm()">
-      <div class="card-title" style="margin-bottom:0">Dépense directe — achat non planifié</div>
-      <span id="depenseToggleIcon" style="font-size:12px;color:var(--txt3)">▼ ouvrir</span>
-    </div>
-    <div id="depenseForm" style="display:none;margin-top:14px">
+  <!-- ONGLET ACHATS -->
+  <div id="obj-achat-panel">
+    <div class="card">
+      <div class="card-title">Nouvel objectif d'achat</div>
       <div class="form-grid">
-        <div class="field"><label>Nom / description</label><input type="text" id="depNom" placeholder="Ex: Pistolet custom"/></div>
-        <div class="field"><label>Montant ($)</label><input type="number" id="depMontant" placeholder="Ex: 25000" min="0" step="1"/></div>
+        <div class="field"><label>Nom</label><input type="text" id="objName" placeholder="Ex: Bateau de pêche"/></div>
+        <div class="field"><label>Montant cible ($)</label><input type="number" id="objTarget" placeholder="Ex: 500000" min="0" step="1"/></div>
         <div class="field"><label>Catégorie</label>
-          <select id="depCat">
-            <option value="vehicule">Véhicule</option>
-            <option value="immobilier">Immobilier</option>
-            <option value="business">Business</option>
-            <option value="equipement">Équipement</option>
-            <option value="divers">Divers</option>
+          <select id="objCat">
+            <option value="vehicule">🚗 Véhicule</option>
+            <option value="immobilier">🏠 Immobilier</option>
+            <option value="business">🏭 Business</option>
+            <option value="equipement">🔫 Équipement</option>
+            <option value="divers">📦 Divers</option>
           </select>
         </div>
         <div class="field"><label>Type d'argent</label>
-          <select id="depMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select>
+          <select id="objMonnaie"><option value="propre">💰 Propre</option><option value="sale">🔴 Sale</option></select>
         </div>
-        <div class="field"><label>Payé par</label>
-          <select id="depJoueur"><option value="both">Sun + Moon (50/50)</option><option value="sun">Sun</option><option value="moon">Moon</option></select>
+        <div class="field"><label>Concerne</label>
+          <select id="objJoueur"><option value="both">Sun + Moon</option><option value="sun">Sun</option><option value="moon">Moon</option></select>
         </div>
-        <div class="field"><label>Note</label><input type="text" id="depNote" placeholder="Optionnel..."/></div>
       </div>
-      <button class="btn btn-primary" onclick="saveDepenseDirecte()">Enregistrer la dépense</button>
+      <button class="btn btn-primary" onclick="addObjectif()">Ajouter l'objectif</button>
     </div>
+    <div class="card"><div class="card-title">Objectifs d'achat en cours</div><div id="objList"></div></div>
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleDepenseForm()">
+        <div class="card-title" style="margin-bottom:0">Dépense directe — achat non planifié</div>
+        <span id="depenseToggleIcon" style="font-size:12px;color:var(--txt3)">▼ ouvrir</span>
+      </div>
+      <div id="depenseForm" style="display:none;margin-top:14px">
+        <div class="form-grid">
+          <div class="field"><label>Nom</label><input type="text" id="depNom" placeholder="Ex: Pistolet custom"/></div>
+          <div class="field"><label>Montant ($)</label><input type="number" id="depMontant" placeholder="Ex: 25000" min="0" step="1"/></div>
+          <div class="field"><label>Catégorie</label>
+            <select id="depCat">
+              <option value="vehicule">🚗 Véhicule</option>
+              <option value="immobilier">🏠 Immobilier</option>
+              <option value="business">🏭 Business</option>
+              <option value="equipement">🔫 Équipement</option>
+              <option value="divers">📦 Divers</option>
+            </select>
+          </div>
+          <div class="field"><label>Type d'argent</label>
+            <select id="depMonnaie"><option value="propre">💰 Propre</option><option value="sale">🔴 Sale</option></select>
+          </div>
+          <div class="field"><label>Payé par</label>
+            <select id="depJoueur"><option value="both">Sun + Moon (50/50)</option><option value="sun">Sun</option><option value="moon">Moon</option></select>
+          </div>
+          <div class="field"><label>Note</label><input type="text" id="depNote" placeholder="Optionnel..."/></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveDepenseDirecte()">Enregistrer la dépense</button>
+      </div>
+    </div>
+    <div class="card"><div class="card-title">Historique des achats</div><div id="achatsHisto"></div></div>
   </div>
 
-  <!-- Historique achats -->
-  <div class="card">
-    <div class="card-title">Historique des achats</div>
-    <div id="achatsHisto"></div>
+  <!-- ONGLET COMMANDES -->
+  <div id="obj-commande-panel" style="display:none">
+    <div class="card">
+      <div class="card-title">Nouvelle commande</div>
+      <div class="form-grid">
+        <div class="field"><label>Client / Gang</label><input type="text" id="cmdClient" placeholder="Ex: Los Santos Cartel"/></div>
+        <div class="field"><label>Produit</label>
+          <select id="cmdProduit">
+            <option value="salvia">🌿 Salvia</option>
+          </select>
+        </div>
+        <div class="field"><label>Quantité (kg)</label><input type="number" id="cmdQty" placeholder="Ex: 300" min="1" step="1"/></div>
+        <div class="field"><label>Priorité</label>
+          <select id="cmdPriorite">
+            <option value="haute">🔴 Haute</option>
+            <option value="normale">🟡 Normale</option>
+            <option value="basse">🟢 Basse</option>
+          </select>
+        </div>
+        <div class="field"><label>Commentaire</label><input type="text" id="cmdNote" placeholder="Optionnel..."/></div>
+      </div>
+      <button class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
+    </div>
+    <div class="card"><div class="card-title">Commandes en cours</div><div id="cmdList"></div></div>
   </div>
 
 </div>
@@ -603,7 +625,7 @@ function startListeners(){
   onSnapshot(query(collection(db,'sessions'),orderBy('ts','desc')), snap=>{ state.sessions=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('sessions'));
   onSnapshot(query(collection(db,'achats'),orderBy('ts','desc')), snap=>{ state.achats=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('achats'));
   onSnapshot(query(collection(db,'shifts'),orderBy('ts','desc')), snap=>{ state.shifts=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('shifts'));
-  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; state.salviaStock=d.salviaStock||{feuilles:0,tetes:0}; } ol(); sr(); }, eh('state'));
+  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; state.salviaStock=d.salviaStock||{feuilles:0,tetes:0}; state.commandes=d.commandes||[]; } ol(); sr(); }, eh('state'));
   onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')), snap=>{ state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('depenses',err));
   onSnapshot(query(collection(db,'salvia'),orderBy('ts','desc')), snap=>{ state.salvia=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('salvia',err));
 }
@@ -617,7 +639,7 @@ window.fixStock = async type => {
   showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
 };
 
-async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, updatedAt:serverTimestamp() }); }
+async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, commandes:state.commandes||[], updatedAt:serverTimestamp() }); }
 
 // Calcule le solde automatique d'un joueur (shifts + sessions - achats)
 function calcSoldeAuto(player){
@@ -932,7 +954,90 @@ function renderSalvia(){
   }).join('');
 }
 
-function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); renderSalvia(); }
+// ── OBJECTIFS TABS ────────────────────────────────────────────
+window.switchObjTab = tab => {
+  document.getElementById('obj-achat-panel').style.display = tab==='achat'?'block':'none';
+  document.getElementById('obj-commande-panel').style.display = tab==='commande'?'block':'none';
+  document.getElementById('otab-achat').classList.toggle('active', tab==='achat');
+  document.getElementById('otab-commande').classList.toggle('active', tab==='commande');
+};
+
+// ── COMMANDES ─────────────────────────────────────────────────
+window.addCommande = async () => {
+  const client = document.getElementById('cmdClient').value.trim();
+  const qty = parseInt(document.getElementById('cmdQty').value)||0;
+  const produit = document.getElementById('cmdProduit').value;
+  if(!client||!qty){ showToast('Client et quantité requis', false); return; }
+  state.commandes = state.commandes||[];
+  state.commandes.push({
+    id: Date.now(),
+    client, produit, qty,
+    priorite: document.getElementById('cmdPriorite').value,
+    note: document.getElementById('cmdNote').value,
+    date: today()
+  });
+  await saveState();
+  document.getElementById('cmdClient').value='';
+  document.getElementById('cmdQty').value='';
+  document.getElementById('cmdNote').value='';
+  showToast('Commande ajoutée !');
+};
+
+window.livrerCommande = async id => {
+  const cmd = (state.commandes||[]).find(c=>c.id===id);
+  if(!cmd) return;
+  if(!confirm('Livrer la commande "'+cmd.client+'" — '+cmd.qty+'kg de '+cmd.produit+' ?')) return;
+  // Déduire du stock salvia
+  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
+  if(cmd.produit==='salvia') state.salviaStock.tetes = Math.max(0, state.salviaStock.tetes - cmd.qty);
+  state.commandes = state.commandes.filter(c=>c.id!==id);
+  await saveState();
+  showToast('Commande livrée — '+cmd.qty+'kg de '+cmd.produit+' déduits du stock !');
+};
+
+window.delCommande = async id => {
+  if(!confirm('Supprimer cette commande ?')) return;
+  state.commandes = state.commandes.filter(c=>c.id!==id);
+  await saveState();
+  showToast('Commande supprimée');
+};
+
+const PRIO_COLORS = {haute:'#d85a30', normale:'#ef9f27', basse:'#1d9e75'};
+const PRIO_LABELS = {haute:'🔴 Haute', normale:'🟡 Normale', basse:'🟢 Basse'};
+
+function renderCommandes(){
+  const el = document.getElementById('cmdList');
+  if(!el) return;
+  const cmds = (state.commandes||[]).sort((a,b)=>{
+    const order={haute:0,normale:1,basse:2};
+    return (order[a.priorite]||1)-(order[b.priorite]||1);
+  });
+  if(!cmds.length){ el.innerHTML='<div class="empty-state">Aucune commande en cours</div>'; return; }
+  const stock = state.salviaStock||{feuilles:0,tetes:0};
+  el.innerHTML = cmds.map(cmd=>{
+    const stockDisp = cmd.produit==='salvia' ? stock.tetes : 0;
+    const pct = cmd.qty>0 ? Math.min(100, Math.round(stockDisp/cmd.qty*100)) : 0;
+    const col = pct>=100?'#1d9e75':pct>50?'#ef9f27':'#6c6fcf';
+    const canDeliver = stockDisp >= cmd.qty;
+    return '<div style="padding:14px 0;border-bottom:0.5px solid var(--border)">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
+      +'<span style="font-size:18px">'+(cmd.produit==='salvia'?'🌿':'📦')+'</span>'
+      +'<div style="flex:1">'
+      +'<div style="font-size:13px;font-weight:500;color:var(--txt)">'+cmd.client+'</div>'
+      +'<div style="font-size:11px;color:var(--txt3)">'+cmd.qty+'kg · '+PRIO_LABELS[cmd.priorite]+(cmd.note?' · '+cmd.note:'')+'</div>'
+      +'</div>'
+      +(canDeliver?'<button class="btn btn-primary" onclick="livrerCommande('+cmd.id+')" style="padding:5px 12px;font-size:12px">Livrer</button>':'')
+      +'<button class="btn-del" onclick="delCommande('+cmd.id+')">✕</button>'
+      +'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+      +'<div class="progress-bg" style="flex:1;height:6px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:6px"></div></div>'
+      +'<span style="font-size:12px;color:var(--txt2);min-width:80px;text-align:right">'+stockDisp+'kg / '+cmd.qty+'kg ('+pct+'%)</span>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); renderSalvia(); renderCommandes(); }
 
 function renderHQ(){
   const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
