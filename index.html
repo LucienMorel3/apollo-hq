@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
@@ -127,12 +128,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   <button class="nav-btn active" onclick="showPage('hq')">Apollo HQ</button>
   <button class="nav-btn" onclick="showPage('peche')">Pêche</button>
   <button class="nav-btn" onclick="showPage('salvia')">Salvia</button>
+  <button class="nav-btn" onclick="showPage('plantation')">Plantation</button>
   <button class="nav-btn" onclick="showPage('emplois')">Emplois</button>
   <button class="nav-btn" onclick="showPage('historique')">Historique</button>
   <button class="nav-btn" onclick="showPage('objectifs')">Objectifs</button>
 </div>
 
 <!-- HQ -->
+
 <div class="page active" id="page-hq">
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:20px 24px;margin-bottom:14px;text-align:center">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Total Apollo</div>
@@ -202,6 +205,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 </div>
 
 <!-- PÊCHE -->
+
 <div class="page" id="page-peche">
   <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
     <button class="inner-tab peche-tab active" id="itab-stats" onclick="switchInnerTab('stats')">Stats & graphiques</button>
@@ -280,6 +284,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 </div>
 
 <!-- SALVIA -->
+
 <div class="page" id="page-salvia">
   <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
     <button class="inner-tab salvia-tab active" id="stab-stats" onclick="switchSalviaTab('stats')">Stats & stocks</button>
@@ -287,6 +292,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
 
   <!-- Stats Salvia -->
+
   <div id="salvia-stats">
     <div class="kpi-row" id="salviaKpis"></div>
     <div class="two-col">
@@ -325,100 +331,278 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
 
   <!-- Saisie Salvia -->
+
   <div id="salvia-saisie" style="display:none">
 
-    <!-- Cueillette -->
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#1a4a2e;display:flex;align-items:center;justify-content:center;font-size:14px">🌿</div>
-        <div class="card-title" style="margin-bottom:0">Cueillette — Falaises de Cayo</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
-        Zone revendiquée — territoire gang local
-      </div>
-      <div class="form-grid">
-        <div class="field"><label>Pêcheur(s)</label>
-          <select id="salvCueilPeche">
-            <option value="sun">Sun (Lucien Morel)</option>
-            <option value="moon">Moon (Oscar Marchemont)</option>
-            <option value="both">Sun + Moon ensemble</option>
-          </select>
-        </div>
-        <div class="field"><label>Feuilles récoltées</label>
-          <input type="number" id="salvFeuilles" placeholder="Ex: 50" min="1" step="1"/>
-        </div>
-        <div class="field"><label>Taxe payée ($)</label>
-          <input type="number" id="salvTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
-        </div>
-        <div class="field"><label>Note</label>
-          <input type="text" id="salvCueilNote" placeholder="Optionnel..."/>
-        </div>
-      </div>
-      <button class="btn btn-primary" onclick="saveSalviaCueillette()">Enregistrer la cueillette</button>
+```
+<!-- Cueillette -->
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="width:24px;height:24px;border-radius:50%;background:#1a4a2e;display:flex;align-items:center;justify-content:center;font-size:14px">🌿</div>
+    <div class="card-title" style="margin-bottom:0">Cueillette — Falaises de Cayo</div>
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
+    Zone revendiquée — territoire gang local
+  </div>
+  <div class="form-grid">
+    <div class="field"><label>Pêcheur(s)</label>
+      <select id="salvCueilPeche">
+        <option value="sun">Sun (Lucien Morel)</option>
+        <option value="moon">Moon (Oscar Marchemont)</option>
+        <option value="both">Sun + Moon ensemble</option>
+      </select>
     </div>
+    <div class="field"><label>Feuilles récoltées</label>
+      <input type="number" id="salvFeuilles" placeholder="Ex: 50" min="1" step="1"/>
+    </div>
+    <div class="field"><label>Taxe payée ($)</label>
+      <input type="number" id="salvTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
+    </div>
+    <div class="field"><label>Note</label>
+      <input type="text" id="salvCueilNote" placeholder="Optionnel..."/>
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="saveSalviaCueillette()">Enregistrer la cueillette</button>
+</div>
 
-    <!-- Transformation -->
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#2a1a4a;display:flex;align-items:center;justify-content:center;font-size:14px">🔥</div>
-        <div class="card-title" style="margin-bottom:0">Transformation — Chalet montagne</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
-        Zone revendiquée — entre téléphérique et scierie
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Stock feuilles disponibles — <span id="salviaFeuillesDisp" style="color:var(--txt);font-weight:500">0</span>
-      </div>
-      <div class="form-grid">
-        <div class="field"><label>Feuilles utilisées</label>
-          <input type="number" id="salvTransfFeuilles" placeholder="Ex: 30" min="1" step="1" oninput="updateSalviaTransfEstim()"/>
-        </div>
-        <div class="field"><label>Taxe payée ($)</label>
-          <input type="number" id="salvTransfTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
-        </div>
-        <div class="field"><label>Note</label>
-          <input type="text" id="salvTransfNote" placeholder="Optionnel..."/>
-        </div>
-      </div>
-      <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvTransfEstim"></div>
-      <button class="btn btn-primary" onclick="saveSalviaTransfo()">Enregistrer la transformation</button>
+<!-- Transformation -->
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="width:24px;height:24px;border-radius:50%;background:#2a1a4a;display:flex;align-items:center;justify-content:center;font-size:14px">🔥</div>
+    <div class="card-title" style="margin-bottom:0">Transformation — Chalet montagne</div>
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
+    Zone revendiquée — entre téléphérique et scierie
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+    Stock feuilles disponibles — <span id="salviaFeuillesDisp" style="color:var(--txt);font-weight:500">0</span>
+  </div>
+  <div class="form-grid">
+    <div class="field"><label>Feuilles utilisées</label>
+      <input type="number" id="salvTransfFeuilles" placeholder="Ex: 30" min="1" step="1" oninput="updateSalviaTransfEstim()"/>
     </div>
+    <div class="field"><label>Taxe payée ($)</label>
+      <input type="number" id="salvTransfTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
+    </div>
+    <div class="field"><label>Note</label>
+      <input type="text" id="salvTransfNote" placeholder="Optionnel..."/>
+    </div>
+  </div>
+  <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvTransfEstim"></div>
+  <button class="btn btn-primary" onclick="saveSalviaTransfo()">Enregistrer la transformation</button>
+</div>
 
-    <!-- Vente -->
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
-        <div class="card-title" style="margin-bottom:0">Vente — argent sale</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Prix variable 60$–100$/tête · Stock têtes — <span id="salviaTetesDisp" style="color:var(--txt);font-weight:500">0</span>
-      </div>
-      <div class="form-grid">
-        <div class="field"><label>Têtes vendues</label>
-          <input type="number" id="salvVenteTetes" placeholder="Ex: 20" min="1" step="1" oninput="updateSalviaVenteEstim()"/>
-        </div>
-        <div class="field"><label>Revenus encaissés ($)</label>
-          <input type="number" id="salvVenteRevenu" placeholder="Total reçu" min="0" step="1" oninput="updateSalviaVenteEstim()"/>
-        </div>
-        <div class="field"><label>Vendeur</label>
-          <select id="salvVentePeche">
-            <option value="sun">Sun</option>
-            <option value="moon">Moon</option>
-            <option value="both">Sun + Moon</option>
-          </select>
-        </div>
-        <div class="field"><label>Note</label>
-          <input type="text" id="salvVenteNote" placeholder="Optionnel..."/>
-        </div>
-      </div>
-      <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvVenteEstim"></div>
-      <button class="btn btn-primary" onclick="saveSalviaVente()">Enregistrer la vente</button>
+<!-- Vente -->
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
+    <div class="card-title" style="margin-bottom:0">Vente — argent sale</div>
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+    Prix variable 60$–100$/tête · Stock têtes — <span id="salviaTetesDisp" style="color:var(--txt);font-weight:500">0</span>
+  </div>
+  <div class="form-grid">
+    <div class="field"><label>Têtes vendues</label>
+      <input type="number" id="salvVenteTetes" placeholder="Ex: 20" min="1" step="1" oninput="updateSalviaVenteEstim()"/>
     </div>
+    <div class="field"><label>Revenus encaissés ($)</label>
+      <input type="number" id="salvVenteRevenu" placeholder="Total reçu" min="0" step="1" oninput="updateSalviaVenteEstim()"/>
+    </div>
+    <div class="field"><label>Vendeur</label>
+      <select id="salvVentePeche">
+        <option value="sun">Sun</option>
+        <option value="moon">Moon</option>
+        <option value="both">Sun + Moon</option>
+      </select>
+    </div>
+    <div class="field"><label>Note</label>
+      <input type="text" id="salvVenteNote" placeholder="Optionnel..."/>
+    </div>
+  </div>
+  <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvVenteEstim"></div>
+  <button class="btn btn-primary" onclick="saveSalviaVente()">Enregistrer la vente</button>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- PLANTATION -->
+
+<div class="page" id="page-plantation">
+  <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
+    <button class="inner-tab active" id="ptab-stats" onclick="switchPlantationTab('stats')">Stats & stocks</button>
+    <button class="inner-tab" id="ptab-saisie" onclick="switchPlantationTab('saisie')">Saisie cycle</button>
+  </div>
+
+  <!-- Stats -->
+
+  <div id="plantation-stats">
+    <div class="kpi-row" id="plantationKpis"></div>
+
+```
+<!-- Commande en cours -->
+<div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
+  <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Commande en cours</div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+    <div style="flex:1">
+      <div style="font-size:13px;color:var(--txt2);margin-bottom:6px">Progression <span id="plantCmdLabel" style="color:var(--txt);font-weight:500"></span></div>
+      <div class="progress-bg" style="height:8px"><div id="plantCmdBar" class="progress-fill" style="height:8px;background:#6c6fcf;width:0%"></div></div>
+    </div>
+    <div style="text-align:right;min-width:60px">
+      <div style="font-size:20px;font-weight:500;color:#6c6fcf" id="plantCmdPct">0%</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--txt3);flex-wrap:wrap">
+    <span>Objectif commande :</span>
+    <input type="number" id="plantCmdTarget" placeholder="1000" min="1" step="1" style="width:80px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:4px 8px;font-size:12px;color:var(--txt)"/>
+    <span>branches (0,5kg/branche)</span>
+    <button class="btn btn-sm" onclick="updatePlantCmdTarget()">Màj</button>
+  </div>
+</div>
+
+<!-- Stockage -->
+<div class="card">
+  <div class="card-title">Stockage branches — capacités</div>
+  <div id="plantStockBlock"></div>
+  <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Corriger le stock</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div>
+        <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">🏭 Entrepôt (max 700)</div>
+        <div style="display:flex;gap:6px">
+          <input type="number" id="fixEntrepot" placeholder="Qté branches" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 8px;font-size:12px;color:var(--txt)"/>
+          <button class="btn btn-primary" onclick="fixPlantStock('entrepot')" style="padding:7px 10px;font-size:11px">Màj</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">🚐 Moon Beam / Sun (max 300)</div>
+        <div style="display:flex;gap:6px">
+          <input type="number" id="fixVanSun" placeholder="Qté branches" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 8px;font-size:12px;color:var(--txt)"/>
+          <button class="btn btn-primary" onclick="fixPlantStock('vanSun')" style="padding:7px 10px;font-size:11px">Màj</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">🚐 Van Moon (max 300)</div>
+        <div style="display:flex;gap:6px">
+          <input type="number" id="fixVanMoon" placeholder="Qté branches" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 8px;font-size:12px;color:var(--txt)"/>
+          <button class="btn btn-primary" onclick="fixPlantStock('vanMoon')" style="padding:7px 10px;font-size:11px">Màj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Historique des cycles</div>
+  <div id="plantCyclesHisto"></div>
+</div>
+```
+
+  </div>
+
+  <!-- Saisie cycle -->
+
+  <div id="plantation-saisie" style="display:none">
+
+```
+<!-- Achat matériel -->
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="width:24px;height:24px;border-radius:50%;background:#1a2a1a;display:flex;align-items:center;justify-content:center;font-size:14px">🛒</div>
+    <div class="card-title" style="margin-bottom:0">Achat — graines & pots (Roxwood)</div>
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+    Graine 75$/unité · Pot 75$/unité · Eau 5$/bouteille (LTD rouge) · Fertilisant gratuit (récup sous le pont)
+  </div>
+  <div class="form-grid">
+    <div class="field"><label>Nombre de pieds</label>
+      <input type="number" id="plantNbPieds" placeholder="Max 54" min="1" max="54" step="1" oninput="updatePlantCout()"/>
+    </div>
+    <div class="field"><label>Taxe fertilisant ($)</label>
+      <input type="number" id="plantTaxeFert" placeholder="0 si pas taxé" min="0" step="1"/>
+    </div>
+    <div class="field"><label>Acheteur</label>
+      <select id="plantAcheteur">
+        <option value="sun">Sun</option>
+        <option value="moon">Moon</option>
+        <option value="both">Sun + Moon (50/50)</option>
+      </select>
+    </div>
+  </div>
+  <div id="plantCoutEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
+  <button class="btn btn-primary" onclick="savePlantAchat()">Enregistrer l'achat</button>
+</div>
+
+<!-- Récolte -->
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="width:24px;height:24px;border-radius:50%;background:#1a3a1a;display:flex;align-items:center;justify-content:center;font-size:14px">🌱</div>
+    <div class="card-title" style="margin-bottom:0">Récolte — fin de cycle</div>
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+    Rendement max : 9 branches/pied · 0,5kg/branche · Prix vente : 70$/branche
+  </div>
+  <div class="form-grid">
+    <div class="field"><label>Pieds récoltés</label>
+      <input type="number" id="plantPiedsRecolte" placeholder="Ex: 54" min="1" max="54" step="1" oninput="updatePlantRecolteEstim()"/>
+    </div>
+    <div class="field"><label>Branches récoltées</label>
+      <input type="number" id="plantBranches" placeholder="Max 9×pieds" min="1" step="1" oninput="updatePlantRecolteEstim()"/>
+    </div>
+    <div class="field"><label>Stockage destination</label>
+      <select id="plantDest">
+        <option value="entrepot">Entrepôt</option>
+        <option value="vanSun">Moon Beam (Sun)</option>
+        <option value="vanMoon">Van Moon</option>
+      </select>
+    </div>
+    <div class="field"><label>Note</label>
+      <input type="text" id="plantNote" placeholder="Optionnel..."/>
+    </div>
+  </div>
+  <div id="plantRecolteEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
+  <button class="btn btn-primary" onclick="savePlantRecolte()">Enregistrer la récolte</button>
+</div>
+
+<!-- Vente -->
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
+    <div class="card-title" style="margin-bottom:0">Livraison / vente — argent sale</div>
+  </div>
+  <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+    Stock total disponible : <span id="plantStockTotal" style="color:var(--txt);font-weight:500">0</span> branches
+  </div>
+  <div class="form-grid">
+    <div class="field"><label>Branches vendues</label>
+      <input type="number" id="plantVenteBranches" placeholder="Ex: 1000" min="1" step="1" oninput="updatePlantVenteEstim()"/>
+    </div>
+    <div class="field"><label>Revenus encaissés ($)</label>
+      <input type="number" id="plantVenteRevenu" placeholder="Auto : branches × 70$" min="0" step="1" oninput="updatePlantVenteEstim()"/>
+    </div>
+    <div class="field"><label>Source stock</label>
+      <select id="plantVenteSrc">
+        <option value="entrepot">Entrepôt</option>
+        <option value="vanSun">Moon Beam (Sun)</option>
+        <option value="vanMoon">Van Moon</option>
+        <option value="all">Tout (entrepôt + vans)</option>
+      </select>
+    </div>
+    <div class="field"><label>Note</label>
+      <input type="text" id="plantVenteNote" placeholder="Ex: Livraison commande..."/>
+    </div>
+  </div>
+  <div id="plantVenteEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
+  <button class="btn btn-primary" onclick="savePlantVente()">Enregistrer la vente</button>
+</div>
+```
 
   </div>
 </div>
 
 <!-- EMPLOIS -->
+
 <div class="page" id="page-emplois">
   <div class="kpi-row" id="emploisKpis"></div>
   <div class="card">
@@ -455,6 +639,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 </div>
 
 <!-- HISTORIQUE -->
+
 <div class="page" id="page-historique">
   <div class="card" style="padding:12px 16px;margin-bottom:14px">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
@@ -470,15 +655,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 </div>
 
 <!-- OBJECTIFS -->
+
 <div class="page" id="page-objectifs">
 
   <!-- Tabs internes -->
+
   <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
     <button class="inner-tab active" id="otab-achat" onclick="switchObjTab('achat')">🛒 Achats</button>
     <button class="inner-tab" id="otab-commande" onclick="switchObjTab('commande')">📦 Commandes</button>
   </div>
 
   <!-- ONGLET ACHATS -->
+
   <div id="obj-achat-panel">
     <div class="card">
       <div class="card-title">Nouvel objectif d'achat</div>
@@ -537,6 +725,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
 
   <!-- ONGLET COMMANDES -->
+
   <div id="obj-commande-panel" style="display:none">
     <div class="card">
       <div class="card-title">Nouvelle commande</div>
@@ -569,680 +758,847 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = { apiKey:"AIzaSyCjgzUN_7lMuThJ992NYr8uwJ8vdj01Ey8", authDomain:"apollo-hq-a4a8a.firebaseapp.com", projectId:"apollo-hq-a4a8a", storageBucket:"apollo-hq-a4a8a.firebasestorage.app", messagingSenderId:"673101576451", appId:"1:673101576451:web:3c8fff73dba95ee1209136" };
+const firebaseConfig = { apiKey:“AIzaSyCjgzUN_7lMuThJ992NYr8uwJ8vdj01Ey8”, authDomain:“apollo-hq-a4a8a.firebaseapp.com”, projectId:“apollo-hq-a4a8a”, storageBucket:“apollo-hq-a4a8a.firebasestorage.app”, messagingSenderId:“673101576451”, appId:“1:673101576451:web:3c8fff73dba95ee1209136” };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const FISH = [
-  {id:'requin',name:'Requin',price:250,type:'illegal',icon:'🦈'},
-  {id:'dauphin',name:'Dauphin',price:575,type:'illegal',icon:'🐬'},
-  {id:'espadon',name:'Espadon',price:325,type:'illegal',icon:'🐟'},
-  {id:'piranha',name:'Piranha',price:415,type:'illegal',icon:'🦷'},
-  {id:'anchois',name:'Anchois',price:5,type:'legal',icon:'🐟',approx:false},
-  {id:'esturgeon',name:'Esturgeon',price:74,type:'legal',icon:'🐡',approx:true},
-  {id:'thon',name:'Thon rouge',price:77,type:'legal',icon:'🐠',approx:true},
+{id:‘requin’,name:‘Requin’,price:250,type:‘illegal’,icon:‘🦈’},
+{id:‘dauphin’,name:‘Dauphin’,price:575,type:‘illegal’,icon:‘🐬’},
+{id:‘espadon’,name:‘Espadon’,price:325,type:‘illegal’,icon:‘🐟’},
+{id:‘piranha’,name:‘Piranha’,price:415,type:‘illegal’,icon:‘🦷’},
+{id:‘anchois’,name:‘Anchois’,price:5,type:‘legal’,icon:‘🐟’,approx:false},
+{id:‘esturgeon’,name:‘Esturgeon’,price:74,type:‘legal’,icon:‘🐡’,approx:true},
+{id:‘thon’,name:‘Thon rouge’,price:77,type:‘legal’,icon:‘🐠’,approx:true},
 ];
-const FC = {requin:'#7f77dd',dauphin:'#1d9e75',espadon:'#378add',piranha:'#d85a30',anchois:'#ba7517',esturgeon:'#d4537e',thon:'#0f6e56'};
-const PNAMES = {sun:'Sun',moon:'Moon',both:'Sun+Moon'};
+const FC = {requin:’#7f77dd’,dauphin:’#1d9e75’,espadon:’#378add’,piranha:’#d85a30’,anchois:’#ba7517’,esturgeon:’#d4537e’,thon:’#0f6e56’};
+const PNAMES = {sun:‘Sun’,moon:‘Moon’,both:‘Sun+Moon’};
 
 let state = { sessions:[], achats:[], shifts:[], objectifs:[], stock:{appats:0,cannes:0}, soldes:{sun:0,moon:0,potCommun:0} };
 const tmpFish = {}; FISH.forEach(f => tmpFish[f.id]=0);
 let isDark = true;
 let CH = {};
 
-const fmt = n => '$'+Math.round(n).toLocaleString('fr-FR');
-const fmtDate = ts => { if(!ts) return '—'; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}); };
-const today = () => new Date().toISOString().split('T')[0];
+const fmt = n => ‘$’+Math.round(n).toLocaleString(‘fr-FR’);
+const fmtDate = ts => { if(!ts) return ‘—’; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString(‘fr-FR’,{day:‘2-digit’,month:‘2-digit’}); };
+const today = () => new Date().toISOString().split(‘T’)[0];
 const $ = id => document.getElementById(id);
 
-function showToast(msg,ok=true){ const t=$('toast'); t.textContent=msg; t.style.borderColor=ok?'rgba(29,158,117,.4)':'rgba(216,90,48,.4)'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
-function setSyncStatus(s){ const dot=$('syncDot'),lbl=$('syncLabel'); dot.className='sync-dot'; if(s==='live'){dot.classList.add('live');lbl.textContent='Sync en direct';}else if(s==='error'){dot.classList.add('error');lbl.textContent='Hors ligne';}else{lbl.textContent='Connexion...';} }
-function playerTag(p){ if(p==='sun') return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(245,200,66,.15);color:#f5c842">Sun</span>'; if(p==='moon') return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,200,248,.15);color:#7fc8f8">Moon</span>'; return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,119,221,.15);color:#afa9ec">Sun+Moon</span>'; }
+function showToast(msg,ok=true){ const t=$(‘toast’); t.textContent=msg; t.style.borderColor=ok?‘rgba(29,158,117,.4)’:‘rgba(216,90,48,.4)’; t.classList.add(‘show’); setTimeout(()=>t.classList.remove(‘show’),2800); }
+function setSyncStatus(s){ const dot=$(‘syncDot’),lbl=$(‘syncLabel’); dot.className=‘sync-dot’; if(s===‘live’){dot.classList.add(‘live’);lbl.textContent=‘Sync en direct’;}else if(s===‘error’){dot.classList.add(‘error’);lbl.textContent=‘Hors ligne’;}else{lbl.textContent=‘Connexion…’;} }
+function playerTag(p){ if(p===‘sun’) return ‘<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(245,200,66,.15);color:#f5c842">Sun</span>’; if(p===‘moon’) return ‘<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,200,248,.15);color:#7fc8f8">Moon</span>’; return ‘<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(127,119,221,.15);color:#afa9ec">Sun+Moon</span>’; }
 
-window.toggleTheme = () => { isDark=!isDark; $('root').classList.toggle('light',!isDark); document.body.classList.toggle('light',!isDark); };
+window.toggleTheme = () => { isDark=!isDark; $(‘root’).classList.toggle(‘light’,!isDark); document.body.classList.toggle(‘light’,!isDark); };
 window.showPage = id => {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active','active-peche','active-salvia'));
-  $('page-'+id).classList.add('active');
-  const colorClass = id==='peche'?'active-peche':id==='salvia'?'active-salvia':'active';
-  ['hq','peche','salvia','emplois','historique','objectifs'].forEach((n,i)=>{ if(n===id) document.querySelectorAll('.nav-btn')[i].classList.add(colorClass); });
-  if(id==='peche') setTimeout(renderPecheCharts,80);
-  if(id==='salvia') setTimeout(renderSalviaChart,80);
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+document.querySelectorAll(’.nav-btn’).forEach(b=>b.classList.remove(‘active’,‘active-peche’,‘active-salvia’));
+$(‘page-’+id).classList.add(‘active’);
+const colorClass = id===‘peche’?‘active-peche’:id===‘salvia’?‘active-salvia’:‘active’;
+[‘hq’,‘peche’,‘salvia’,‘plantation’,‘emplois’,‘historique’,‘objectifs’].forEach((n,i)=>{ if(n===id) document.querySelectorAll(’.nav-btn’)[i].classList.add(colorClass); });
+if(id===‘peche’) setTimeout(renderPecheCharts,80);
+if(id===‘salvia’) setTimeout(renderSalviaChart,80);
 };
 window.switchInnerTab = tab => {
-  $('inner-stats').style.display=tab==='stats'?'block':'none';
-  $('inner-saisie').style.display=tab==='saisie'?'block':'none';
-  ['itab-stats','itab-saisie'].forEach(id=>{ $(id).classList.remove('active'); });
-  $(tab==='stats'?'itab-stats':'itab-saisie').classList.add('active');
-  if(tab==='stats') setTimeout(renderPecheCharts,80);
+$(‘inner-stats’).style.display=tab===‘stats’?‘block’:‘none’;
+$(‘inner-saisie’).style.display=tab===‘saisie’?‘block’:‘none’;
+[‘itab-stats’,‘itab-saisie’].forEach(id=>{ $(id).classList.remove(‘active’); });
+$(tab===‘stats’?‘itab-stats’:‘itab-saisie’).classList.add(‘active’);
+if(tab===‘stats’) setTimeout(renderPecheCharts,80);
 };
 
 function startListeners(){
-  let loaded=0; const TOTAL=4; let rt=null;
-  const sr = () => { if(rt) clearTimeout(rt); rt=setTimeout(renderAll,80); };
-  const ol = () => { loaded++; if(loaded>=TOTAL){ setSyncStatus('live'); $('loadingOverlay').classList.add('hide'); } };
-  const eh = n => err => { console.error(n,err); setSyncStatus('error'); $('loadingOverlay').classList.add('hide'); };
-  onSnapshot(query(collection(db,'sessions'),orderBy('ts','desc')), snap=>{ state.sessions=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('sessions'));
-  onSnapshot(query(collection(db,'achats'),orderBy('ts','desc')), snap=>{ state.achats=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('achats'));
-  onSnapshot(query(collection(db,'shifts'),orderBy('ts','desc')), snap=>{ state.shifts=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('shifts'));
-  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; state.salviaStock=d.salviaStock||{feuilles:0,tetes:0}; state.commandes=d.commandes||[]; } ol(); sr(); }, eh('state'));
-  onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')), snap=>{ state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('depenses',err));
-  onSnapshot(query(collection(db,'salvia'),orderBy('ts','desc')), snap=>{ state.salvia=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('salvia',err));
+let loaded=0; const TOTAL=4; let rt=null;
+const sr = () => { if(rt) clearTimeout(rt); rt=setTimeout(renderAll,80); };
+const ol = () => { loaded++; if(loaded>=TOTAL){ setSyncStatus(‘live’); $(‘loadingOverlay’).classList.add(‘hide’); } };
+const eh = n => err => { console.error(n,err); setSyncStatus(‘error’); $(‘loadingOverlay’).classList.add(‘hide’); };
+onSnapshot(query(collection(db,‘sessions’),orderBy(‘ts’,‘desc’)), snap=>{ state.sessions=snap.docs.map(d=>({…d.data(),_id:d.id})); ol(); sr(); }, eh(‘sessions’));
+onSnapshot(query(collection(db,‘achats’),orderBy(‘ts’,‘desc’)), snap=>{ state.achats=snap.docs.map(d=>({…d.data(),_id:d.id})); ol(); sr(); }, eh(‘achats’));
+onSnapshot(query(collection(db,‘shifts’),orderBy(‘ts’,‘desc’)), snap=>{ state.shifts=snap.docs.map(d=>({…d.data(),_id:d.id})); ol(); sr(); }, eh(‘shifts’));
+onSnapshot(doc(db,‘apollo’,‘state’), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; state.salviaStock=d.salviaStock||{feuilles:0,tetes:0}; state.commandes=d.commandes||[]; } ol(); sr(); }, eh(‘state’));
+onSnapshot(query(collection(db,‘depenses’),orderBy(‘ts’,‘desc’)), snap=>{ state.depenses=snap.docs.map(d=>({…d.data(),_id:d.id})); sr(); }, err=>console.error(‘depenses’,err));
+onSnapshot(query(collection(db,‘salvia’),orderBy(‘ts’,‘desc’)), snap=>{ state.salvia=snap.docs.map(d=>({…d.data(),_id:d.id})); sr(); }, err=>console.error(‘salvia’,err));
+onSnapshot(query(collection(db,‘plantation’),orderBy(‘ts’,‘desc’)), snap=>{ state.plantation=snap.docs.map(d=>({…d.data(),_id:d.id})); sr(); }, err=>console.error(‘plantation’,err));
 }
 
 window.fixStock = async type => {
-  const val = parseInt(document.getElementById(type==='appats'?'fixAppats':'fixCannes').value);
-  if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
-  state.stock[type] = val;
-  await saveState();
-  document.getElementById(type==='appats'?'fixAppats':'fixCannes').value = '';
-  showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
+const val = parseInt(document.getElementById(type===‘appats’?‘fixAppats’:‘fixCannes’).value);
+if(isNaN(val)||val<0){ showToast(‘Quantité invalide’, false); return; }
+state.stock[type] = val;
+await saveState();
+document.getElementById(type===‘appats’?‘fixAppats’:‘fixCannes’).value = ‘’;
+showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
 };
 
-async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, commandes:state.commandes||[], updatedAt:serverTimestamp() }); }
+async function saveState(){ await setDoc(doc(db,‘apollo’,‘state’),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, plantationStock:state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000}, commandes:state.commandes||[], updatedAt:serverTimestamp() }); }
 
-// Calcule le solde automatique d'un joueur (shifts + sessions - achats)
+// Calcule le solde automatique d’un joueur (shifts + sessions - achats)
 function calcSoldeAuto(player){
-  return (state.soldes||{})[player]||0;
+return (state.soldes||{})[player]||0;
 }
 
 window.updateSolde = async player => {
-  const val=parseFloat($(player+'Solde').value);
-  if(isNaN(val)||val<0){showToast('Montant invalide',false);return;}
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  state.soldes[player] = val;
-  await saveState();
-  $(player+'Solde').value='';
-  showToast(`Solde ${player==='sun'?'Sun':'Moon'} mis à jour : ${fmt(val)}`);
+const val=parseFloat($(player+‘Solde’).value);
+if(isNaN(val)||val<0){showToast(‘Montant invalide’,false);return;}
+state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
+state.soldes[player] = val;
+await saveState();
+$(player+‘Solde’).value=’’;
+showToast(`Solde ${player==='sun'?'Sun':'Moon'} mis à jour : ${fmt(val)}`);
 };
-window.updatePotCommun = async () => { const val=parseFloat($('potCommun').value); if(isNaN(val)||val<0){showToast('Montant invalide',false);return;} state.soldes=state.soldes||{sun:0,moon:0,potCommun:0}; state.soldes.potCommun=val; await saveState(); $('potCommun').value=''; showToast(`Pot commun sale mis à jour : ${fmt(val)}`); };
+window.updatePotCommun = async () => { const val=parseFloat($(‘potCommun’).value); if(isNaN(val)||val<0){showToast(‘Montant invalide’,false);return;} state.soldes=state.soldes||{sun:0,moon:0,potCommun:0}; state.soldes.potCommun=val; await saveState(); $(‘potCommun’).value=’’; showToast(`Pot commun sale mis à jour : ${fmt(val)}`); };
 
-window.checkStockLive = () => { const a=parseInt($('qAppats').value)||0, c=parseInt($('qCannes').value)||0, w=$('stockWarning'), errs=[]; if(a>state.stock.appats) errs.push(`Appâts insuffisants — stock: ${state.stock.appats}`); if(c>state.stock.cannes) errs.push(`Cannes insuffisantes — stock: ${state.stock.cannes}`); w.style.display=errs.length?'block':'none'; if(errs.length) w.innerHTML=errs.join('<br>'); };
-window.chg = (id,d) => { tmpFish[id]=Math.max(0,(tmpFish[id]||0)+d); $('fc-'+id).textContent=tmpFish[id]; let est=0; FISH.forEach(f=>{if(f.price) est+=(tmpFish[f.id]||0)*f.price;}); $('sessionEstim').textContent=est>0?'Estimation : '+fmt(est):''; };
+window.checkStockLive = () => { const a=parseInt($(‘qAppats’).value)||0, c=parseInt($(‘qCannes’).value)||0, w=$(‘stockWarning’), errs=[]; if(a>state.stock.appats) errs.push(`Appâts insuffisants — stock: ${state.stock.appats}`); if(c>state.stock.cannes) errs.push(`Cannes insuffisantes — stock: ${state.stock.cannes}`); w.style.display=errs.length?‘block’:‘none’; if(errs.length) w.innerHTML=errs.join(’<br>’); };
+window.chg = (id,d) => { tmpFish[id]=Math.max(0,(tmpFish[id]||0)+d); $(‘fc-’+id).textContent=tmpFish[id]; let est=0; FISH.forEach(f=>{if(f.price) est+=(tmpFish[f.id]||0)*f.price;}); $(‘sessionEstim’).textContent=est>0?‘Estimation : ‘+fmt(est):’’; };
 
 window.saveSession = async () => {
-  const btn=$('btnSession'); btn.disabled=true;
-  try {
-    const revenu=parseFloat($('qRevenu').value)||0, fish={};
-    FISH.forEach(f=>fish[f.id]=tmpFish[f.id]||0);
-    const totalFish=Object.values(fish).reduce((a,v)=>a+v,0);
-    if(!revenu&&!totalFish){showToast('Renseigne les revenus ou les poissons pêchés',false);btn.disabled=false;return;}
-    const appats=parseInt($('qAppats').value)||0, cannes=parseInt($('qCannes').value)||0;
-    const errs=[];
-    if(appats>state.stock.appats) errs.push('Appâts insuffisants');
-    if(cannes>state.stock.cannes) errs.push('Cannes insuffisantes');
-    if(errs.length){$('stockWarning').style.display='block';$('stockWarning').innerHTML='Impossible — '+errs.join(' / ');showToast('Stock insuffisant !',false);btn.disabled=false;return;}
-    await addDoc(collection(db,'sessions'),{peche:$('qPeche').value,appats,cannes,vente:$('qVente').value,revenu,monnaie:'propre',note:$('qNote').value,fish,ts:serverTimestamp(),date:today()});
-    state.stock.appats-=appats; state.stock.cannes-=cannes; await saveState();
-    FISH.forEach(f=>{tmpFish[f.id]=0;$('fc-'+f.id).textContent='0';}); ['qRevenu','qAppats','qCannes','qNote'].forEach(id=>$(id).value=''); $('sessionEstim').textContent=''; $('stockWarning').style.display='none';
-    showToast('Session enregistrée !'); showPage('peche'); switchInnerTab('stats');
-  } catch(e){showToast('Erreur: '+e.message,false);}
-  btn.disabled=false;
+const btn=$(‘btnSession’); btn.disabled=true;
+try {
+const revenu=parseFloat($(‘qRevenu’).value)||0, fish={};
+FISH.forEach(f=>fish[f.id]=tmpFish[f.id]||0);
+const totalFish=Object.values(fish).reduce((a,v)=>a+v,0);
+if(!revenu&&!totalFish){showToast(‘Renseigne les revenus ou les poissons pêchés’,false);btn.disabled=false;return;}
+const appats=parseInt($(‘qAppats’).value)||0, cannes=parseInt($(‘qCannes’).value)||0;
+const errs=[];
+if(appats>state.stock.appats) errs.push(‘Appâts insuffisants’);
+if(cannes>state.stock.cannes) errs.push(‘Cannes insuffisantes’);
+if(errs.length){$(‘stockWarning’).style.display=‘block’;$(‘stockWarning’).innerHTML=‘Impossible — ‘+errs.join(’ / ‘);showToast(‘Stock insuffisant !’,false);btn.disabled=false;return;}
+await addDoc(collection(db,‘sessions’),{peche:$(‘qPeche’).value,appats,cannes,vente:$(‘qVente’).value,revenu,monnaie:‘propre’,note:$(‘qNote’).value,fish,ts:serverTimestamp(),date:today()});
+state.stock.appats-=appats; state.stock.cannes-=cannes; await saveState();
+FISH.forEach(f=>{tmpFish[f.id]=0;$(‘fc-’+f.id).textContent=‘0’;}); [‘qRevenu’,‘qAppats’,‘qCannes’,‘qNote’].forEach(id=>$(id).value=’’); $(‘sessionEstim’).textContent=’’; $(‘stockWarning’).style.display=‘none’;
+showToast(‘Session enregistrée !’); showPage(‘peche’); switchInnerTab(‘stats’);
+} catch(e){showToast(’Erreur: ’+e.message,false);}
+btn.disabled=false;
 };
 
 window.saveAchat = async () => {
-  const btn=$('btnAchat'); btn.disabled=true;
-  try {
-    const qty=parseInt($('matQty').value)||0, cost=parseFloat($('matCost').value)||0;
-    if(!qty||!cost){showToast('Quantité et coût requis',false);btn.disabled=false;return;}
-    const matType=$('matType').value, monnaie=matType==='canne'?$('matMonnaie').value:'propre';
-    await addDoc(collection(db,'achats'),{matType,qty,cost,monnaie,person:$('matPerson').value,ts:serverTimestamp(),date:today()});
-    if(matType==='appat') state.stock.appats+=qty; else state.stock.cannes+=qty;
-    await saveState(); $('matQty').value=''; $('matCost').value=''; showToast('Achat enregistré !');
-  } catch(e){showToast('Erreur: '+e.message,false);}
-  btn.disabled=false;
+const btn=$(‘btnAchat’); btn.disabled=true;
+try {
+const qty=parseInt($(‘matQty’).value)||0, cost=parseFloat($(‘matCost’).value)||0;
+if(!qty||!cost){showToast(‘Quantité et coût requis’,false);btn.disabled=false;return;}
+const matType=$(‘matType’).value, monnaie=matType===‘canne’?$(‘matMonnaie’).value:‘propre’;
+await addDoc(collection(db,‘achats’),{matType,qty,cost,monnaie,person:$(‘matPerson’).value,ts:serverTimestamp(),date:today()});
+if(matType===‘appat’) state.stock.appats+=qty; else state.stock.cannes+=qty;
+await saveState(); $(‘matQty’).value=’’; $(‘matCost’).value=’’; showToast(‘Achat enregistré !’);
+} catch(e){showToast(’Erreur: ’+e.message,false);}
+btn.disabled=false;
 };
 
-window.delSession = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'sessions',id)); showToast('Supprimé'); };
-window.delAchat   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'achats',id)); showToast('Supprimé'); };
-window.delShift   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'shifts',id)); showToast('Supprimé'); };
+window.delSession = async id => { if(!confirm(‘Supprimer ?’)) return; await deleteDoc(doc(db,‘sessions’,id)); showToast(‘Supprimé’); };
+window.delAchat   = async id => { if(!confirm(‘Supprimer ?’)) return; await deleteDoc(doc(db,‘achats’,id)); showToast(‘Supprimé’); };
+window.delShift   = async id => { if(!confirm(‘Supprimer ?’)) return; await deleteDoc(doc(db,‘shifts’,id)); showToast(‘Supprimé’); };
 window.delDepense = async id => {
-  if(!confirm('Supprimer cet achat ? Les soldes ne seront pas recalculés automatiquement.')) return;
-  await deleteDoc(doc(db,'depenses',id));
-  showToast('Achat supprimé');
+if(!confirm(‘Supprimer cet achat ? Les soldes ne seront pas recalculés automatiquement.’)) return;
+await deleteDoc(doc(db,‘depenses’,id));
+showToast(‘Achat supprimé’);
 };
-window.confirmReset = () => { if(!confirm('Supprimer TOUTES les données ?')) return; state.sessions.forEach(s=>deleteDoc(doc(db,'sessions',s._id))); state.achats.forEach(a=>deleteDoc(doc(db,'achats',a._id))); state.shifts.forEach(s=>deleteDoc(doc(db,'shifts',s._id))); state.stock={appats:0,cannes:0}; state.objectifs=[]; state.soldes={sun:0,moon:0,potCommun:0}; saveState(); showToast('Données réinitialisées'); };
+window.confirmReset = () => { if(!confirm(‘Supprimer TOUTES les données ?’)) return; state.sessions.forEach(s=>deleteDoc(doc(db,‘sessions’,s._id))); state.achats.forEach(a=>deleteDoc(doc(db,‘achats’,a._id))); state.shifts.forEach(s=>deleteDoc(doc(db,‘shifts’,s._id))); state.stock={appats:0,cannes:0}; state.objectifs=[]; state.soldes={sun:0,moon:0,potCommun:0}; saveState(); showToast(‘Données réinitialisées’); };
 
-window.updateSunEstim = () => { const r=parseInt($('sunRuns').value)||0, e=r*4480; $('sunEstim').textContent=r>0?'Estimation : '+fmt(e):''; if(r>0) $('sunGains').placeholder=String(e); };
+window.updateSunEstim = () => { const r=parseInt($(‘sunRuns’).value)||0, e=r*4480; $(‘sunEstim’).textContent=r>0?‘Estimation : ‘+fmt(e):’’; if(r>0) $(‘sunGains’).placeholder=String(e); };
 window.saveShift = async player => {
-  const runs=parseInt($(player+'Runs').value)||0, gains=parseFloat($(player+'Gains').value)||(runs*4480);
-  if(!gains){showToast('Renseigne les gains ou le nombre de runs',false);return;}
-  await addDoc(collection(db,'shifts'),{player,runs,gains,note:$(player+'Note').value,monnaie:'propre',activite:player==='sun'?'Biotech & Horizon':'Club 77',ts:serverTimestamp(),date:today()});
-  $(player+'Runs').value=''; $(player+'Gains').value=''; $(player+'Note').value='';
-  if(player==='sun') $('sunEstim').textContent='';
-  showToast('Shift enregistré !');
+const runs=parseInt($(player+‘Runs’).value)||0, gains=parseFloat($(player+‘Gains’).value)||(runs*4480);
+if(!gains){showToast(‘Renseigne les gains ou le nombre de runs’,false);return;}
+await addDoc(collection(db,‘shifts’),{player,runs,gains,note:$(player+‘Note’).value,monnaie:‘propre’,activite:player===‘sun’?‘Biotech & Horizon’:‘Club 77’,ts:serverTimestamp(),date:today()});
+$(player+‘Runs’).value=’’; $(player+‘Gains’).value=’’; $(player+‘Note’).value=’’;
+if(player===‘sun’) $(‘sunEstim’).textContent=’’;
+showToast(‘Shift enregistré !’);
 };
 
-window.addObjectif = async () => { const name=$('objName').value.trim(), target=parseFloat($('objTarget').value)||0; if(!name||!target){showToast('Nom et montant requis',false);return;} state.objectifs.push({id:Date.now(),name,target,cat:$('objCat').value,monnaie:$('objMonnaie').value,joueur:$('objJoueur').value}); await saveState(); $('objName').value=''; $('objTarget').value=''; showToast('Objectif ajouté !'); };
+window.addObjectif = async () => { const name=$(‘objName’).value.trim(), target=parseFloat($(‘objTarget’).value)||0; if(!name||!target){showToast(‘Nom et montant requis’,false);return;} state.objectifs.push({id:Date.now(),name,target,cat:$(‘objCat’).value,monnaie:$(‘objMonnaie’).value,joueur:$(‘objJoueur’).value}); await saveState(); $(‘objName’).value=’’; $(‘objTarget’).value=’’; showToast(‘Objectif ajouté !’); };
 window.delObj = async id => { state.objectifs=state.objectifs.filter(o=>o.id!==id); await saveState(); };
 
 window.toggleDepenseForm = () => {
-  const f = $('depenseForm'), icon = $('depenseToggleIcon');
-  const open = f.style.display === 'none';
-  f.style.display = open ? 'block' : 'none';
-  icon.textContent = open ? '▲ fermer' : '▼ ouvrir';
+const f = $(‘depenseForm’), icon = $(‘depenseToggleIcon’);
+const open = f.style.display === ‘none’;
+f.style.display = open ? ‘block’ : ‘none’;
+icon.textContent = open ? ‘▲ fermer’ : ‘▼ ouvrir’;
 };
 
 window.validerAchat = async id => {
-  const o = state.objectifs.find(x=>x.id===id);
-  if(!o) return;
-  if(!confirm(`Valider l'achat "${o.name}" pour ${fmt(o.target)} ?`)) return;
-  await enregistrerDepense({ nom:o.name, montant:o.target, cat:o.cat, monnaie:o.monnaie||'propre', joueur:o.joueur||'both', note:'Objectif atteint', fromObjectif:true });
-  state.objectifs = state.objectifs.filter(x=>x.id!==id);
-  await saveState();
-  showToast(`Achat "${o.name}" validé — ${fmt(o.target)} déduits !`);
+const o = state.objectifs.find(x=>x.id===id);
+if(!o) return;
+if(!confirm(`Valider l'achat "${o.name}" pour ${fmt(o.target)} ?`)) return;
+await enregistrerDepense({ nom:o.name, montant:o.target, cat:o.cat, monnaie:o.monnaie||‘propre’, joueur:o.joueur||‘both’, note:‘Objectif atteint’, fromObjectif:true });
+state.objectifs = state.objectifs.filter(x=>x.id!==id);
+await saveState();
+showToast(`Achat "${o.name}" validé — ${fmt(o.target)} déduits !`);
 };
 
 window.saveDepenseDirecte = async () => {
-  const nom = $('depNom').value.trim();
-  const montant = parseFloat($('depMontant').value)||0;
-  if(!nom||!montant){ showToast('Nom et montant requis', false); return; }
-  await enregistrerDepense({ nom, montant, cat:$('depCat').value, monnaie:$('depMonnaie').value, joueur:$('depJoueur').value, note:$('depNote').value });
-  $('depNom').value=''; $('depMontant').value=''; $('depNote').value='';
-  showToast('Dépense enregistrée !');
+const nom = $(‘depNom’).value.trim();
+const montant = parseFloat($(‘depMontant’).value)||0;
+if(!nom||!montant){ showToast(‘Nom et montant requis’, false); return; }
+await enregistrerDepense({ nom, montant, cat:$(‘depCat’).value, monnaie:$(‘depMonnaie’).value, joueur:$(‘depJoueur’).value, note:$(‘depNote’).value });
+$(‘depNom’).value=’’; $(‘depMontant’).value=’’; $(‘depNote’).value=’’;
+showToast(‘Dépense enregistrée !’);
 };
 
 async function enregistrerDepense({nom, montant, cat, monnaie, joueur, note, fromObjectif=false}){
-  await addDoc(collection(db,'depenses'), { nom, montant, cat, monnaie, joueur, note:note||'', fromObjectif, ts:serverTimestamp(), date:today() });
-  // Déduire des soldes
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  if(monnaie==='sale'){
-    state.soldes.potCommun = Math.max(0, (state.soldes.potCommun||0) - montant);
-  } else {
-    if(joueur==='sun' || joueur==='both'){
-      const part = joueur==='both' ? montant/2 : montant;
-      state.ajustements = state.ajustements||{sun:0,moon:0};
-      state.ajustements.sun = (state.ajustements.sun||0) - part;
-    }
-    if(joueur==='moon' || joueur==='both'){
-      const part = joueur==='both' ? montant/2 : montant;
-      state.ajustements = state.ajustements||{sun:0,moon:0};
-      state.ajustements.moon = (state.ajustements.moon||0) - part;
-    }
-  }
-  await saveState();
+await addDoc(collection(db,‘depenses’), { nom, montant, cat, monnaie, joueur, note:note||’’, fromObjectif, ts:serverTimestamp(), date:today() });
+// Déduire des soldes
+state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
+if(monnaie===‘sale’){
+state.soldes.potCommun = Math.max(0, (state.soldes.potCommun||0) - montant);
+} else {
+if(joueur===‘sun’ || joueur===‘both’){
+const part = joueur===‘both’ ? montant/2 : montant;
+state.ajustements = state.ajustements||{sun:0,moon:0};
+state.ajustements.sun = (state.ajustements.sun||0) - part;
+}
+if(joueur===‘moon’ || joueur===‘both’){
+const part = joueur===‘both’ ? montant/2 : montant;
+state.ajustements = state.ajustements||{sun:0,moon:0};
+state.ajustements.moon = (state.ajustements.moon||0) - part;
+}
+}
+await saveState();
 }
 
 // ── SALVIA ────────────────────────────────────────────────────
 window.switchSalviaTab = tab => {
-  $('salvia-stats').style.display = tab==='stats' ? 'block' : 'none';
-  $('salvia-saisie').style.display = tab==='saisie' ? 'block' : 'none';
-  ['stab-stats','stab-saisie'].forEach(id=>{ $(id).classList.remove('active'); });
-  $(tab==='stats'?'stab-stats':'stab-saisie').classList.add('active');
-  if(tab==='stats') setTimeout(renderSalviaChart, 80);
+$(‘salvia-stats’).style.display = tab===‘stats’ ? ‘block’ : ‘none’;
+$(‘salvia-saisie’).style.display = tab===‘saisie’ ? ‘block’ : ‘none’;
+[‘stab-stats’,‘stab-saisie’].forEach(id=>{ $(id).classList.remove(‘active’); });
+$(tab===‘stats’?‘stab-stats’:‘stab-saisie’).classList.add(‘active’);
+if(tab===‘stats’) setTimeout(renderSalviaChart, 80);
 };
 
 function getSalviaStock(){
-  const ops = state.salvia||[];
-  let feuilles = (state.salviaStock||{}).feuilles||0;
-  let tetes    = (state.salviaStock||{}).tetes||0;
-  return {feuilles, tetes};
+const ops = state.salvia||[];
+let feuilles = (state.salviaStock||{}).feuilles||0;
+let tetes    = (state.salviaStock||{}).tetes||0;
+return {feuilles, tetes};
 }
 
 window.fixSalviaStock = async type => {
-  const val = parseInt($(type==='feuilles'?'fixFeuilles':'fixTetes').value);
-  if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
-  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
-  state.salviaStock[type] = val;
-  await saveState();
-  $(type==='feuilles'?'fixFeuilles':'fixTetes').value = '';
-  showToast(`Stock ${type} salvia corrigé : ${val}`);
+const val = parseInt($(type===‘feuilles’?‘fixFeuilles’:‘fixTetes’).value);
+if(isNaN(val)||val<0){ showToast(‘Quantité invalide’, false); return; }
+state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
+state.salviaStock[type] = val;
+await saveState();
+$(type===‘feuilles’?‘fixFeuilles’:‘fixTetes’).value = ‘’;
+showToast(`Stock ${type} salvia corrigé : ${val}`);
 };
 
 window.updateSalviaTransfEstim = () => {
-  const n = parseInt($('salvTransfFeuilles').value)||0;
-  $('salvTransfEstim').textContent = n>0 ? `${n} feuilles → ${n} têtes (conversion 1:1)` : '';
+const n = parseInt($(‘salvTransfFeuilles’).value)||0;
+$(‘salvTransfEstim’).textContent = n>0 ? `${n} feuilles → ${n} têtes (conversion 1:1)` : ‘’;
 };
 
 window.updateSalviaVenteEstim = () => {
-  const tetes = parseInt($('salvVenteTetes').value)||0;
-  const revenu = parseFloat($('salvVenteRevenu').value)||0;
-  if(tetes>0 && revenu>0){
-    const moy = Math.round(revenu/tetes);
-    $('salvVenteEstim').textContent = `Prix moyen : ${fmt(moy)}/tête (fourchette 60$–100$)`;
-  } else {
-    $('salvVenteEstim').textContent = '';
-  }
+const tetes = parseInt($(‘salvVenteTetes’).value)||0;
+const revenu = parseFloat($(‘salvVenteRevenu’).value)||0;
+if(tetes>0 && revenu>0){
+const moy = Math.round(revenu/tetes);
+$(‘salvVenteEstim’).textContent = `Prix moyen : ${fmt(moy)}/tête (fourchette 60$–100$)`;
+} else {
+$(‘salvVenteEstim’).textContent = ‘’;
+}
 };
 
 window.saveSalviaCueillette = async () => {
-  const feuilles = parseInt($('salvFeuilles').value)||0;
-  if(!feuilles){ showToast('Nombre de feuilles requis', false); return; }
-  const taxe = parseFloat($('salvTaxe').value)||0;
-  await addDoc(collection(db,'salvia'), {
-    type:'cueillette', player:$('salvCueilPeche').value,
-    feuilles, taxe, note:$('salvCueilNote').value,
-    ts:serverTimestamp(), date:today()
-  });
-  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
-  state.salviaStock.feuilles += feuilles;
-  await saveState();
-  $('salvFeuilles').value=''; $('salvTaxe').value=''; $('salvCueilNote').value='';
-  showToast(`Cueillette enregistrée — ${feuilles} feuilles ajoutées !`);
-  switchSalviaTab('stats');
+const feuilles = parseInt($(‘salvFeuilles’).value)||0;
+if(!feuilles){ showToast(‘Nombre de feuilles requis’, false); return; }
+const taxe = parseFloat($(‘salvTaxe’).value)||0;
+await addDoc(collection(db,‘salvia’), {
+type:‘cueillette’, player:$(‘salvCueilPeche’).value,
+feuilles, taxe, note:$(‘salvCueilNote’).value,
+ts:serverTimestamp(), date:today()
+});
+state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
+state.salviaStock.feuilles += feuilles;
+await saveState();
+$(‘salvFeuilles’).value=’’; $(‘salvTaxe’).value=’’; $(‘salvCueilNote’).value=’’;
+showToast(`Cueillette enregistrée — ${feuilles} feuilles ajoutées !`);
+switchSalviaTab(‘stats’);
 };
 
 window.saveSalviaTransfo = async () => {
-  const feuilles = parseInt($('salvTransfFeuilles').value)||0;
-  if(!feuilles){ showToast('Nombre de feuilles requis', false); return; }
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  if(feuilles > stock.feuilles){
-    showToast(`Stock insuffisant — ${stock.feuilles} feuilles disponibles`, false); return;
-  }
-  const taxe = parseFloat($('salvTransfTaxe').value)||0;
-  const tetes = feuilles; // 1:1
-  await addDoc(collection(db,'salvia'), {
-    type:'transformation', feuilles, tetes, taxe,
-    note:$('salvTransfNote').value, ts:serverTimestamp(), date:today()
-  });
-  state.salviaStock.feuilles -= feuilles;
-  state.salviaStock.tetes += tetes;
-  await saveState();
-  $('salvTransfFeuilles').value=''; $('salvTransfTaxe').value=''; $('salvTransfNote').value='';
-  $('salvTransfEstim').textContent='';
-  showToast(`Transformation enregistrée — ${tetes} têtes produites !`);
-  switchSalviaTab('stats');
+const feuilles = parseInt($(‘salvTransfFeuilles’).value)||0;
+if(!feuilles){ showToast(‘Nombre de feuilles requis’, false); return; }
+const stock = state.salviaStock||{feuilles:0,tetes:0};
+if(feuilles > stock.feuilles){
+showToast(`Stock insuffisant — ${stock.feuilles} feuilles disponibles`, false); return;
+}
+const taxe = parseFloat($(‘salvTransfTaxe’).value)||0;
+const tetes = feuilles; // 1:1
+await addDoc(collection(db,‘salvia’), {
+type:‘transformation’, feuilles, tetes, taxe,
+note:$(‘salvTransfNote’).value, ts:serverTimestamp(), date:today()
+});
+state.salviaStock.feuilles -= feuilles;
+state.salviaStock.tetes += tetes;
+await saveState();
+$(‘salvTransfFeuilles’).value=’’; $(‘salvTransfTaxe’).value=’’; $(‘salvTransfNote’).value=’’;
+$(‘salvTransfEstim’).textContent=’’;
+showToast(`Transformation enregistrée — ${tetes} têtes produites !`);
+switchSalviaTab(‘stats’);
 };
 
 window.saveSalviaVente = async () => {
-  const tetes = parseInt($('salvVenteTetes').value)||0;
-  const revenu = parseFloat($('salvVenteRevenu').value)||0;
-  if(!tetes||!revenu){ showToast('Têtes et revenus requis', false); return; }
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  if(tetes > stock.tetes){
-    showToast(`Stock insuffisant — ${stock.tetes} têtes disponibles`, false); return;
-  }
-  await addDoc(collection(db,'salvia'), {
-    type:'vente', player:$('salvVentePeche').value,
-    tetes, revenu, monnaie:'sale',
-    note:$('salvVenteNote').value, ts:serverTimestamp(), date:today()
-  });
-  state.salviaStock.tetes -= tetes;
-  // Ajouter au pot commun sale
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  state.soldes.potCommun = (state.soldes.potCommun||0) + revenu;
-  await saveState();
-  $('salvVenteTetes').value=''; $('salvVenteRevenu').value='';
-  $('salvVenteNote').value=''; $('salvVenteEstim').textContent='';
-  showToast(`Vente enregistrée — ${fmt(revenu)} en sale ajoutés au pot commun !`);
-  switchSalviaTab('stats');
+const tetes = parseInt($(‘salvVenteTetes’).value)||0;
+const revenu = parseFloat($(‘salvVenteRevenu’).value)||0;
+if(!tetes||!revenu){ showToast(‘Têtes et revenus requis’, false); return; }
+const stock = state.salviaStock||{feuilles:0,tetes:0};
+if(tetes > stock.tetes){
+showToast(`Stock insuffisant — ${stock.tetes} têtes disponibles`, false); return;
+}
+await addDoc(collection(db,‘salvia’), {
+type:‘vente’, player:$(‘salvVentePeche’).value,
+tetes, revenu, monnaie:‘sale’,
+note:$(‘salvVenteNote’).value, ts:serverTimestamp(), date:today()
+});
+state.salviaStock.tetes -= tetes;
+// Ajouter au pot commun sale
+state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
+state.soldes.potCommun = (state.soldes.potCommun||0) + revenu;
+await saveState();
+$(‘salvVenteTetes’).value=’’; $(‘salvVenteRevenu’).value=’’;
+$(‘salvVenteNote’).value=’’; $(‘salvVenteEstim’).textContent=’’;
+showToast(`Vente enregistrée — ${fmt(revenu)} en sale ajoutés au pot commun !`);
+switchSalviaTab(‘stats’);
 };
 
 window.delSalviaOp = async id => {
-  if(!confirm('Supprimer cette opération ?')) return;
-  await deleteDoc(doc(db,'salvia',id));
-  showToast('Supprimé');
+if(!confirm(‘Supprimer cette opération ?’)) return;
+await deleteDoc(doc(db,‘salvia’,id));
+showToast(‘Supprimé’);
 };
 
 let salviaChart;
 function renderSalviaChart(){
-  const ventes = (state.salvia||[]).filter(s=>s.type==='vente').slice(0,8).reverse();
-  const labels = ventes.map((_,i)=>'V'+(i+1));
-  const data   = ventes.map(s=>s.revenu);
-  if($('salviaChart')){
-    if(salviaChart) salviaChart.destroy();
-    salviaChart = new Chart($('salviaChart'),{
-      type:'bar',
-      data:{labels,datasets:[{label:'Revenus',data,backgroundColor:'rgba(108,111,207,0.6)',borderColor:'#6c6fcf',borderWidth:1}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
-        x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},
-        y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}
-      }}
-    });
-  }
+const ventes = (state.salvia||[]).filter(s=>s.type===‘vente’).slice(0,8).reverse();
+const labels = ventes.map((_,i)=>‘V’+(i+1));
+const data   = ventes.map(s=>s.revenu);
+if($(‘salviaChart’)){
+if(salviaChart) salviaChart.destroy();
+salviaChart = new Chart($(‘salviaChart’),{
+type:‘bar’,
+data:{labels,datasets:[{label:‘Revenus’,data,backgroundColor:‘rgba(108,111,207,0.6)’,borderColor:’#6c6fcf’,borderWidth:1}]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
+x:{grid:{color:‘rgba(128,128,128,0.08)’},ticks:{color:’#8b90a8’,font:{size:11}}},
+y:{grid:{color:‘rgba(128,128,128,0.08)’},ticks:{color:’#8b90a8’,font:{size:11},callback:v=>’$’+Math.round(v/1000)+‘k’}}
+}}
+});
+}
 }
 
 function renderSalvia(){
-  const ops = state.salvia||[];
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  const totalVentes = ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.revenu,0);
-  const totalTaxes  = ops.reduce((a,s)=>a+(s.taxe||0),0);
-  const totalFeuilles = ops.filter(s=>s.type==='cueillette').reduce((a,s)=>a+s.feuilles,0);
-  const totalTetes  = ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.tetes,0);
-  const moy = totalTetes>0 ? Math.round(totalVentes/totalTetes) : 0;
+const ops = state.salvia||[];
+const stock = state.salviaStock||{feuilles:0,tetes:0};
+const totalVentes = ops.filter(s=>s.type===‘vente’).reduce((a,s)=>a+s.revenu,0);
+const totalTaxes  = ops.reduce((a,s)=>a+(s.taxe||0),0);
+const totalFeuilles = ops.filter(s=>s.type===‘cueillette’).reduce((a,s)=>a+s.feuilles,0);
+const totalTetes  = ops.filter(s=>s.type===‘vente’).reduce((a,s)=>a+s.tetes,0);
+const moy = totalTetes>0 ? Math.round(totalVentes/totalTetes) : 0;
 
-  const ki = $('salviaKpis');
-  if(ki) ki.innerHTML = `
-    <div class="kpi"><div class="kpi-label">Revenus bruts (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div>
-    <div class="kpi"><div class="kpi-label">Taxes payées</div><div class="kpi-val red">${fmt(totalTaxes)}</div></div>
-    <div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val amber">${fmt(totalVentes-totalTaxes)}</div></div>
-    <div class="kpi"><div class="kpi-label">Feuilles récoltées</div><div class="kpi-val">${totalFeuilles}</div></div>
-    <div class="kpi"><div class="kpi-label">Prix moy./tête</div><div class="kpi-val">${moy?fmt(moy):'—'}</div></div>
-  `;
+const ki = $(‘salviaKpis’);
+if(ki) ki.innerHTML = `<div class="kpi"><div class="kpi-label">Revenus bruts (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div> <div class="kpi"><div class="kpi-label">Taxes payées</div><div class="kpi-val red">${fmt(totalTaxes)}</div></div> <div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val amber">${fmt(totalVentes-totalTaxes)}</div></div> <div class="kpi"><div class="kpi-label">Feuilles récoltées</div><div class="kpi-val">${totalFeuilles}</div></div> <div class="kpi"><div class="kpi-label">Prix moy./tête</div><div class="kpi-val">${moy?fmt(moy):'—'}</div></div>`;
 
-  const fPct = Math.min(100, stock.feuilles>0?Math.round(stock.feuilles/200*100):0);
-  const tPct = Math.min(100, stock.tetes>0?Math.round(stock.tetes/200*100):0);
-  const ss = $('salviaStock');
-  if(ss) ss.innerHTML = `
-    <div style="padding:8px 0;border-bottom:0.5px solid var(--border)">
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">🌿 Feuilles</span><span style="color:var(--txt);font-weight:500">${stock.feuilles} kg</span></div>
-      <div class="progress-bg"><div class="progress-fill" style="width:${fPct}%;background:#1d9e75"></div></div>
-    </div>
-    <div style="padding:8px 0">
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">💊 Têtes prêtes</span><span style="color:var(--txt);font-weight:500">${stock.tetes} kg</span></div>
-      <div class="progress-bg"><div class="progress-fill" style="width:${tPct}%;background:#6c6fcf"></div></div>
-    </div>
-  `;
+const fPct = Math.min(100, stock.feuilles>0?Math.round(stock.feuilles/200*100):0);
+const tPct = Math.min(100, stock.tetes>0?Math.round(stock.tetes/200*100):0);
+const ss = $(‘salviaStock’);
+if(ss) ss.innerHTML = `<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"> <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">🌿 Feuilles</span><span style="color:var(--txt);font-weight:500">${stock.feuilles} kg</span></div> <div class="progress-bg"><div class="progress-fill" style="width:${fPct}%;background:#1d9e75"></div></div> </div> <div style="padding:8px 0"> <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">💊 Têtes prêtes</span><span style="color:var(--txt);font-weight:500">${stock.tetes} kg</span></div> <div class="progress-bg"><div class="progress-fill" style="width:${tPct}%;background:#6c6fcf"></div></div> </div>`;
 
-  // Stock dispo pour saisie
-  const fd = $('salviaFeuillesDisp'); if(fd) fd.textContent = stock.feuilles+' kg';
-  const td = $('salviaTetesDisp');   if(td) td.textContent = stock.tetes+' kg';
+// Stock dispo pour saisie
+const fd = $(‘salviaFeuillesDisp’); if(fd) fd.textContent = stock.feuilles+’ kg’;
+const td = $(‘salviaTetesDisp’);   if(td) td.textContent = stock.tetes+’ kg’;
 
-  // Historique
-  const ho = $('salviaOpsHisto');
-  if(!ho) return;
-  if(!ops.length){ ho.innerHTML='<div class="empty-state">Aucune opération enregistrée</div>'; return; }
-  const icons = {cueillette:'🌿',transformation:'🔥',vente:'💰'};
-  const labels = {cueillette:'Cueillette',transformation:'Transformation',vente:'Vente'};
-  ho.innerHTML = ops.slice(0,10).map(op=>{
-    const detail = op.type==='cueillette' ? '— '+op.feuilles+' feuilles'
-      : op.type==='transformation' ? '— '+op.feuilles+'f → '+op.tetes+' têtes'
-      : op.type==='vente' ? '— '+op.tetes+' têtes' : '';
-    const taxeStr = op.taxe ? ' · taxe : '+fmt(op.taxe) : '';
-    const venteHtml = op.type==='vente' ? '<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">'+fmt(op.revenu)+'</span>' : '';
-    const taxeHtml = op.taxe && op.type!=='vente' ? '<span style="color:#d85a30;font-size:12px">-'+fmt(op.taxe)+'</span>' : '';
-    return '<div class="row">'
-      +'<span style="font-size:16px">'+icons[op.type]+'</span>'
-      +'<div style="flex:1;margin-left:6px">'
-      +'<div style="font-size:13px;font-weight:500;color:var(--txt)">'+labels[op.type]+' '+detail+'</div>'
-      +'<div style="font-size:11px;color:var(--txt3)">'+(op.note||'')+taxeStr+'</div>'
-      +'</div>'
-      +venteHtml+taxeHtml
-      +'<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'
-      +'<button class="btn-del" onclick="delSalviaOp(&quot;'+op._id+'&quot;)">✕</button>'
-      +'</div>';
-  }).join('');
+// Historique
+const ho = $(‘salviaOpsHisto’);
+if(!ho) return;
+if(!ops.length){ ho.innerHTML=’<div class="empty-state">Aucune opération enregistrée</div>’; return; }
+const icons = {cueillette:‘🌿’,transformation:‘🔥’,vente:‘💰’};
+const labels = {cueillette:‘Cueillette’,transformation:‘Transformation’,vente:‘Vente’};
+ho.innerHTML = ops.slice(0,10).map(op=>{
+const detail = op.type===‘cueillette’ ? ‘— ‘+op.feuilles+’ feuilles’
+: op.type===‘transformation’ ? ‘— ‘+op.feuilles+‘f → ‘+op.tetes+’ têtes’
+: op.type===‘vente’ ? ‘— ‘+op.tetes+’ têtes’ : ‘’;
+const taxeStr = op.taxe ? ’ · taxe : ‘+fmt(op.taxe) : ‘’;
+const venteHtml = op.type===‘vente’ ? ‘<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">’+fmt(op.revenu)+’</span>’ : ‘’;
+const taxeHtml = op.taxe && op.type!==‘vente’ ? ‘<span style="color:#d85a30;font-size:12px">-’+fmt(op.taxe)+’</span>’ : ‘’;
+return ‘<div class="row">’
++’<span style="font-size:16px">’+icons[op.type]+’</span>’
++’<div style="flex:1;margin-left:6px">’
++’<div style="font-size:13px;font-weight:500;color:var(--txt)">’+labels[op.type]+’ ‘+detail+’</div>’
++’<div style="font-size:11px;color:var(--txt3)">’+(op.note||’’)+taxeStr+’</div>’
++’</div>’
++venteHtml+taxeHtml
++’<span style="font-size:11px;color:var(--txt3);margin-left:8px">’+fmtDate(op.ts)+’</span>’
++’<button class="btn-del" onclick="delSalviaOp(&quot;'+op._id+'&quot;)">✕</button>’
++’</div>’;
+}).join(’’);
 }
 
 // ── OBJECTIFS TABS ────────────────────────────────────────────
 window.switchObjTab = tab => {
-  document.getElementById('obj-achat-panel').style.display = tab==='achat'?'block':'none';
-  document.getElementById('obj-commande-panel').style.display = tab==='commande'?'block':'none';
-  document.getElementById('otab-achat').classList.toggle('active', tab==='achat');
-  document.getElementById('otab-commande').classList.toggle('active', tab==='commande');
+document.getElementById(‘obj-achat-panel’).style.display = tab===‘achat’?‘block’:‘none’;
+document.getElementById(‘obj-commande-panel’).style.display = tab===‘commande’?‘block’:‘none’;
+document.getElementById(‘otab-achat’).classList.toggle(‘active’, tab===‘achat’);
+document.getElementById(‘otab-commande’).classList.toggle(‘active’, tab===‘commande’);
 };
 
 // ── COMMANDES ─────────────────────────────────────────────────
 window.addCommande = async () => {
-  const client = document.getElementById('cmdClient').value.trim();
-  const qty = parseInt(document.getElementById('cmdQty').value)||0;
-  const produit = document.getElementById('cmdProduit').value;
-  if(!client||!qty){ showToast('Client et quantité requis', false); return; }
-  state.commandes = state.commandes||[];
-  state.commandes.push({
-    id: Date.now(),
-    client, produit, qty,
-    priorite: document.getElementById('cmdPriorite').value,
-    note: document.getElementById('cmdNote').value,
-    date: today()
-  });
-  await saveState();
-  document.getElementById('cmdClient').value='';
-  document.getElementById('cmdQty').value='';
-  document.getElementById('cmdNote').value='';
-  showToast('Commande ajoutée !');
+const client = document.getElementById(‘cmdClient’).value.trim();
+const qty = parseInt(document.getElementById(‘cmdQty’).value)||0;
+const produit = document.getElementById(‘cmdProduit’).value;
+if(!client||!qty){ showToast(‘Client et quantité requis’, false); return; }
+state.commandes = state.commandes||[];
+state.commandes.push({
+id: Date.now(),
+client, produit, qty,
+priorite: document.getElementById(‘cmdPriorite’).value,
+note: document.getElementById(‘cmdNote’).value,
+date: today()
+});
+await saveState();
+document.getElementById(‘cmdClient’).value=’’;
+document.getElementById(‘cmdQty’).value=’’;
+document.getElementById(‘cmdNote’).value=’’;
+showToast(‘Commande ajoutée !’);
 };
 
 window.livrerCommande = async id => {
-  const cmd = (state.commandes||[]).find(c=>c.id===id);
-  if(!cmd) return;
-  if(!confirm('Livrer la commande "'+cmd.client+'" — '+cmd.qty+'kg de '+cmd.produit+' ?')) return;
-  // Déduire du stock salvia
-  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
-  if(cmd.produit==='salvia') state.salviaStock.tetes = Math.max(0, state.salviaStock.tetes - cmd.qty);
-  state.commandes = state.commandes.filter(c=>c.id!==id);
-  await saveState();
-  showToast('Commande livrée — '+cmd.qty+'kg de '+cmd.produit+' déduits du stock !');
+const cmd = (state.commandes||[]).find(c=>c.id===id);
+if(!cmd) return;
+if(!confirm(‘Livrer la commande “’+cmd.client+’” — ’+cmd.qty+‘kg de ‘+cmd.produit+’ ?’)) return;
+// Déduire du stock salvia
+state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
+if(cmd.produit===‘salvia’) state.salviaStock.tetes = Math.max(0, state.salviaStock.tetes - cmd.qty);
+state.commandes = state.commandes.filter(c=>c.id!==id);
+await saveState();
+showToast(’Commande livrée — ’+cmd.qty+‘kg de ‘+cmd.produit+’ déduits du stock !’);
 };
 
 window.delCommande = async id => {
-  if(!confirm('Supprimer cette commande ?')) return;
-  state.commandes = state.commandes.filter(c=>c.id!==id);
-  await saveState();
-  showToast('Commande supprimée');
+if(!confirm(‘Supprimer cette commande ?’)) return;
+state.commandes = state.commandes.filter(c=>c.id!==id);
+await saveState();
+showToast(‘Commande supprimée’);
 };
 
-const PRIO_COLORS = {haute:'#d85a30', normale:'#ef9f27', basse:'#1d9e75'};
-const PRIO_LABELS = {haute:'🔴 Haute', normale:'🟡 Normale', basse:'🟢 Basse'};
+const PRIO_COLORS = {haute:’#d85a30’, normale:’#ef9f27’, basse:’#1d9e75’};
+const PRIO_LABELS = {haute:‘🔴 Haute’, normale:‘🟡 Normale’, basse:‘🟢 Basse’};
 
 function renderCommandes(){
-  const el = document.getElementById('cmdList');
-  if(!el) return;
-  const cmds = (state.commandes||[]).sort((a,b)=>{
-    const order={haute:0,normale:1,basse:2};
-    return (order[a.priorite]||1)-(order[b.priorite]||1);
-  });
-  if(!cmds.length){ el.innerHTML='<div class="empty-state">Aucune commande en cours</div>'; return; }
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  el.innerHTML = cmds.map(cmd=>{
-    const stockDisp = cmd.produit==='salvia' ? stock.tetes : 0;
-    const pct = cmd.qty>0 ? Math.min(100, Math.round(stockDisp/cmd.qty*100)) : 0;
-    const col = pct>=100?'#1d9e75':pct>50?'#ef9f27':'#6c6fcf';
-    const canDeliver = stockDisp >= cmd.qty;
-    return '<div style="padding:14px 0;border-bottom:0.5px solid var(--border)">'
-      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
-      +'<span style="font-size:18px">'+(cmd.produit==='salvia'?'🌿':'📦')+'</span>'
-      +'<div style="flex:1">'
-      +'<div style="font-size:13px;font-weight:500;color:var(--txt)">'+cmd.client+'</div>'
-      +'<div style="font-size:11px;color:var(--txt3)">'+cmd.qty+'kg · '+PRIO_LABELS[cmd.priorite]+(cmd.note?' · '+cmd.note:'')+'</div>'
-      +'</div>'
-      +(canDeliver?'<button class="btn btn-primary" onclick="livrerCommande('+cmd.id+')" style="padding:5px 12px;font-size:12px">Livrer</button>':'')
-      +'<button class="btn-del" onclick="delCommande('+cmd.id+')">✕</button>'
-      +'</div>'
-      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
-      +'<div class="progress-bg" style="flex:1;height:6px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:6px"></div></div>'
-      +'<span style="font-size:12px;color:var(--txt2);min-width:80px;text-align:right">'+stockDisp+'kg / '+cmd.qty+'kg ('+pct+'%)</span>'
-      +'</div>'
-      +'</div>';
-  }).join('');
+const el = document.getElementById(‘cmdList’);
+if(!el) return;
+const cmds = (state.commandes||[]).sort((a,b)=>{
+const order={haute:0,normale:1,basse:2};
+return (order[a.priorite]||1)-(order[b.priorite]||1);
+});
+if(!cmds.length){ el.innerHTML=’<div class="empty-state">Aucune commande en cours</div>’; return; }
+const stock = state.salviaStock||{feuilles:0,tetes:0};
+el.innerHTML = cmds.map(cmd=>{
+const stockDisp = cmd.produit===‘salvia’ ? stock.tetes : 0;
+const pct = cmd.qty>0 ? Math.min(100, Math.round(stockDisp/cmd.qty*100)) : 0;
+const col = pct>=100?’#1d9e75’:pct>50?’#ef9f27’:’#6c6fcf’;
+const canDeliver = stockDisp >= cmd.qty;
+return ‘<div style="padding:14px 0;border-bottom:0.5px solid var(--border)">’
++’<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">’
++’<span style="font-size:18px">’+(cmd.produit===‘salvia’?‘🌿’:‘📦’)+’</span>’
++’<div style="flex:1">’
++’<div style="font-size:13px;font-weight:500;color:var(--txt)">’+cmd.client+’</div>’
++’<div style="font-size:11px;color:var(--txt3)">’+cmd.qty+‘kg · ‘+PRIO_LABELS[cmd.priorite]+(cmd.note?’ · ‘+cmd.note:’’)+’</div>’
++’</div>’
++(canDeliver?’<button class="btn btn-primary" onclick="livrerCommande('+cmd.id+')" style="padding:5px 12px;font-size:12px">Livrer</button>’:’’)
++’<button class="btn-del" onclick="delCommande('+cmd.id+')">✕</button>’
++’</div>’
++’<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">’
++’<div class="progress-bg" style="flex:1;height:6px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:6px"></div></div>’
++’<span style="font-size:12px;color:var(--txt2);min-width:80px;text-align:right">’+stockDisp+‘kg / ‘+cmd.qty+‘kg (’+pct+’%)</span>’
++’</div>’
++’</div>’;
+}).join(’’);
 }
 
-function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); renderSalvia(); renderCommandes(); }
+// ── PLANTATION ────────────────────────────────────────────────
+const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300};
+const PRIX_BRANCHE = 70;
+const POIDS_BRANCHE = 0.5; // kg
+
+window.switchPlantationTab = tab => {
+$(‘plantation-stats’).style.display = tab===‘stats’?‘block’:‘none’;
+$(‘plantation-saisie’).style.display = tab===‘saisie’?‘block’:‘none’;
+$(‘ptab-stats’).classList.toggle(‘active’, tab===‘stats’);
+$(‘ptab-saisie’).classList.toggle(‘active’, tab===‘saisie’);
+};
+
+window.updatePlantCmdTarget = async () => {
+const val = parseInt($(‘plantCmdTarget’).value)||1000;
+state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+state.plantationStock.commande = val;
+await saveState();
+showToast(`Objectif commande mis à jour : ${val} branches`);
+};
+
+window.fixPlantStock = async type => {
+const ids = {entrepot:‘fixEntrepot’, vanSun:‘fixVanSun’, vanMoon:‘fixVanMoon’};
+const val = parseInt($(ids[type]).value);
+if(isNaN(val)||val<0){ showToast(‘Quantité invalide’, false); return; }
+const max = PLANT_MAX[type];
+if(val > max){ showToast(`Max ${max} branches pour ce stockage`, false); return; }
+state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+state.plantationStock[type] = val;
+await saveState();
+$(ids[type]).value=’’;
+showToast(`Stock ${type} corrigé : ${val} branches`);
+};
+
+window.updatePlantCout = () => {
+const n = parseInt($(‘plantNbPieds’).value)||0;
+if(!n){ $(‘plantCoutEstim’).textContent=’’; return; }
+const graines = n * 75;
+const pots = n * 75;
+const eau = n * 6 * 5;
+const total = graines + pots + eau;
+$(‘plantCoutEstim’).innerHTML = ` <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center"> <div><div style="color:var(--txt3);font-size:10px;margin-bottom:2px">Graines</div><div style="font-weight:500;color:var(--txt)">${fmt(graines)}</div></div> <div><div style="color:var(--txt3);font-size:10px;margin-bottom:2px">Pots</div><div style="font-weight:500;color:var(--txt)">${fmt(pots)}</div></div> <div><div style="color:var(--txt3);font-size:10px;margin-bottom:2px">Eau (${n*6} bouteilles)</div><div style="font-weight:500;color:var(--txt)">${fmt(eau)}</div></div> <div><div style="color:var(--txt3);font-size:10px;margin-bottom:2px">Total dépense</div><div style="font-weight:500;color:#d85a30">${fmt(total)}</div></div> </div>`;
+};
+
+window.updatePlantRecolteEstim = () => {
+const pieds = parseInt($(‘plantPiedsRecolte’).value)||0;
+const branches = parseInt($(‘plantBranches’).value)||0;
+if(!pieds&&!branches){ $(‘plantRecolteEstim’).textContent=’’; return; }
+const maxBranches = pieds * 9;
+const revEstim = branches * PRIX_BRANCHE;
+const poids = (branches * POIDS_BRANCHE).toFixed(1);
+$(‘plantRecolteEstim’).innerHTML = ` <span>Max théorique : <strong>${maxBranches}</strong> branches · </span> <span>Poids : <strong>${poids} kg</strong> · </span> <span>Valeur estimée : <strong style="color:#ef9f27">${fmt(revEstim)}</strong></span>`;
+};
+
+window.updatePlantVenteEstim = () => {
+const branches = parseInt($(‘plantVenteBranches’).value)||0;
+const revenu = parseFloat($(‘plantVenteRevenu’).value)||(branches*PRIX_BRANCHE);
+if(!branches){ $(‘plantVenteEstim’).textContent=’’; return; }
+const moy = branches>0 ? Math.round(revenu/branches) : 0;
+const poids = (branches*POIDS_BRANCHE).toFixed(1);
+$(‘plantVenteEstim’).innerHTML = ` <span>Poids livré : <strong>${poids} kg</strong> · </span> <span>Prix moyen : <strong>${fmt(moy)}/branche</strong> · </span> <span>Total : <strong style="color:#ef9f27">${fmt(revenu)}</strong></span>`;
+if(!$(‘plantVenteRevenu’).value) $(‘plantVenteRevenu’).placeholder = String(branches*PRIX_BRANCHE);
+};
+
+window.savePlantAchat = async () => {
+const nbPieds = parseInt($(‘plantNbPieds’).value)||0;
+if(!nbPieds){ showToast(‘Nombre de pieds requis’, false); return; }
+const taxeFert = parseFloat($(‘plantTaxeFert’).value)||0;
+const graines = nbPieds*75, pots = nbPieds*75, eau = nbPieds*6*5;
+const totalCout = graines + pots + eau + taxeFert;
+const acheteur = $(‘plantAcheteur’).value;
+
+await addDoc(collection(db,‘plantation’), {
+type:‘achat’, nbPieds, graines, pots, eau, taxeFert, totalCout, acheteur,
+ts:serverTimestamp(), date:today()
+});
+
+// Déduire du solde
+state.ajustements = state.ajustements||{sun:0,moon:0};
+if(acheteur===‘sun’||acheteur===‘both’){
+const part = acheteur===‘both’?totalCout/2:totalCout;
+state.ajustements.sun = (state.ajustements.sun||0) - part;
+}
+if(acheteur===‘moon’||acheteur===‘both’){
+const part = acheteur===‘both’?totalCout/2:totalCout;
+state.ajustements.moon = (state.ajustements.moon||0) - part;
+}
+await saveState();
+$(‘plantNbPieds’).value=’’; $(‘plantTaxeFert’).value=’’; $(‘plantCoutEstim’).innerHTML=’’;
+showToast(`Achat enregistré — ${fmt(totalCout)} déduits !`);
+switchPlantationTab(‘stats’);
+};
+
+window.savePlantRecolte = async () => {
+const pieds = parseInt($(‘plantPiedsRecolte’).value)||0;
+const branches = parseInt($(‘plantBranches’).value)||0;
+if(!pieds||!branches){ showToast(‘Pieds et branches requis’, false); return; }
+const dest = $(‘plantDest’).value;
+const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+const newQty = (stock[dest]||0) + branches;
+if(newQty > PLANT_MAX[dest]){
+showToast(`Capacité dépassée — max ${PLANT_MAX[dest]} branches dans ce stockage (actuel: ${stock[dest]})`, false); return;
+}
+await addDoc(collection(db,‘plantation’), {
+type:‘recolte’, pieds, branches, dest, note:$(‘plantNote’).value,
+ts:serverTimestamp(), date:today()
+});
+state.plantationStock[dest] = newQty;
+await saveState();
+$(‘plantPiedsRecolte’).value=’’; $(‘plantBranches’).value=’’; $(‘plantNote’).value=’’; $(‘plantRecolteEstim’).innerHTML=’’;
+showToast(`Récolte enregistrée — ${branches} branches ajoutées en ${dest} !`);
+switchPlantationTab(‘stats’);
+};
+
+window.savePlantVente = async () => {
+const branches = parseInt($(‘plantVenteBranches’).value)||0;
+const revenu = parseFloat($(‘plantVenteRevenu’).value)||(branches*PRIX_BRANCHE);
+if(!branches){ showToast(‘Nombre de branches requis’, false); return; }
+const src = $(‘plantVenteSrc’).value;
+const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+const totalStock = stock.entrepot+stock.vanSun+stock.vanMoon;
+if(src===‘all’ && branches>totalStock){ showToast(`Stock insuffisant — ${totalStock} branches disponibles`, false); return; }
+if(src!==‘all’ && branches>(stock[src]||0)){ showToast(`Stock insuffisant dans ce stockage — ${stock[src]||0} branches`, false); return; }
+
+await addDoc(collection(db,‘plantation’), {
+type:‘vente’, branches, revenu, src, monnaie:‘sale’,
+note:$(‘plantVenteNote’).value, ts:serverTimestamp(), date:today()
+});
+
+// Déduire du stock
+if(src===‘all’){
+let reste = branches;
+for(const loc of [‘entrepot’,‘vanSun’,‘vanMoon’]){
+const pris = Math.min(reste, stock[loc]||0);
+state.plantationStock[loc] = (stock[loc]||0) - pris;
+reste -= pris;
+if(reste<=0) break;
+}
+} else {
+state.plantationStock[src] = (stock[src]||0) - branches;
+}
+// Ajouter au pot commun sale
+state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
+state.soldes.potCommun = (state.soldes.potCommun||0) + revenu;
+await saveState();
+$(‘plantVenteBranches’).value=’’; $(‘plantVenteRevenu’).value=’’; $(‘plantVenteNote’).value=’’; $(‘plantVenteEstim’).innerHTML=’’;
+showToast(`Vente enregistrée — ${fmt(revenu)} en sale ajoutés au pot commun !`);
+switchPlantationTab(‘stats’);
+};
+
+window.delPlantOp = async id => {
+if(!confirm(‘Supprimer cette opération ?’)) return;
+await deleteDoc(doc(db,‘plantation’,id));
+showToast(‘Supprimé’);
+};
+
+let plantChart;
+function renderPlantation(){
+const ops = state.plantation||[];
+const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+const commande = stock.commande||1000;
+const totalStock = stock.entrepot+stock.vanSun+stock.vanMoon;
+
+const totalVentes = ops.filter(o=>o.type===‘vente’).reduce((a,o)=>a+o.revenu,0);
+const totalCouts = ops.filter(o=>o.type===‘achat’).reduce((a,o)=>a+o.totalCout,0);
+const totalBranchesRecoltees = ops.filter(o=>o.type===‘recolte’).reduce((a,o)=>a+o.branches,0);
+const totalBranchesVendues = ops.filter(o=>o.type===‘vente’).reduce((a,o)=>a+o.branches,0);
+const nbCycles = ops.filter(o=>o.type===‘recolte’).length;
+
+// KPIs
+const ki = $(‘plantationKpis’);
+if(ki) ki.innerHTML = `<div class="kpi"><div class="kpi-label">Revenus (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div> <div class="kpi"><div class="kpi-label">Coûts totaux</div><div class="kpi-val red">${fmt(totalCouts)}</div></div> <div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val amber">${fmt(totalVentes-totalCouts)}</div></div> <div class="kpi"><div class="kpi-label">Branches récoltées</div><div class="kpi-val">${totalBranchesRecoltees}</div></div> <div class="kpi"><div class="kpi-label">En stock</div><div class="kpi-val">${totalStock}</div></div>`;
+
+// Commande progress
+const cmdPct = Math.min(100, Math.round(totalStock/commande*100));
+const cmdBar = $(‘plantCmdBar’), cmdPctEl = $(‘plantCmdPct’), cmdLabel = $(‘plantCmdLabel’);
+if(cmdBar) cmdBar.style.width = cmdPct+’%’;
+if(cmdBar) cmdBar.style.background = cmdPct>=100?’#1d9e75’:cmdPct>50?’#ef9f27’:’#6c6fcf’;
+if(cmdPctEl) cmdPctEl.textContent = cmdPct+’%’;
+if(cmdLabel) cmdLabel.textContent = `${totalStock} / ${commande} branches`;
+const ct = $(‘plantCmdTarget’); if(ct&&!ct.value) ct.placeholder = String(commande);
+
+// Stock par location
+const sb = $(‘plantStockBlock’);
+if(sb){
+const locs = [{key:‘entrepot’,label:‘🏭 Entrepôt’,max:700},{key:‘vanSun’,label:‘🚐 Moon Beam (Sun)’,max:300},{key:‘vanMoon’,label:‘🚐 Van Moon’,max:300}];
+sb.innerHTML = locs.map(l=>{
+const qty = stock[l.key]||0, pct = Math.round(qty/l.max*100);
+const col = pct>90?’#d85a30’:pct>60?’#ef9f27’:’#1d9e75’;
+return `<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"> <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"> <span style="color:var(--txt2)">${l.label}</span> <span style="color:var(--txt);font-weight:500">${qty} / ${l.max} branches <span style="color:var(--txt3);font-size:11px">(${(qty*POIDS_BRANCHE).toFixed(0)}kg / ${l.max*POIDS_BRANCHE}kg)</span></span> </div> <div class="progress-bg"><div class="progress-fill" style="width:${pct}%;background:${col}"></div></div> </div>`;
+}).join(’’)+`<div style="padding:8px 0;font-size:13px;display:flex;justify-content:space-between"> <span style="color:var(--txt2)">Total stock</span> <span style="color:var(--txt);font-weight:500">${totalStock} branches · ${(totalStock*POIDS_BRANCHE).toFixed(0)}kg</span> </div>`;
+}
+
+// Stock total pour saisie vente
+const ps = $(‘plantStockTotal’); if(ps) ps.textContent = totalStock;
+
+// Historique
+const ho = $(‘plantCyclesHisto’);
+if(!ho) return;
+if(!ops.length){ ho.innerHTML=’<div class="empty-state">Aucune opération enregistrée</div>’; return; }
+const icons = {achat:‘🛒’,recolte:‘🌱’,vente:‘💰’};
+const labels = {achat:‘Achat matériel’,recolte:‘Récolte’,vente:‘Vente’};
+ho.innerHTML = ops.slice(0,15).map(op=>` <div class="row"> <span style="font-size:16px">${icons[op.type]}</span> <div style="flex:1;margin-left:6px"> <div style="font-size:13px;font-weight:500;color:var(--txt)">${labels[op.type]} ${op.type==='achat'?`— ${op.nbPieds} pieds · ${fmt(op.totalCout)}`:''} ${op.type==='recolte'?`— ${op.branches} branches → ${op.dest}`:''} ${op.type==='vente'?`— ${op.branches} branches`:''} </div> <div style="font-size:11px;color:var(--txt3)">${op.note||''}${op.taxeFert?` · taxe fert: ${fmt(op.taxeFert)}`:''}</div> </div> ${op.type==='vente'?`<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">${fmt(op.revenu)}</span>`:''} ${op.type==='achat'?`<span style="color:#d85a30;font-size:12px">-${fmt(op.totalCout)}</span>`:''} <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span> <button class="btn-del" onclick="delPlantOp('${op._id}')">✕</button> </div>`).join(’’);
+}
+
+function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); renderSalvia(); renderCommandes(); renderPlantation(); }
 
 function renderHQ(){
-  const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
-  // Soldes calculés automatiquement (shifts + pêche - achats + ajustements)
-  const soldeSun  = calcSoldeAuto('sun');
-  const soldeMoon = calcSoldeAuto('moon');
-  const totalSale = soldes.potCommun||0;
-  const totalPropre = soldeSun + soldeMoon;
-  const totalApollo = totalPropre + totalSale;
+const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+// Soldes calculés automatiquement (shifts + pêche - achats + ajustements)
+const soldeSun  = calcSoldeAuto(‘sun’);
+const soldeMoon = calcSoldeAuto(‘moon’);
+const totalSale = soldes.potCommun||0;
+const totalPropre = soldeSun + soldeMoon;
+const totalApollo = totalPropre + totalSale;
 
-  // Participation (toutes activités depuis le début)
-  const sunPartic=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0);
-  const moonPartic=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0);
-  const totalPartic=sunPartic+moonPartic, sunPct=totalPartic>0?Math.round(sunPartic/totalPartic*100):50, moonPct=totalPartic>0?Math.round(moonPartic/totalPartic*100):50;
-  const todaySess=state.sessions.filter(s=>s.date===today()), todayShifts=shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
-  const propreJour=todaySess.reduce((a,s)=>a+s.revenu,0)+todayShifts.reduce((a,s)=>a+s.gains,0), depJour=todayAchats.reduce((a,x)=>a+x.cost,0), netJour=propreJour-depJour;
+// Participation (toutes activités depuis le début)
+const sunPartic=state.sessions.reduce((a,s)=>a+(s.peche===‘sun’?s.revenu:s.peche===‘both’?s.revenu/2:0),0)+shifts.filter(s=>s.player===‘sun’).reduce((a,s)=>a+s.gains,0);
+const moonPartic=state.sessions.reduce((a,s)=>a+(s.peche===‘moon’?s.revenu:s.peche===‘both’?s.revenu/2:0),0)+shifts.filter(s=>s.player===‘moon’).reduce((a,s)=>a+s.gains,0);
+const totalPartic=sunPartic+moonPartic, sunPct=totalPartic>0?Math.round(sunPartic/totalPartic*100):50, moonPct=totalPartic>0?Math.round(moonPartic/totalPartic*100):50;
+const todaySess=state.sessions.filter(s=>s.date===today()), todayShifts=shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
+const propreJour=todaySess.reduce((a,s)=>a+s.revenu,0)+todayShifts.reduce((a,s)=>a+s.gains,0), depJour=todayAchats.reduce((a,x)=>a+x.cost,0), netJour=propreJour-depJour;
 
-  $('totalApolloVal').textContent=fmt(totalApollo); $('totalPropreVal').textContent=fmt(totalPropre); $('totalSaleVal').textContent=fmt(totalSale);
-  const ne=$('netJourVal'); ne.textContent=fmt(netJour); ne.style.color=netJour>=0?'#1d9e75':'#d85a30';
-  $('propreJourVal').textContent=fmt(propreJour); $('saleJourVal').textContent='$0';
-  $('sunSoldeSmall').textContent=fmt(soldeSun); $('moonSoldeSmall').textContent=fmt(soldeMoon); $('saleSmall').textContent=fmt(soldes.potCommun||0);
+$(‘totalApolloVal’).textContent=fmt(totalApollo); $(‘totalPropreVal’).textContent=fmt(totalPropre); $(‘totalSaleVal’).textContent=fmt(totalSale);
+const ne=$(‘netJourVal’); ne.textContent=fmt(netJour); ne.style.color=netJour>=0?’#1d9e75’:’#d85a30’;
+$(‘propreJourVal’).textContent=fmt(propreJour); $(‘saleJourVal’).textContent=’$0’;
+$(‘sunSoldeSmall’).textContent=fmt(soldeSun); $(‘moonSoldeSmall’).textContent=fmt(soldeMoon); $(‘saleSmall’).textContent=fmt(soldes.potCommun||0);
 
-  $('participationBlock').innerHTML=`
-    <div style="margin-bottom:14px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <div class="av av-sun" style="width:28px;height:28px;font-size:10px">SU</div>
-        <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">Sun</div></div>
-        <div style="text-align:right"><div style="font-size:15px;font-weight:500;color:var(--sun)">${fmt(sunPartic)}</div><div style="font-size:11px;color:var(--txt3)">${sunPct}%</div></div>
-      </div>
-      <div class="progress-bg"><div class="progress-fill" style="width:${sunPct}%;background:#f5c842"></div></div>
-    </div>
-    <div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <div class="av av-moon" style="width:28px;height:28px;font-size:10px">MO</div>
-        <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">Moon</div></div>
-        <div style="text-align:right"><div style="font-size:15px;font-weight:500;color:var(--moon)">${fmt(moonPartic)}</div><div style="font-size:11px;color:var(--txt3)">${moonPct}%</div></div>
-      </div>
-      <div class="progress-bg"><div class="progress-fill" style="width:${moonPct}%;background:#7fc8f8"></div></div>
-    </div>`;
+$(‘participationBlock’).innerHTML=` <div style="margin-bottom:14px"> <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"> <div class="av av-sun" style="width:28px;height:28px;font-size:10px">SU</div> <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">Sun</div></div> <div style="text-align:right"><div style="font-size:15px;font-weight:500;color:var(--sun)">${fmt(sunPartic)}</div><div style="font-size:11px;color:var(--txt3)">${sunPct}%</div></div> </div> <div class="progress-bg"><div class="progress-fill" style="width:${sunPct}%;background:#f5c842"></div></div> </div> <div> <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"> <div class="av av-moon" style="width:28px;height:28px;font-size:10px">MO</div> <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">Moon</div></div> <div style="text-align:right"><div style="font-size:15px;font-weight:500;color:var(--moon)">${fmt(moonPartic)}</div><div style="font-size:11px;color:var(--txt3)">${moonPct}%</div></div> </div> <div class="progress-bg"><div class="progress-fill" style="width:${moonPct}%;background:#7fc8f8"></div></div> </div>`;
 
-  if($('hqPieChart')){ if(CH.pie) CH.pie.destroy(); CH.pie=new Chart($('hqPieChart'),{type:'doughnut',data:{labels:['Sun '+sunPct+'%','Moon '+moonPct+'%'],datasets:[{data:totalPartic>0?[sunPartic,moonPartic]:[1,1],backgroundColor:['rgba(245,200,66,0.75)','rgba(127,200,248,0.75)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>totalPartic>0?' '+ctx.label+' — '+fmt(ctx.raw):ctx.label}}}}}); }
+if($(‘hqPieChart’)){ if(CH.pie) CH.pie.destroy(); CH.pie=new Chart($(‘hqPieChart’),{type:‘doughnut’,data:{labels:[‘Sun ‘+sunPct+’%’,‘Moon ‘+moonPct+’%’],datasets:[{data:totalPartic>0?[sunPartic,moonPartic]:[1,1],backgroundColor:[‘rgba(245,200,66,0.75)’,‘rgba(127,200,248,0.75)’],borderColor:[’#f5c842’,’#7fc8f8’],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:‘62%’,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>totalPartic>0?’ ‘+ctx.label+’ — ’+fmt(ctx.raw):ctx.label}}}}}); }
 
-  const last14=[]; for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().split('T')[0]);}
-  const comboLabels=last14.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
-  const netParJour=last14.map(day=>{const rev=state.sessions.filter(s=>s.date===day).reduce((a,s)=>a+s.revenu,0)+shifts.filter(s=>s.date===day).reduce((a,s)=>a+s.gains,0);const dep=state.achats.filter(a=>a.date===day).reduce((a,x)=>a+x.cost,0);return Math.round(rev-dep);});
-  const allOps=[...state.sessions.map(s=>({date:s.date,val:s.revenu})),...shifts.map(s=>({date:s.date,val:s.gains})),...state.achats.map(a=>({date:a.date,val:-a.cost}))];
-  const totalParJour=last14.map(day=>allOps.filter(o=>o.date<=day).reduce((a,o)=>a+o.val,0));
-  if($('hqComboChart')){ if(CH.combo) CH.combo.destroy(); CH.combo=new Chart($('hqComboChart'),{type:'bar',data:{labels:comboLabels,datasets:[{type:'bar',label:'Net du jour',data:netParJour,backgroundColor:netParJour.map(v=>v>=0?'rgba(29,158,117,0.55)':'rgba(216,90,48,0.55)'),borderColor:netParJour.map(v=>v>=0?'#1d9e75':'#d85a30'),borderWidth:1,yAxisID:'y'},{type:'line',label:'Total cumulé',data:totalParJour,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.08)',fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#7f77dd',yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#8b90a8',font:{size:10},autoSkip:false,maxRotation:0}},y:{position:'left',grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#1d9e75',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}},y2:{position:'right',grid:{display:false},ticks:{color:'#7f77dd',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}}}}}); }
+const last14=[]; for(let i=13;i>=0;i–){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().split(‘T’)[0]);}
+const comboLabels=last14.map(d=>{const p=d.split(’-’);return p[2]+’/’+p[1];});
+const netParJour=last14.map(day=>{const rev=state.sessions.filter(s=>s.date===day).reduce((a,s)=>a+s.revenu,0)+shifts.filter(s=>s.date===day).reduce((a,s)=>a+s.gains,0);const dep=state.achats.filter(a=>a.date===day).reduce((a,x)=>a+x.cost,0);return Math.round(rev-dep);});
+const allOps=[…state.sessions.map(s=>({date:s.date,val:s.revenu})),…shifts.map(s=>({date:s.date,val:s.gains})),…state.achats.map(a=>({date:a.date,val:-a.cost}))];
+const totalParJour=last14.map(day=>allOps.filter(o=>o.date<=day).reduce((a,o)=>a+o.val,0));
+if($(‘hqComboChart’)){ if(CH.combo) CH.combo.destroy(); CH.combo=new Chart($(‘hqComboChart’),{type:‘bar’,data:{labels:comboLabels,datasets:[{type:‘bar’,label:‘Net du jour’,data:netParJour,backgroundColor:netParJour.map(v=>v>=0?‘rgba(29,158,117,0.55)’:‘rgba(216,90,48,0.55)’),borderColor:netParJour.map(v=>v>=0?’#1d9e75’:’#d85a30’),borderWidth:1,yAxisID:‘y’},{type:‘line’,label:‘Total cumulé’,data:totalParJour,borderColor:’#7f77dd’,backgroundColor:‘rgba(127,119,221,0.08)’,fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:’#7f77dd’,yAxisID:‘y2’}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:‘rgba(128,128,128,0.06)’},ticks:{color:’#8b90a8’,font:{size:10},autoSkip:false,maxRotation:0}},y:{position:‘left’,grid:{color:‘rgba(128,128,128,0.06)’},ticks:{color:’#1d9e75’,font:{size:10},callback:v=>’$’+Math.round(v/1000)+‘k’}},y2:{position:‘right’,grid:{display:false},ticks:{color:’#7f77dd’,font:{size:10},callback:v=>’$’+Math.round(v/1000)+‘k’}}}}}); }
 
-  let alerts='';
-  if(state.stock.appats===0) alerts+='<div class="alert-box alert-danger">Rupture appâts !</div>';
-  else if(state.stock.appats<50) alerts+=`<div class="alert-box alert-danger">Appâts critiques — ${state.stock.appats} restants</div>`;
-  else if(state.stock.appats<100) alerts+=`<div class="alert-box alert-warn">Appâts à renouveler — ${state.stock.appats}</div>`;
-  else alerts+=`<div class="alert-box alert-ok">Appâts OK — ${state.stock.appats}</div>`;
-  if(state.stock.cannes===0) alerts+='<div class="alert-box alert-danger">Plus de cannes !</div>';
-  else if(state.stock.cannes<3) alerts+=`<div class="alert-box alert-warn">Cannes basses — ${state.stock.cannes}</div>`;
-  else alerts+=`<div class="alert-box alert-ok">Cannes OK — ${state.stock.cannes}</div>`;
-  $('alertsBlock').innerHTML=alerts;
+let alerts=’’;
+if(state.stock.appats===0) alerts+=’<div class="alert-box alert-danger">Rupture appâts !</div>’;
+else if(state.stock.appats<50) alerts+=`<div class="alert-box alert-danger">Appâts critiques — ${state.stock.appats} restants</div>`;
+else if(state.stock.appats<100) alerts+=`<div class="alert-box alert-warn">Appâts à renouveler — ${state.stock.appats}</div>`;
+else alerts+=`<div class="alert-box alert-ok">Appâts OK — ${state.stock.appats}</div>`;
+if(state.stock.cannes===0) alerts+=’<div class="alert-box alert-danger">Plus de cannes !</div>’;
+else if(state.stock.cannes<3) alerts+=`<div class="alert-box alert-warn">Cannes basses — ${state.stock.cannes}</div>`;
+else alerts+=`<div class="alert-box alert-ok">Cannes OK — ${state.stock.cannes}</div>`;
+$(‘alertsBlock’).innerHTML=alerts;
 
-  const recent=[...state.sessions.map(s=>({...s,kind:'session',_ts:s.ts?.seconds||0})),...state.achats.map(a=>({...a,kind:'achat',_ts:a.ts?.seconds||0})),...shifts.map(s=>({...s,kind:'shift',_ts:s.ts?.seconds||0}))].sort((a,b)=>b._ts-a._ts).slice(0,6);
-  if(!recent.length){$('recentOps').innerHTML='<div class="empty-state">Aucune opération — commencez à saisir !</div>';return;}
-  $('recentOps').innerHTML=recent.map(op=>{
-    if(op.kind==='session') return `<div class="row">${playerTag(op.peche)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">Session pêche${op.note?' · '+op.note:''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.revenu)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
-    if(op.kind==='shift') return `<div class="row">${playerTag(op.player)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">${op.activite}${op.runs?' · '+op.runs+' run(s)':''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
-    return `<div class="row"><span class="tag tag-depense">${op.person}</span><span style="flex:1;font-size:13px;color:var(--txt2)">Achat ${op.matType==='appat'?'appâts':'cannes'} ×${op.qty}</span><span class="${op.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:4px">${op.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(op.cost)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
-  }).join('');
+const recent=[…state.sessions.map(s=>({…s,kind:‘session’,_ts:s.ts?.seconds||0})),…state.achats.map(a=>({…a,kind:‘achat’,_ts:a.ts?.seconds||0})),…shifts.map(s=>({…s,kind:‘shift’,_ts:s.ts?.seconds||0}))].sort((a,b)=>b._ts-a._ts).slice(0,6);
+if(!recent.length){$(‘recentOps’).innerHTML=’<div class="empty-state">Aucune opération — commencez à saisir !</div>’;return;}
+$(‘recentOps’).innerHTML=recent.map(op=>{
+if(op.kind===‘session’) return `<div class="row">${playerTag(op.peche)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">Session pêche${op.note?' · '+op.note:''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.revenu)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+if(op.kind===‘shift’) return `<div class="row">${playerTag(op.player)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">${op.activite}${op.runs?' · '+op.runs+' run(s)':''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+return `<div class="row"><span class="tag tag-depense">${op.person}</span><span style="flex:1;font-size:13px;color:var(--txt2)">Achat ${op.matType==='appat'?'appâts':'cannes'} ×${op.qty}</span><span class="${op.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:4px">${op.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(op.cost)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+}).join(’’);
 }
 
 function renderPechePage(){
-  const FISH_BY_VALUE=[...FISH].sort((a,b)=>{if(a.price===null&&b.price===null)return 0;if(a.price===null)return 1;if(b.price===null)return -1;return b.price-a.price;});
-  $('fishCatalog').innerHTML=FISH.map(f=>'<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">'+f.icon+'</div><div class="fish-name">'+f.name+'</div><div class="fish-price">'+fmt(f.price)+(f.priceNote?' <span style="font-size:10px;color:var(--txt3)">('+f.priceNote+')</span>':'')+'</div><div class="fish-type" style="color:'+(f.type==='illegal'?'#f0997b':'#5dcaa5')+'">'+(f.type==='illegal'?'LTD Cayo':'PNJ Canal')+'</div></div>').join('');
-  const totalRev=state.sessions.reduce((a,s)=>a+s.revenu,0), totalDep=state.achats.reduce((a,x)=>a+x.cost,0), net=totalRev-totalDep;
-  const totalPoissons=state.sessions.reduce((a,s)=>{FISH.forEach(f=>{a+=(s.fish?.[f.id]||0);});return a;},0);
-  $('pecheKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts</div><div class="kpi-val green">${fmt(totalRev)}</div></div><div class="kpi"><div class="kpi-label">Dépenses</div><div class="kpi-val red">${fmt(totalDep)}</div></div><div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val ${net>=0?'green':'red'}">${fmt(net)}</div></div><div class="kpi"><div class="kpi-label">Poissons pêchés</div><div class="kpi-val">${totalPoissons}</div></div><div class="kpi"><div class="kpi-label">Moy. / session</div><div class="kpi-val" style="color:#7ab8f5">${fmt(state.sessions.length?totalRev/state.sessions.length:0)}</div></div>`;
-  const ap=Math.min(100,state.stock.appats>0?Math.round(state.stock.appats/300*100):0), cp=Math.min(100,state.stock.cannes>0?Math.round(state.stock.cannes/12*100):0);
-  $('stockBlock').innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Appâts</span><span style="color:var(--txt);font-weight:500">${state.stock.appats} restants</span></div><div class="progress-bg"><div class="progress-fill" style="width:${ap}%;background:${ap<20?'#d85a30':ap<40?'#ef9f27':'#1d9e75'}"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Cannes</span><span style="color:var(--txt);font-weight:500">${state.stock.cannes} restantes</span></div><div class="progress-bg"><div class="progress-fill" style="width:${cp}%;background:${cp<20?'#d85a30':cp<40?'#ef9f27':'#1d9e75'}"></div></div></div>`;
-  const sr=$('stockResume'); if(sr) sr.textContent=`${state.stock.appats} appâts · ${state.stock.cannes} cannes`;
+const FISH_BY_VALUE=[…FISH].sort((a,b)=>{if(a.price===null&&b.price===null)return 0;if(a.price===null)return 1;if(b.price===null)return -1;return b.price-a.price;});
+$(‘fishCatalog’).innerHTML=FISH.map(f=>’<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">’+f.icon+’</div><div class="fish-name">’+f.name+’</div><div class="fish-price">’+fmt(f.price)+(f.priceNote?’ <span style="font-size:10px;color:var(--txt3)">(’+f.priceNote+’)</span>’:’’)+’</div><div class="fish-type" style="color:'+(f.type==='illegal'?'#f0997b':'#5dcaa5')+'">’+(f.type===‘illegal’?‘LTD Cayo’:‘PNJ Canal’)+’</div></div>’).join(’’);
+const totalRev=state.sessions.reduce((a,s)=>a+s.revenu,0), totalDep=state.achats.reduce((a,x)=>a+x.cost,0), net=totalRev-totalDep;
+const totalPoissons=state.sessions.reduce((a,s)=>{FISH.forEach(f=>{a+=(s.fish?.[f.id]||0);});return a;},0);
+$(‘pecheKpis’).innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts</div><div class="kpi-val green">${fmt(totalRev)}</div></div><div class="kpi"><div class="kpi-label">Dépenses</div><div class="kpi-val red">${fmt(totalDep)}</div></div><div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val ${net>=0?'green':'red'}">${fmt(net)}</div></div><div class="kpi"><div class="kpi-label">Poissons pêchés</div><div class="kpi-val">${totalPoissons}</div></div><div class="kpi"><div class="kpi-label">Moy. / session</div><div class="kpi-val" style="color:#7ab8f5">${fmt(state.sessions.length?totalRev/state.sessions.length:0)}</div></div>`;
+const ap=Math.min(100,state.stock.appats>0?Math.round(state.stock.appats/300*100):0), cp=Math.min(100,state.stock.cannes>0?Math.round(state.stock.cannes/12*100):0);
+$(‘stockBlock’).innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Appâts</span><span style="color:var(--txt);font-weight:500">${state.stock.appats} restants</span></div><div class="progress-bg"><div class="progress-fill" style="width:${ap}%;background:${ap<20?'#d85a30':ap<40?'#ef9f27':'#1d9e75'}"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Cannes</span><span style="color:var(--txt);font-weight:500">${state.stock.cannes} restantes</span></div><div class="progress-bg"><div class="progress-fill" style="width:${cp}%;background:${cp<20?'#d85a30':cp<40?'#ef9f27':'#1d9e75'}"></div></div></div>`;
+const sr=$(‘stockResume’); if(sr) sr.textContent=`${state.stock.appats} appâts · ${state.stock.cannes} cannes`;
 }
 
 function renderPecheCharts(){
-  const last8=[...state.sessions].slice(0,8).reverse(), labels=last8.map((_,i)=>'S'+(state.sessions.length-last8.length+i+1)), nets=last8.map(s=>Math.round(s.revenu));
-  if(CH.line) CH.line.destroy();
-  CH.line=new Chart($('lineChart'),{type:'line',data:{labels,datasets:[{label:'Revenu',data:nets,borderColor:'#2a6db5',backgroundColor:'rgba(42,109,181,0.12)',fill:true,tension:0.3,pointBackgroundColor:'#2a6db5',pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}});
-  const ft={};FISH.forEach(f=>{ft[f.id]=state.sessions.reduce((a,s)=>a+(s.fish?.[f.id]||0),0);});const hF=Object.values(ft).some(v=>v>0);
-  $('pieLegend').innerHTML=FISH.map(f=>`<span><span class="ldot" style="background:${FC[f.id]}"></span>${f.name} ${hF?ft[f.id]:0}</span>`).join('');
-  if(CH.pie2) CH.pie2.destroy();
-  CH.pie2=new Chart($('pieChart'),{type:'doughnut',data:{labels:FISH.map(f=>f.name),datasets:[{data:hF?FISH.map(f=>ft[f.id]):FISH.map(()=>1),backgroundColor:FISH.map(f=>FC[f.id]),borderWidth:2,borderColor:'rgba(0,0,0,0.2)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-  const sR=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0), mR=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0);
-  if(CH.team) CH.team.destroy();
-  CH.team=new Chart($('teamChart'),{type:'bar',data:{labels:['Sun (Lucien)','Moon (Oscar)'],datasets:[{data:[sR,mR],backgroundColor:['rgba(245,200,66,0.7)','rgba(127,200,248,0.7)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}},y:{grid:{display:false},ticks:{color:'#8b90a8',font:{size:11}}}}}});
+const last8=[…state.sessions].slice(0,8).reverse(), labels=last8.map((_,i)=>‘S’+(state.sessions.length-last8.length+i+1)), nets=last8.map(s=>Math.round(s.revenu));
+if(CH.line) CH.line.destroy();
+CH.line=new Chart($(‘lineChart’),{type:‘line’,data:{labels,datasets:[{label:‘Revenu’,data:nets,borderColor:’#2a6db5’,backgroundColor:‘rgba(42,109,181,0.12)’,fill:true,tension:0.3,pointBackgroundColor:’#2a6db5’,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:‘rgba(128,128,128,0.08)’},ticks:{color:’#8b90a8’,font:{size:11}}},y:{grid:{color:‘rgba(128,128,128,0.08)’},ticks:{color:’#8b90a8’,font:{size:11},callback:v=>’$’+Math.round(v/1000)+‘k’}}}}});
+const ft={};FISH.forEach(f=>{ft[f.id]=state.sessions.reduce((a,s)=>a+(s.fish?.[f.id]||0),0);});const hF=Object.values(ft).some(v=>v>0);
+$(‘pieLegend’).innerHTML=FISH.map(f=>`<span><span class="ldot" style="background:${FC[f.id]}"></span>${f.name} ${hF?ft[f.id]:0}</span>`).join(’’);
+if(CH.pie2) CH.pie2.destroy();
+CH.pie2=new Chart($(‘pieChart’),{type:‘doughnut’,data:{labels:FISH.map(f=>f.name),datasets:[{data:hF?FISH.map(f=>ft[f.id]):FISH.map(()=>1),backgroundColor:FISH.map(f=>FC[f.id]),borderWidth:2,borderColor:‘rgba(0,0,0,0.2)’}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+const sR=state.sessions.reduce((a,s)=>a+(s.peche===‘sun’?s.revenu:s.peche===‘both’?s.revenu/2:0),0), mR=state.sessions.reduce((a,s)=>a+(s.peche===‘moon’?s.revenu:s.peche===‘both’?s.revenu/2:0),0);
+if(CH.team) CH.team.destroy();
+CH.team=new Chart($(‘teamChart’),{type:‘bar’,data:{labels:[‘Sun (Lucien)’,‘Moon (Oscar)’],datasets:[{data:[sR,mR],backgroundColor:[‘rgba(245,200,66,0.7)’,‘rgba(127,200,248,0.7)’],borderColor:[’#f5c842’,’#7fc8f8’],borderWidth:1}]},options:{indexAxis:‘y’,responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:‘rgba(128,128,128,0.08)’},ticks:{color:’#8b90a8’,font:{size:11},callback:v=>’$’+Math.round(v/1000)+‘k’}},y:{grid:{display:false},ticks:{color:’#8b90a8’,font:{size:11}}}}}});
 }
 
 function renderSaisieCounters(){
-  const el=$('fishCounters');
-  const FISH_SORTED = [...FISH].sort((a,b)=>{
-    if(a.price===null&&b.price===null) return 0;
-    if(a.price===null) return 1;
-    if(b.price===null) return -1;
-    return b.price-a.price;
-  });
-  if(el&&!el.children.length) el.innerHTML=FISH_SORTED.map(f=>`<div class="fish-counter"><span style="font-size:15px;margin-right:4px">${f.icon}</span><span style="flex:1;font-size:13px;color:var(--txt)">${f.name} <span style="font-size:10px;color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD':'PNJ'}</span></span><div style="display:flex;align-items:center;gap:6px"><button class="cbtn" onclick="chg('${f.id}',-1)">−</button><span class="cval" id="fc-${f.id}">0</span><button class="cbtn" onclick="chg('${f.id}',1)">+</button></div></div>`).join('');
+const el=$(‘fishCounters’);
+const FISH_SORTED = […FISH].sort((a,b)=>{
+if(a.price===null&&b.price===null) return 0;
+if(a.price===null) return 1;
+if(b.price===null) return -1;
+return b.price-a.price;
+});
+if(el&&!el.children.length) el.innerHTML=FISH_SORTED.map(f=>`<div class="fish-counter"><span style="font-size:15px;margin-right:4px">${f.icon}</span><span style="flex:1;font-size:13px;color:var(--txt)">${f.name} <span style="font-size:10px;color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD':'PNJ'}</span></span><div style="display:flex;align-items:center;gap:6px"><button class="cbtn" onclick="chg('${f.id}',-1)">−</button><span class="cval" id="fc-${f.id}">0</span><button class="cbtn" onclick="chg('${f.id}',1)">+</button></div></div>`).join(’’);
 }
 
 function renderEmplois(){
-  const shifts=state.shifts||[], tS=shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0), tM=shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0), tdS=shifts.filter(s=>s.date===today()).reduce((a,s)=>a+s.gains,0);
-  $('emploisKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Total emplois</div><div class="kpi-val green">${fmt(tS+tM)}</div><div class="kpi-sub">${shifts.length} shifts</div></div><div class="kpi"><div class="kpi-label">Sun — Horizon</div><div class="kpi-val" style="color:var(--sun)">${fmt(tS)}</div><div class="kpi-sub">${shifts.filter(s=>s.player==='sun').length} shifts</div></div><div class="kpi"><div class="kpi-label">Moon — Club 77</div><div class="kpi-val" style="color:var(--moon)">${fmt(tM)}</div></div><div class="kpi"><div class="kpi-label">Aujourd'hui</div><div class="kpi-val green">${fmt(tdS)}</div></div>`;
-  const el=$('shiftsHisto');
-  if(!shifts.length){el.innerHTML='<div class="empty-state">Aucun shift enregistré</div>';return;}
-  el.innerHTML=[...shifts].sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0)).slice(0,10).map(s=>`<div class="row"><div class="av ${s.player==='sun'?'av-sun':'av-moon'}" style="width:28px;height:28px;font-size:10px">${s.player==='sun'?'SU':'MO'}</div><span style="flex:1;font-size:13px;color:var(--txt2)">${s.activite}${s.runs?' · '+s.runs+' run(s)':''}${s.note?' · '+s.note:''}</span><span class="badge-propre">propre</span><span style="color:#1d9e75;font-weight:500;margin-left:8px">${fmt(s.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(s.ts)}</span><button class="btn-del" onclick="delShift('${s._id}')">✕</button></div>`).join('');
+const shifts=state.shifts||[], tS=shifts.filter(s=>s.player===‘sun’).reduce((a,s)=>a+s.gains,0), tM=shifts.filter(s=>s.player===‘moon’).reduce((a,s)=>a+s.gains,0), tdS=shifts.filter(s=>s.date===today()).reduce((a,s)=>a+s.gains,0);
+$(‘emploisKpis’).innerHTML=`<div class="kpi"><div class="kpi-label">Total emplois</div><div class="kpi-val green">${fmt(tS+tM)}</div><div class="kpi-sub">${shifts.length} shifts</div></div><div class="kpi"><div class="kpi-label">Sun — Horizon</div><div class="kpi-val" style="color:var(--sun)">${fmt(tS)}</div><div class="kpi-sub">${shifts.filter(s=>s.player==='sun').length} shifts</div></div><div class="kpi"><div class="kpi-label">Moon — Club 77</div><div class="kpi-val" style="color:var(--moon)">${fmt(tM)}</div></div><div class="kpi"><div class="kpi-label">Aujourd'hui</div><div class="kpi-val green">${fmt(tdS)}</div></div>`;
+const el=$(‘shiftsHisto’);
+if(!shifts.length){el.innerHTML=’<div class="empty-state">Aucun shift enregistré</div>’;return;}
+el.innerHTML=[…shifts].sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0)).slice(0,10).map(s=>`<div class="row"><div class="av ${s.player==='sun'?'av-sun':'av-moon'}" style="width:28px;height:28px;font-size:10px">${s.player==='sun'?'SU':'MO'}</div><span style="flex:1;font-size:13px;color:var(--txt2)">${s.activite}${s.runs?' · '+s.runs+' run(s)':''}${s.note?' · '+s.note:''}</span><span class="badge-propre">propre</span><span style="color:#1d9e75;font-weight:500;margin-left:8px">${fmt(s.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(s.ts)}</span><button class="btn-del" onclick="delShift('${s._id}')">✕</button></div>`).join(’’);
 }
 
 function renderHistorique(){
-  const fT=$('filtType').value,fP=$('filtPerson').value;let rows=[];
-  if(!fT||fT==='session'){let s=[...state.sessions];if(fP)s=s.filter(x=>x.peche===fP);rows.push(...s.map(x=>({...x,kind:'session'})));}
-  if(!fT||fT==='achat'){let a=[...state.achats];if(fP&&fP!=='both')a=a.filter(x=>x.person===fP);rows.push(...a.map(x=>({...x,kind:'achat'})));}
-  rows.sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0));
-  if(!rows.length){$('histoBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txt3)">Aucune entrée</td></tr>';return;}
-  $('histoBody').innerHTML=rows.map(r=>{
-    if(r.kind==='session') return `<tr><td>${fmtDate(r.ts)}</td><td><span class="badge-propre">Pêche</span></td><td>${PNAMES[r.peche]||r.peche}</td><td style="color:#1d9e75">${fmt(r.revenu)}</td><td style="color:var(--txt3)">—</td><td style="color:#1d9e75;font-weight:500">${fmt(r.revenu)}</td><td style="color:var(--txt3)">${r.note||'—'}</td><td><button class="btn-del" onclick="delSession('${r._id}')">✕</button></td></tr>`;
-    return `<tr><td>${fmtDate(r.ts)}</td><td><span class="tag tag-depense">Achat</span></td><td>${r.person}</td><td style="color:var(--txt3)">—</td><td style="color:#d85a30">-${fmt(r.cost)}</td><td style="color:#d85a30;font-weight:500">-${fmt(r.cost)}</td><td style="color:var(--txt3)">${r.matType==='appat'?'Appâts':'Cannes'} ×${r.qty} <span class="${r.monnaie==='sale'?'badge-sale':'badge-propre'}">${r.monnaie||'propre'}</span></td><td><button class="btn-del" onclick="delAchat('${r._id}')">✕</button></td></tr>`;
-  }).join('');
+const fT=$(‘filtType’).value,fP=$(‘filtPerson’).value;let rows=[];
+if(!fT||fT===‘session’){let s=[…state.sessions];if(fP)s=s.filter(x=>x.peche===fP);rows.push(…s.map(x=>({…x,kind:‘session’})));}
+if(!fT||fT===‘achat’){let a=[…state.achats];if(fP&&fP!==‘both’)a=a.filter(x=>x.person===fP);rows.push(…a.map(x=>({…x,kind:‘achat’})));}
+rows.sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0));
+if(!rows.length){$(‘histoBody’).innerHTML=’<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txt3)">Aucune entrée</td></tr>’;return;}
+$(‘histoBody’).innerHTML=rows.map(r=>{
+if(r.kind===‘session’) return `<tr><td>${fmtDate(r.ts)}</td><td><span class="badge-propre">Pêche</span></td><td>${PNAMES[r.peche]||r.peche}</td><td style="color:#1d9e75">${fmt(r.revenu)}</td><td style="color:var(--txt3)">—</td><td style="color:#1d9e75;font-weight:500">${fmt(r.revenu)}</td><td style="color:var(--txt3)">${r.note||'—'}</td><td><button class="btn-del" onclick="delSession('${r._id}')">✕</button></td></tr>`;
+return `<tr><td>${fmtDate(r.ts)}</td><td><span class="tag tag-depense">Achat</span></td><td>${r.person}</td><td style="color:var(--txt3)">—</td><td style="color:#d85a30">-${fmt(r.cost)}</td><td style="color:#d85a30;font-weight:500">-${fmt(r.cost)}</td><td style="color:var(--txt3)">${r.matType==='appat'?'Appâts':'Cannes'} ×${r.qty} <span class="${r.monnaie==='sale'?'badge-sale':'badge-propre'}">${r.monnaie||'propre'}</span></td><td><button class="btn-del" onclick="delAchat('${r._id}')">✕</button></td></tr>`;
+}).join(’’);
 }
 
-const CAT_ICONS = {vehicule:'🚗',immobilier:'🏠',business:'🏭',equipement:'🔫',divers:'📦',peche:'🎣',cagnotte:'💰'};
-const JOUEUR_LABELS = {both:'Sun + Moon', sun:'Sun', moon:'Moon'};
+const CAT_ICONS = {vehicule:‘🚗’,immobilier:‘🏠’,business:‘🏭’,equipement:‘🔫’,divers:‘📦’,peche:‘🎣’,cagnotte:‘💰’};
+const JOUEUR_LABELS = {both:‘Sun + Moon’, sun:‘Sun’, moon:‘Moon’};
 
 function renderAchatsHisto(){
-  const el = $('achatsHisto');
-  if(!el) return;
-  const deps = state.depenses||[];
-  if(!deps.length){ el.innerHTML='<div class="empty-state">Aucun achat enregistré</div>'; return; }
-  el.innerHTML = deps.slice(0,20).map(d=>`
-    <div class="row">
-      <span style="font-size:18px">${CAT_ICONS[d.cat]||'📦'}</span>
-      <div style="flex:1;margin-left:6px">
-        <div style="font-size:13px;font-weight:500;color:var(--txt)">${d.nom}</div>
-        <div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur}${d.note?' · '+d.note:''}</div>
-      </div>
-      <span class="${d.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:6px">${d.monnaie||'propre'}</span>
-      <span style="color:#d85a30;font-weight:500">-${fmt(d.montant)}</span>
-      <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(d.ts)}</span>
-      <button class="btn-del" onclick="delDepense('${d._id}')" style="margin-left:6px">✕</button>
-    </div>`).join('');
+const el = $(‘achatsHisto’);
+if(!el) return;
+const deps = state.depenses||[];
+if(!deps.length){ el.innerHTML=’<div class="empty-state">Aucun achat enregistré</div>’; return; }
+el.innerHTML = deps.slice(0,20).map(d=>` <div class="row"> <span style="font-size:18px">${CAT_ICONS[d.cat]||'📦'}</span> <div style="flex:1;margin-left:6px"> <div style="font-size:13px;font-weight:500;color:var(--txt)">${d.nom}</div> <div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur}${d.note?' · '+d.note:''}</div> </div> <span class="${d.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:6px">${d.monnaie||'propre'}</span> <span style="color:#d85a30;font-weight:500">-${fmt(d.montant)}</span> <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(d.ts)}</span> <button class="btn-del" onclick="delDepense('${d._id}')" style="margin-left:6px">✕</button> </div>`).join(’’);
 }
 
 function renderObjectifs(){
-  const soldeSun  = calcSoldeAuto('sun');
-  const soldeMoon = calcSoldeAuto('moon');
-  const potSale   = (state.soldes||{}).potCommun||0;
-  const totalPropre = soldeSun + soldeMoon;
-  const totalSale   = potSale;
+const soldeSun  = calcSoldeAuto(‘sun’);
+const soldeMoon = calcSoldeAuto(‘moon’);
+const potSale   = (state.soldes||{}).potCommun||0;
+const totalPropre = soldeSun + soldeMoon;
+const totalSale   = potSale;
 
-  if(!state.objectifs.length){$('objList').innerHTML='<div class="empty-state">Aucun objectif défini</div>';return;}
-  $('objList').innerHTML=state.objectifs.map(o=>{
-    const monnaie = o.monnaie||'propre';
-    const joueur  = o.joueur||'both';
-    const budget  = monnaie==='sale' ? totalSale : totalPropre;
-    const budgetLabel = monnaie==='sale' ? 'Propre total' : 'Propre total';
+if(!state.objectifs.length){$(‘objList’).innerHTML=’<div class="empty-state">Aucun objectif défini</div>’;return;}
+$(‘objList’).innerHTML=state.objectifs.map(o=>{
+const monnaie = o.monnaie||‘propre’;
+const joueur  = o.joueur||‘both’;
+const budget  = monnaie===‘sale’ ? totalSale : totalPropre;
+const budgetLabel = monnaie===‘sale’ ? ‘Propre total’ : ‘Propre total’;
 
-    const pct      = o.target > 0 ? Math.round(budget / o.target * 100) : 0;
-    const barWidth = Math.min(100, Math.round(Math.min(pct,120) / 120 * 100));
-    const resteApres = budget - o.target;
+```
+const pct      = o.target > 0 ? Math.round(budget / o.target * 100) : 0;
+const barWidth = Math.min(100, Math.round(Math.min(pct,120) / 120 * 100));
+const resteApres = budget - o.target;
 
-    let col, label, labelCol;
-    if(pct >= 120){
-      col='#1d9e75'; label='Prêt à acheter ✓'; labelCol='#1d9e75';
-    } else if(pct >= 100){
-      col='#ef9f27'; label='Finançable — cash limité'; labelCol='#ef9f27';
-    } else {
-      col='#7f77dd'; label='En cours'; labelCol='var(--txt3)';
-    }
-
-    const monnaieTag = monnaie==='sale'
-      ? '<span class="badge-sale">sale</span>'
-      : '<span class="badge-propre">propre</span>';
-    const joueurTag = joueur==='both'
-      ? '<span style="font-size:11px;color:var(--txt3)">Sun + Moon</span>'
-      : joueur==='sun'
-        ? '<span style="font-size:11px;color:var(--sun)">Sun</span>'
-        : '<span style="font-size:11px;color:var(--moon)">Moon</span>';
-
-    return `<div style="padding:12px 0;border-bottom:0.5px solid var(--border)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-        <span style="font-size:18px">${CAT_ICONS[o.cat]||'📦'}</span>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:500;color:var(--txt)">${o.name}</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:2px">${monnaieTag}${joueurTag}<span style="font-size:11px;color:var(--txt3)">${o.cat}</span></div>
-        </div>
-        <div style="font-size:11px;font-weight:500;color:${labelCol};padding:2px 8px;border-radius:999px;border:0.5px solid ${labelCol};white-space:nowrap">${label}</div>
-        ${pct>=120?'<button class="btn btn-primary" onclick="validerAchat('+o.id+')" style="padding:5px 12px;font-size:12px">Valider l\'achat</button>':''}
-        <button class="btn-del" onclick="delObj(${o.id})">✕</button>
-      </div>
-      <div class="progress-bg" style="height:6px;margin-bottom:8px">
-        <div class="progress-fill" style="width:${barWidth}%;background:${col};height:6px"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:4px">
-        <span style="color:var(--txt3)">Disponible : <span style="color:var(--txt);font-weight:500">${fmt(budget)}</span> / <span style="font-weight:500">${fmt(o.target)}</span> <span style="color:${labelCol}">(${pct}%)</span></span>
-        <span style="color:var(--txt3)">Reste après : <span style="color:${resteApres>=0?'#1d9e75':'#d85a30'};font-weight:500">${fmt(resteApres)}</span></span>
-      </div>
-    </div>`;
-  }).join('');
+let col, label, labelCol;
+if(pct >= 120){
+  col='#1d9e75'; label='Prêt à acheter ✓'; labelCol='#1d9e75';
+} else if(pct >= 100){
+  col='#ef9f27'; label='Finançable — cash limité'; labelCol='#ef9f27';
+} else {
+  col='#7f77dd'; label='En cours'; labelCol='var(--txt3)';
 }
 
-$('dateBadge').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+const monnaieTag = monnaie==='sale'
+  ? '<span class="badge-sale">sale</span>'
+  : '<span class="badge-propre">propre</span>';
+const joueurTag = joueur==='both'
+  ? '<span style="font-size:11px;color:var(--txt3)">Sun + Moon</span>'
+  : joueur==='sun'
+    ? '<span style="font-size:11px;color:var(--sun)">Sun</span>'
+    : '<span style="font-size:11px;color:var(--moon)">Moon</span>';
+
+return `<div style="padding:12px 0;border-bottom:0.5px solid var(--border)">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <span style="font-size:18px">${CAT_ICONS[o.cat]||'📦'}</span>
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:500;color:var(--txt)">${o.name}</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:2px">${monnaieTag}${joueurTag}<span style="font-size:11px;color:var(--txt3)">${o.cat}</span></div>
+    </div>
+    <div style="font-size:11px;font-weight:500;color:${labelCol};padding:2px 8px;border-radius:999px;border:0.5px solid ${labelCol};white-space:nowrap">${label}</div>
+    ${pct>=120?'<button class="btn btn-primary" onclick="validerAchat('+o.id+')" style="padding:5px 12px;font-size:12px">Valider l\'achat</button>':''}
+    <button class="btn-del" onclick="delObj(${o.id})">✕</button>
+  </div>
+  <div class="progress-bg" style="height:6px;margin-bottom:8px">
+    <div class="progress-fill" style="width:${barWidth}%;background:${col};height:6px"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:4px">
+    <span style="color:var(--txt3)">Disponible : <span style="color:var(--txt);font-weight:500">${fmt(budget)}</span> / <span style="font-weight:500">${fmt(o.target)}</span> <span style="color:${labelCol}">(${pct}%)</span></span>
+    <span style="color:var(--txt3)">Reste après : <span style="color:${resteApres>=0?'#1d9e75':'#d85a30'};font-weight:500">${fmt(resteApres)}</span></span>
+  </div>
+</div>`;
+```
+
+}).join(’’);
+}
+
+$(‘dateBadge’).textContent=new Date().toLocaleDateString(‘fr-FR’,{weekday:‘long’,day:‘numeric’,month:‘long’});
 startListeners();
 </script>
+
 </body>
 </html>
