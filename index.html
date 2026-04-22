@@ -120,6 +120,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 <div class="nav">
   <button class="nav-btn active" onclick="showPage('hq')">Apollo HQ</button>
   <button class="nav-btn" onclick="showPage('peche')">Pêche</button>
+  <button class="nav-btn" onclick="showPage('salvia')">Salvia</button>
   <button class="nav-btn" onclick="showPage('emplois')">Emplois</button>
   <button class="nav-btn" onclick="showPage('historique')">Historique</button>
   <button class="nav-btn" onclick="showPage('objectifs')">Objectifs</button>
@@ -272,6 +273,145 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
 </div>
 
+<!-- SALVIA -->
+<div class="page" id="page-salvia">
+  <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
+    <button class="inner-tab active" id="stab-stats" onclick="switchSalviaTab('stats')">Stats & stocks</button>
+    <button class="inner-tab" id="stab-saisie" onclick="switchSalviaTab('saisie')">Saisie</button>
+  </div>
+
+  <!-- Stats Salvia -->
+  <div id="salvia-stats">
+    <div class="kpi-row" id="salviaKpis"></div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Stock actuel</div>
+        <div id="salviaStock"></div>
+        <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Corriger le stock</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Feuilles en inventaire</div>
+              <div style="display:flex;gap:6px">
+                <input type="number" id="fixFeuilles" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
+                <button class="btn btn-primary" onclick="fixSalviaStock('feuilles')" style="padding:7px 12px;font-size:12px">Màj</button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Têtes en inventaire</div>
+              <div style="display:flex;gap:6px">
+                <input type="number" id="fixTetes" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
+                <button class="btn btn-primary" onclick="fixSalviaStock('tetes')" style="padding:7px 12px;font-size:12px">Màj</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Revenus — historique sessions</div>
+        <div class="chart-wrap" style="height:180px"><canvas id="salviaChart" role="img" aria-label="Revenus salvia par session">Graphique salvia</canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Dernières opérations salvia</div>
+      <div id="salviaOpsHisto"></div>
+    </div>
+  </div>
+
+  <!-- Saisie Salvia -->
+  <div id="salvia-saisie" style="display:none">
+
+    <!-- Cueillette -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:24px;height:24px;border-radius:50%;background:#1a4a2e;display:flex;align-items:center;justify-content:center;font-size:14px">🌿</div>
+        <div class="card-title" style="margin-bottom:0">Cueillette — Falaises de Cayo</div>
+      </div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
+        Zone revendiquée — territoire gang local
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Pêcheur(s)</label>
+          <select id="salvCueilPeche">
+            <option value="sun">Sun (Lucien Morel)</option>
+            <option value="moon">Moon (Oscar Marchemont)</option>
+            <option value="both">Sun + Moon ensemble</option>
+          </select>
+        </div>
+        <div class="field"><label>Feuilles récoltées</label>
+          <input type="number" id="salvFeuilles" placeholder="Ex: 50" min="1" step="1"/>
+        </div>
+        <div class="field"><label>Taxe payée ($)</label>
+          <input type="number" id="salvTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
+        </div>
+        <div class="field"><label>Note</label>
+          <input type="text" id="salvCueilNote" placeholder="Optionnel..."/>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveSalviaCueillette()">Enregistrer la cueillette</button>
+    </div>
+
+    <!-- Transformation -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:24px;height:24px;border-radius:50%;background:#2a1a4a;display:flex;align-items:center;justify-content:center;font-size:14px">🔥</div>
+        <div class="card-title" style="margin-bottom:0">Transformation — Chalet montagne</div>
+      </div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
+        Zone revendiquée — entre téléphérique et scierie
+      </div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+        Stock feuilles disponibles — <span id="salviaFeuillesDisp" style="color:var(--txt);font-weight:500">0</span>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Feuilles utilisées</label>
+          <input type="number" id="salvTransfFeuilles" placeholder="Ex: 30" min="1" step="1" oninput="updateSalviaTransfEstim()"/>
+        </div>
+        <div class="field"><label>Taxe payée ($)</label>
+          <input type="number" id="salvTransfTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
+        </div>
+        <div class="field"><label>Note</label>
+          <input type="text" id="salvTransfNote" placeholder="Optionnel..."/>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvTransfEstim"></div>
+      <button class="btn btn-primary" onclick="saveSalviaTransfo()">Enregistrer la transformation</button>
+    </div>
+
+    <!-- Vente -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
+        <div class="card-title" style="margin-bottom:0">Vente — argent sale</div>
+      </div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
+        Prix variable 60$–100$/tête · Stock têtes — <span id="salviaTetesDisp" style="color:var(--txt);font-weight:500">0</span>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Têtes vendues</label>
+          <input type="number" id="salvVenteTetes" placeholder="Ex: 20" min="1" step="1" oninput="updateSalviaVenteEstim()"/>
+        </div>
+        <div class="field"><label>Revenus encaissés ($)</label>
+          <input type="number" id="salvVenteRevenu" placeholder="Total reçu" min="0" step="1" oninput="updateSalviaVenteEstim()"/>
+        </div>
+        <div class="field"><label>Vendeur</label>
+          <select id="salvVentePeche">
+            <option value="sun">Sun</option>
+            <option value="moon">Moon</option>
+            <option value="both">Sun + Moon</option>
+          </select>
+        </div>
+        <div class="field"><label>Note</label>
+          <input type="text" id="salvVenteNote" placeholder="Optionnel..."/>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvVenteEstim"></div>
+      <button class="btn btn-primary" onclick="saveSalviaVente()">Enregistrer la vente</button>
+    </div>
+
+  </div>
+</div>
+
 <!-- EMPLOIS -->
 <div class="page" id="page-emplois">
   <div class="kpi-row" id="emploisKpis"></div>
@@ -410,9 +550,9 @@ const FISH = [
   {id:'dauphin',name:'Dauphin',price:575,type:'illegal',icon:'🐬'},
   {id:'espadon',name:'Espadon',price:325,type:'illegal',icon:'🐟'},
   {id:'piranha',name:'Piranha',price:415,type:'illegal',icon:'🦷'},
-  {id:'anchois',name:'Anchois',price:null,type:'legal',icon:'🐟'},
-  {id:'esturgeon',name:'Esturgeon',price:null,type:'legal',icon:'🐡'},
-  {id:'thon',name:'Thon rouge',price:null,type:'legal',icon:'🐠'},
+  {id:'anchois',name:'Anchois',price:5,type:'legal',icon:'🐟',approx:false},
+  {id:'esturgeon',name:'Esturgeon',price:74,type:'legal',icon:'🐡',approx:true},
+  {id:'thon',name:'Thon rouge',price:77,type:'legal',icon:'🐠',approx:true},
 ];
 const FC = {requin:'#7f77dd',dauphin:'#1d9e75',espadon:'#378add',piranha:'#d85a30',anchois:'#ba7517',esturgeon:'#d4537e',thon:'#0f6e56'};
 const PNAMES = {sun:'Sun',moon:'Moon',both:'Sun+Moon'};
@@ -436,7 +576,7 @@ window.showPage = id => {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   $('page-'+id).classList.add('active');
-  ['hq','peche','emplois','historique','objectifs'].forEach((n,i)=>{ if(n===id) document.querySelectorAll('.nav-btn')[i].classList.add('active'); });
+  ['hq','peche','salvia','emplois','historique','objectifs'].forEach((n,i)=>{ if(n===id) document.querySelectorAll('.nav-btn')[i].classList.add('active'); });
   if(id==='peche') setTimeout(renderPecheCharts,80);
 };
 window.switchInnerTab = tab => {
@@ -455,8 +595,9 @@ function startListeners(){
   onSnapshot(query(collection(db,'sessions'),orderBy('ts','desc')), snap=>{ state.sessions=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('sessions'));
   onSnapshot(query(collection(db,'achats'),orderBy('ts','desc')), snap=>{ state.achats=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('achats'));
   onSnapshot(query(collection(db,'shifts'),orderBy('ts','desc')), snap=>{ state.shifts=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('shifts'));
-  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; } ol(); sr(); }, eh('state'));
+  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; state.salviaStock=d.salviaStock||{feuilles:0,tetes:0}; } ol(); sr(); }, eh('state'));
   onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')), snap=>{ state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('depenses',err));
+  onSnapshot(query(collection(db,'salvia'),orderBy('ts','desc')), snap=>{ state.salvia=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('salvia',err));
 }
 
 window.fixStock = async type => {
@@ -468,7 +609,7 @@ window.fixStock = async type => {
   showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
 };
 
-async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, updatedAt:serverTimestamp() }); }
+async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, updatedAt:serverTimestamp() }); }
 
 // Calcule le solde automatique d'un joueur (shifts + sessions - achats)
 function calcSoldeAuto(player){
@@ -592,7 +733,196 @@ async function enregistrerDepense({nom, montant, cat, monnaie, joueur, note, fro
   await saveState();
 }
 
-function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); }
+// ── SALVIA ────────────────────────────────────────────────────
+window.switchSalviaTab = tab => {
+  $('salvia-stats').style.display = tab==='stats' ? 'block' : 'none';
+  $('salvia-saisie').style.display = tab==='saisie' ? 'block' : 'none';
+  $('stab-stats').classList.toggle('active', tab==='stats');
+  $('stab-saisie').classList.toggle('active', tab==='saisie');
+  if(tab==='stats') setTimeout(renderSalviaChart, 80);
+};
+
+function getSalviaStock(){
+  const ops = state.salvia||[];
+  let feuilles = (state.salviaStock||{}).feuilles||0;
+  let tetes    = (state.salviaStock||{}).tetes||0;
+  return {feuilles, tetes};
+}
+
+window.fixSalviaStock = async type => {
+  const val = parseInt($(type==='feuilles'?'fixFeuilles':'fixTetes').value);
+  if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
+  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
+  state.salviaStock[type] = val;
+  await saveState();
+  $(type==='feuilles'?'fixFeuilles':'fixTetes').value = '';
+  showToast(`Stock ${type} salvia corrigé : ${val}`);
+};
+
+window.updateSalviaTransfEstim = () => {
+  const n = parseInt($('salvTransfFeuilles').value)||0;
+  $('salvTransfEstim').textContent = n>0 ? `${n} feuilles → ${n} têtes (conversion 1:1)` : '';
+};
+
+window.updateSalviaVenteEstim = () => {
+  const tetes = parseInt($('salvVenteTetes').value)||0;
+  const revenu = parseFloat($('salvVenteRevenu').value)||0;
+  if(tetes>0 && revenu>0){
+    const moy = Math.round(revenu/tetes);
+    $('salvVenteEstim').textContent = `Prix moyen : ${fmt(moy)}/tête (fourchette 60$–100$)`;
+  } else {
+    $('salvVenteEstim').textContent = '';
+  }
+};
+
+window.saveSalviaCueillette = async () => {
+  const feuilles = parseInt($('salvFeuilles').value)||0;
+  if(!feuilles){ showToast('Nombre de feuilles requis', false); return; }
+  const taxe = parseFloat($('salvTaxe').value)||0;
+  await addDoc(collection(db,'salvia'), {
+    type:'cueillette', player:$('salvCueilPeche').value,
+    feuilles, taxe, note:$('salvCueilNote').value,
+    ts:serverTimestamp(), date:today()
+  });
+  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
+  state.salviaStock.feuilles += feuilles;
+  await saveState();
+  $('salvFeuilles').value=''; $('salvTaxe').value=''; $('salvCueilNote').value='';
+  showToast(`Cueillette enregistrée — ${feuilles} feuilles ajoutées !`);
+  switchSalviaTab('stats');
+};
+
+window.saveSalviaTransfo = async () => {
+  const feuilles = parseInt($('salvTransfFeuilles').value)||0;
+  if(!feuilles){ showToast('Nombre de feuilles requis', false); return; }
+  const stock = state.salviaStock||{feuilles:0,tetes:0};
+  if(feuilles > stock.feuilles){
+    showToast(`Stock insuffisant — ${stock.feuilles} feuilles disponibles`, false); return;
+  }
+  const taxe = parseFloat($('salvTransfTaxe').value)||0;
+  const tetes = feuilles; // 1:1
+  await addDoc(collection(db,'salvia'), {
+    type:'transformation', feuilles, tetes, taxe,
+    note:$('salvTransfNote').value, ts:serverTimestamp(), date:today()
+  });
+  state.salviaStock.feuilles -= feuilles;
+  state.salviaStock.tetes += tetes;
+  await saveState();
+  $('salvTransfFeuilles').value=''; $('salvTransfTaxe').value=''; $('salvTransfNote').value='';
+  $('salvTransfEstim').textContent='';
+  showToast(`Transformation enregistrée — ${tetes} têtes produites !`);
+  switchSalviaTab('stats');
+};
+
+window.saveSalviaVente = async () => {
+  const tetes = parseInt($('salvVenteTetes').value)||0;
+  const revenu = parseFloat($('salvVenteRevenu').value)||0;
+  if(!tetes||!revenu){ showToast('Têtes et revenus requis', false); return; }
+  const stock = state.salviaStock||{feuilles:0,tetes:0};
+  if(tetes > stock.tetes){
+    showToast(`Stock insuffisant — ${stock.tetes} têtes disponibles`, false); return;
+  }
+  await addDoc(collection(db,'salvia'), {
+    type:'vente', player:$('salvVentePeche').value,
+    tetes, revenu, monnaie:'sale',
+    note:$('salvVenteNote').value, ts:serverTimestamp(), date:today()
+  });
+  state.salviaStock.tetes -= tetes;
+  // Ajouter au pot commun sale
+  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
+  state.soldes.potCommun = (state.soldes.potCommun||0) + revenu;
+  await saveState();
+  $('salvVenteTetes').value=''; $('salvVenteRevenu').value='';
+  $('salvVenteNote').value=''; $('salvVenteEstim').textContent='';
+  showToast(`Vente enregistrée — ${fmt(revenu)} en sale ajoutés au pot commun !`);
+  switchSalviaTab('stats');
+};
+
+window.delSalviaOp = async id => {
+  if(!confirm('Supprimer cette opération ?')) return;
+  await deleteDoc(doc(db,'salvia',id));
+  showToast('Supprimé');
+};
+
+let salviaChart;
+function renderSalviaChart(){
+  const ventes = (state.salvia||[]).filter(s=>s.type==='vente').slice(0,8).reverse();
+  const labels = ventes.map((_,i)=>'V'+(i+1));
+  const data   = ventes.map(s=>s.revenu);
+  if($('salviaChart')){
+    if(salviaChart) salviaChart.destroy();
+    salviaChart = new Chart($('salviaChart'),{
+      type:'bar',
+      data:{labels,datasets:[{label:'Revenus',data,backgroundColor:'rgba(108,111,207,0.6)',borderColor:'#6c6fcf',borderWidth:1}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
+        x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},
+        y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}
+      }}
+    });
+  }
+}
+
+function renderSalvia(){
+  const ops = state.salvia||[];
+  const stock = state.salviaStock||{feuilles:0,tetes:0};
+  const totalVentes = ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.revenu,0);
+  const totalTaxes  = ops.reduce((a,s)=>a+(s.taxe||0),0);
+  const totalFeuilles = ops.filter(s=>s.type==='cueillette').reduce((a,s)=>a+s.feuilles,0);
+  const totalTetes  = ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.tetes,0);
+  const moy = totalTetes>0 ? Math.round(totalVentes/totalTetes) : 0;
+
+  const ki = $('salviaKpis');
+  if(ki) ki.innerHTML = `
+    <div class="kpi"><div class="kpi-label">Revenus bruts (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div>
+    <div class="kpi"><div class="kpi-label">Taxes payées</div><div class="kpi-val red">${fmt(totalTaxes)}</div></div>
+    <div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val amber">${fmt(totalVentes-totalTaxes)}</div></div>
+    <div class="kpi"><div class="kpi-label">Feuilles récoltées</div><div class="kpi-val">${totalFeuilles}</div></div>
+    <div class="kpi"><div class="kpi-label">Prix moy./tête</div><div class="kpi-val">${moy?fmt(moy):'—'}</div></div>
+  `;
+
+  const fPct = Math.min(100, stock.feuilles>0?Math.round(stock.feuilles/200*100):0);
+  const tPct = Math.min(100, stock.tetes>0?Math.round(stock.tetes/200*100):0);
+  const ss = $('salviaStock');
+  if(ss) ss.innerHTML = `
+    <div style="padding:8px 0;border-bottom:0.5px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">🌿 Feuilles</span><span style="color:var(--txt);font-weight:500">${stock.feuilles} kg</span></div>
+      <div class="progress-bg"><div class="progress-fill" style="width:${fPct}%;background:#1d9e75"></div></div>
+    </div>
+    <div style="padding:8px 0">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">💊 Têtes prêtes</span><span style="color:var(--txt);font-weight:500">${stock.tetes} kg</span></div>
+      <div class="progress-bg"><div class="progress-fill" style="width:${tPct}%;background:#6c6fcf"></div></div>
+    </div>
+  `;
+
+  // Stock dispo pour saisie
+  const fd = $('salviaFeuillesDisp'); if(fd) fd.textContent = stock.feuilles+' kg';
+  const td = $('salviaTetesDisp');   if(td) td.textContent = stock.tetes+' kg';
+
+  // Historique
+  const ho = $('salviaOpsHisto');
+  if(!ho) return;
+  if(!ops.length){ ho.innerHTML='<div class="empty-state">Aucune opération enregistrée</div>'; return; }
+  const icons = {cueillette:'🌿',transformation:'🔥',vente:'💰'};
+  const labels = {cueillette:'Cueillette',transformation:'Transformation',vente:'Vente'};
+  ho.innerHTML = ops.slice(0,10).map(op=>`
+    <div class="row">
+      <span style="font-size:16px">${icons[op.type]}</span>
+      <div style="flex:1;margin-left:6px">
+        <div style="font-size:13px;font-weight:500;color:var(--txt)">${labels[op.type]}
+          ${op.type==='cueillette'?`— ${op.feuilles} feuilles`:''}
+          ${op.type==='transformation'?`— ${op.feuilles}f → ${op.tetes} têtes`:''}
+          ${op.type==='vente'?`— ${op.tetes} têtes`:''}
+        </div>
+        <div style="font-size:11px;color:var(--txt3)">${op.note||''}${op.taxe?` · taxe : ${fmt(op.taxe)}`:''}</div>
+      </div>
+      ${op.type==='vente'?`<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">${fmt(op.revenu)}</span>`:''}
+      ${op.taxe&&op.type!=='vente'?`<span style="color:#d85a30;font-size:12px">-${fmt(op.taxe)}</span>`:''}
+      <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span>
+      <button class="btn-del" onclick="delSalviaOp('${op._id}')">✕</button>
+    </div>`).join('');
+}
+
+function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); renderSalvia(); }
 
 function renderHQ(){
   const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
@@ -663,7 +993,7 @@ function renderHQ(){
 
 function renderPechePage(){
   const FISH_BY_VALUE=[...FISH].sort((a,b)=>{if(a.price===null&&b.price===null)return 0;if(a.price===null)return 1;if(b.price===null)return -1;return b.price-a.price;});
-  $('fishCatalog').innerHTML=FISH_BY_VALUE.map(f=>`<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">${f.icon}</div><div class="fish-name">${f.name}</div><div class="fish-price">${f.price?fmt(f.price):'variable'}</div><div class="fish-type" style="color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD Cayo':'PNJ Canal'}</div></div>`).join('');
+  $('fishCatalog').innerHTML=FISH.map(f=>`<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">${f.icon}</div><div class="fish-name">${f.name}</div><div class="fish-price">${fmt(f.price)}${f.priceNote?` <span style="font-size:10px;color:var(--txt3)">(${f.priceNote})</span>`:''}</div><div class="fish-type" style="color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD Cayo':'PNJ Canal'}</div></div>`).join('');
   const totalRev=state.sessions.reduce((a,s)=>a+s.revenu,0), totalDep=state.achats.reduce((a,x)=>a+x.cost,0), net=totalRev-totalDep;
   const totalPoissons=state.sessions.reduce((a,s)=>{FISH.forEach(f=>{a+=(s.fish?.[f.id]||0);});return a;},0);
   $('pecheKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts</div><div class="kpi-val green">${fmt(totalRev)}</div></div><div class="kpi"><div class="kpi-label">Dépenses</div><div class="kpi-val red">${fmt(totalDep)}</div></div><div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val ${net>=0?'green':'red'}">${fmt(net)}</div></div><div class="kpi"><div class="kpi-label">Poissons pêchés</div><div class="kpi-val">${totalPoissons}</div></div><div class="kpi"><div class="kpi-label">Moy. / session</div><div class="kpi-val amber">${fmt(state.sessions.length?totalRev/state.sessions.length:0)}</div></div>`;
