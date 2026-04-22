@@ -927,7 +927,7 @@ function renderSalvia(){
       +'</div>'
       +venteHtml+taxeHtml
       +'<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'
-      +'<button class="btn-del" onclick="delSalviaOp(''+op._id+'')">✕</button>'
+      +'<button class="btn-del" onclick="delSalviaOp(&quot;'+op._id+'&quot;)">✕</button>'
       +'</div>';
   }).join('');
 }
