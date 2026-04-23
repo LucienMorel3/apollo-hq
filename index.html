@@ -456,7 +456,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div id="plantStockBlock"></div>
       <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
         <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Corriger le stock</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <div>
             <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">🏭 Entrepôt (max 700)</div>
             <div style="display:flex;gap:6px">
@@ -476,6 +476,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             <div style="display:flex;gap:6px">
               <input type="number" id="fixVanMoon" placeholder="Qté branches" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 8px;font-size:12px;color:var(--txt)"/>
               <button class="btn btn-primary" onclick="fixPlantStock('vanMoon')" style="padding:7px 10px;font-size:11px">Màj</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Appartement (max 700)</div>
+            <div style="display:flex;gap:6px">
+              <input type="number" id="fixAppart" placeholder="Qté branches" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantStock('appart')" style="padding:7px 10px;font-size:11px">Màj</button>
             </div>
           </div>
         </div>
