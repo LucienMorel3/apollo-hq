@@ -571,7 +571,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             <option value="entrepot">Entrepôt</option>
             <option value="vanSun">Moon Beam (Sun)</option>
             <option value="vanMoon">Van Moon</option>
-            <option value="all">Tout (entrepôt + vans)</option>
+            <option value="appart">Appartement</option>
+            <option value="all">Tout (entrepôt + vans + appart)</option>
           </select>
         </div>
         <div class="field"><label>Note</label>
@@ -807,7 +808,7 @@ window.fixStock = async type => {
   showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
 };
 
-async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, plantationStock:state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000}, commandes:state.commandes||[], updatedAt:serverTimestamp() }); }
+async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, plantationStock:state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,commande:1000}, commandes:state.commandes||[], updatedAt:serverTimestamp() }); }
 
 // Calcule le solde automatique d'un joueur (shifts + sessions - achats)
 function calcSoldeAuto(player){
@@ -1206,7 +1207,7 @@ function renderCommandes(){
 }
 
 // ── PLANTATION ────────────────────────────────────────────────
-const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300};
+const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300, appart:700};
 const PRIX_BRANCHE = 70;
 const POIDS_BRANCHE = 0.5; // kg
 
@@ -1219,19 +1220,19 @@ window.switchPlantationTab = tab => {
 
 window.updatePlantCmdTarget = async () => {
   const val = parseInt($('plantCmdTarget').value)||1000;
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,commande:1000};
   state.plantationStock.commande = val;
   await saveState();
   showToast(`Objectif commande mis à jour : ${val} branches`);
 };
 
 window.fixPlantStock = async type => {
-  const ids = {entrepot:'fixEntrepot', vanSun:'fixVanSun', vanMoon:'fixVanMoon'};
+  const ids = {entrepot:'fixEntrepot', vanSun:'fixVanSun', vanMoon:'fixVanMoon', appart:'fixAppart'};
   const val = parseInt($(ids[type]).value);
   if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
   const max = PLANT_MAX[type];
   if(val > max){ showToast(`Max ${max} branches pour ce stockage`, false); return; }
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,commande:1000};
   state.plantationStock[type] = val;
   await saveState();
   $(ids[type]).value='';
@@ -1314,7 +1315,7 @@ window.savePlantRecolte = async () => {
   const branches = parseInt($('plantBranches').value)||0;
   if(!pieds||!branches){ showToast('Pieds et branches requis', false); return; }
   const dest = $('plantDest').value;
-  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,commande:1000};
   const newQty = (stock[dest]||0) + branches;
   if(newQty > PLANT_MAX[dest]){
     showToast(`Capacité dépassée - max ${PLANT_MAX[dest]} branches dans ce stockage (actuel: ${stock[dest]})`, false); return;
@@ -1335,7 +1336,7 @@ window.savePlantVente = async () => {
   const revenu = parseFloat($('plantVenteRevenu').value)||(branches*PRIX_BRANCHE);
   if(!branches){ showToast('Nombre de branches requis', false); return; }
   const src = $('plantVenteSrc').value;
-  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,commande:1000};
   const totalStock = stock.entrepot+stock.vanSun+stock.vanMoon;
   if(src==='all' && branches>totalStock){ showToast(`Stock insuffisant - ${totalStock} branches disponibles`, false); return; }
   if(src!=='all' && branches>(stock[src]||0)){ showToast(`Stock insuffisant dans ce stockage - ${stock[src]||0} branches`, false); return; }
@@ -1348,7 +1349,7 @@ window.savePlantVente = async () => {
   // Déduire du stock
   if(src==='all'){
     let reste = branches;
-    for(const loc of ['entrepot','vanSun','vanMoon']){
+    for(const loc of ['entrepot','vanSun','vanMoon','appart']){
       const pris = Math.min(reste, stock[loc]||0);
       state.plantationStock[loc] = (stock[loc]||0) - pris;
       reste -= pris;
@@ -1375,7 +1376,7 @@ window.delPlantOp = async id => {
 let plantChart;
 function renderPlantation(){
   const ops = state.plantation||[];
-  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,commande:1000};
+  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,commande:1000};
   const commande = stock.commande||1000;
   const totalStock = stock.entrepot+stock.vanSun+stock.vanMoon;
 
@@ -1407,7 +1408,7 @@ function renderPlantation(){
   // Stock par location
   const sb = $('plantStockBlock');
   if(sb){
-    const locs = [{key:'entrepot',label:'🏭 Entrepôt',max:700},{key:'vanSun',label:'🚐 Moon Beam (Sun)',max:300},{key:'vanMoon',label:'🚐 Van Moon',max:300}];
+    const locs = [{key:'entrepot',label:'Entrepot',max:700},{key:'vanSun',label:'Moon Beam (Sun)',max:300},{key:'vanMoon',label:'Van Moon',max:300},{key:'appart',label:'Appartement',max:700}];
     sb.innerHTML = locs.map(l=>{
       const qty = stock[l.key]||0, pct = Math.round(qty/l.max*100);
       const col = pct>90?'#d85a30':pct>60?'#ef9f27':'#1d9e75';
