@@ -426,191 +426,151 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <button class="inner-tab" id="ptab-saisie" onclick="switchPlantationTab('saisie')">Saisie</button>
   </div>
 
-  <!-- STATS & STOCKS -->
+  <!-- ONGLET 1 : STATS & STOCKS -->
   <div id="plantation-stats">
 
     <!-- KPIs -->
     <div class="kpi-row" id="plantationKpis"></div>
 
-    <!-- Commande en cours -->
-    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
-      <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Commande en cours</div>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <div style="flex:1">
-          <div style="font-size:13px;color:var(--txt2);margin-bottom:6px">Branches stockees <span id="plantCmdLabel" style="color:var(--txt);font-weight:500"></span></div>
-          <div class="progress-bg" style="height:8px"><div id="plantCmdBar" class="progress-fill" style="height:8px;background:#6c6fcf;width:0%"></div></div>
-        </div>
-        <div style="text-align:right;min-width:60px">
-          <div style="font-size:20px;font-weight:500;color:#6c6fcf" id="plantCmdPct">0%</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--txt3);flex-wrap:wrap">
-        <span>Objectif commande :</span>
-        <input type="number" id="plantCmdTarget" placeholder="1000" min="1" step="1" style="width:80px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:4px 8px;font-size:12px;color:var(--txt)"/>
-        <span>branches (0,5kg/branche)</span>
-        <button class="btn btn-sm" onclick="updatePlantCmdTarget()">Maj</button>
-      </div>
-    </div>
-
-    <!-- Stock ressources + branches -->
     <div class="two-col">
 
-      <!-- Ressources -->
+      <!-- Colonne gauche : stock -->
       <div class="card">
-        <div class="card-title">Ressources disponibles</div>
-        <div style="margin-bottom:12px">
-          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
-            <span style="color:var(--txt2)">Eau (bouteilles)</span>
-            <span style="color:var(--txt);font-weight:500" id="plantEauVal">0</span>
-          </div>
-          <div class="progress-bg"><div id="plantEauBar" class="progress-fill" style="background:#378add;width:0%"></div></div>
-          <div style="font-size:11px;color:var(--txt3);margin-top:3px">Besoin cycle 54 pieds : 324 bouteilles</div>
-        </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
-            <span style="color:var(--txt2)">Fertilisant (unites)</span>
-            <span style="color:var(--txt);font-weight:500" id="plantFertVal">0</span>
-          </div>
-          <div class="progress-bg"><div id="plantFertBar" class="progress-fill" style="background:#1d9e75;width:0%"></div></div>
-          <div style="font-size:11px;color:var(--txt3);margin-top:3px">Besoin cycle 54 pieds : 324 unites (1 620 kg)</div>
-        </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">
-          <div style="font-size:11px;color:var(--txt3);margin-bottom:8px">Pieds plantables avec le stock actuel</div>
-          <div style="font-size:22px;font-weight:500;color:var(--acc)" id="plantPiedsPossibles">0</div>
-          <div style="font-size:11px;color:var(--txt3)" id="plantPiedsPossiblesSub"></div>
-        </div>
-      </div>
-
-      <!-- Branches -->
-      <div class="card">
-        <div class="card-title">Stock branches</div>
-        <div id="plantStockBlock"></div>
-      </div>
-    </div>
-
-    <!-- Corriger les stocks -->
-    <div class="card">
-      <div class="card-title">Corriger les stocks</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card-title">Stock actuel</div>
 
         <!-- Ressources -->
-        <div>
-          <div style="font-size:12px;color:var(--txt2);margin-bottom:10px;font-weight:500">Ressources</div>
-          <div style="margin-bottom:10px">
-            <div style="font-size:12px;color:var(--txt3);margin-bottom:5px">Eau (bouteilles)</div>
-            <div style="display:flex;gap:6px">
-              <input type="number" id="fixEau" placeholder="Quantite reelle" min="0" step="1" style="flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantRessource('eau')" style="padding:7px 12px;font-size:12px">Maj</button>
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Ressources</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:var(--bg3);border-radius:var(--r);padding:10px">
+              <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Eau</div>
+              <div style="font-size:16px;font-weight:500;color:var(--txt)" id="plantEauVal">0</div>
+              <div style="font-size:10px;color:var(--txt3)">bouteilles</div>
+              <div class="progress-bg" style="margin-top:6px;height:3px"><div id="plantEauBar" class="progress-fill" style="background:#378add;height:3px;width:0%"></div></div>
+              <div style="font-size:10px;color:var(--txt3);margin-top:2px">besoin 54 pieds : 324</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:var(--r);padding:10px">
+              <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Fertilisant</div>
+              <div style="font-size:16px;font-weight:500;color:var(--txt)" id="plantFertVal">0</div>
+              <div style="font-size:10px;color:var(--txt3)">unites</div>
+              <div class="progress-bg" style="margin-top:6px;height:3px"><div id="plantFertBar" class="progress-fill" style="background:#1d9e75;height:3px;width:0%"></div></div>
+              <div style="font-size:10px;color:var(--txt3);margin-top:2px">besoin 54 pieds : 324</div>
             </div>
           </div>
-          <div>
-            <div style="font-size:12px;color:var(--txt3);margin-bottom:5px">Fertilisant (unites)</div>
-            <div style="display:flex;gap:6px">
-              <input type="number" id="fixFert" placeholder="Quantite reelle" min="0" step="1" style="flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantRessource('fert')" style="padding:7px 12px;font-size:12px">Maj</button>
-            </div>
+          <div style="margin-top:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--r);font-size:12px;color:var(--txt2)">
+            Pieds plantables : <span style="font-weight:500;color:var(--acc)" id="plantPiedsPossibles">0</span>
+            <span style="font-size:11px;color:var(--txt3)" id="plantPiedsSub"></span>
           </div>
         </div>
 
         <!-- Branches par lieu -->
         <div>
-          <div style="font-size:12px;color:var(--txt2);margin-bottom:10px;font-weight:500">Branches par lieu</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div>
-              <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Entrepot (max 700)</div>
-              <div style="display:flex;gap:4px">
-                <input type="number" id="fixEntrepot" placeholder="0" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-size:12px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixPlantStock('entrepot')" style="padding:6px 8px;font-size:11px">Maj</button>
-              </div>
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Branches par lieu</div>
+          <div id="plantStockBlock"></div>
+        </div>
+
+        <!-- Correction stock -->
+        <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Corriger</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+            <div style="display:flex;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--txt2);min-width:40px">Eau</span>
+              <input type="number" id="fixEau" placeholder="reel" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantRessource('eau')" style="padding:5px 8px;font-size:11px">Ok</button>
             </div>
-            <div>
-              <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Moon Beam (max 300)</div>
-              <div style="display:flex;gap:4px">
-                <input type="number" id="fixVanSun" placeholder="0" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-size:12px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixPlantStock('vanSun')" style="padding:6px 8px;font-size:11px">Maj</button>
-              </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--txt2);min-width:40px">Fert.</span>
+              <input type="number" id="fixFert" placeholder="reel" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantRessource('fert')" style="padding:5px 8px;font-size:11px">Ok</button>
             </div>
-            <div>
-              <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Van Moon (max 300)</div>
-              <div style="display:flex;gap:4px">
-                <input type="number" id="fixVanMoon" placeholder="0" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-size:12px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixPlantStock('vanMoon')" style="padding:6px 8px;font-size:11px">Maj</button>
-              </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div style="display:flex;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--txt2);min-width:40px">Entrepot</span>
+              <input type="number" id="fixEntrepot" placeholder="reel" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantStock('entrepot')" style="padding:5px 8px;font-size:11px">Ok</button>
             </div>
-            <div>
-              <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Appartement (max 700)</div>
-              <div style="display:flex;gap:4px">
-                <input type="number" id="fixAppart" placeholder="0" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-size:12px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixPlantStock('appart')" style="padding:6px 8px;font-size:11px">Maj</button>
-              </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--txt2);min-width:40px">M.Beam</span>
+              <input type="number" id="fixVanSun" placeholder="reel" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantStock('vanSun')" style="padding:5px 8px;font-size:11px">Ok</button>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--txt2);min-width:40px">Van Moon</span>
+              <input type="number" id="fixVanMoon" placeholder="reel" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantStock('vanMoon')" style="padding:5px 8px;font-size:11px">Ok</button>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--txt2);min-width:40px">Appart</span>
+              <input type="number" id="fixAppart" placeholder="reel" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
+              <button class="btn btn-primary" onclick="fixPlantStock('appart')" style="padding:5px 8px;font-size:11px">Ok</button>
             </div>
           </div>
         </div>
-
       </div>
+
+      <!-- Colonne droite : commandes -->
+      <div class="card">
+        <div class="card-title">Commandes</div>
+        <div id="plantCommandesList"></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Nouvelle commande</div>
+          <div style="display:flex;gap:6px;margin-bottom:6px">
+            <input type="text" id="cmdNom" placeholder="Nom client / ref" style="flex:2;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
+            <input type="number" id="cmdQty" placeholder="branches" min="1" step="1" style="flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
+          </div>
+          <button class="btn btn-primary" style="width:100%" onclick="addCommande()">Ajouter la commande</button>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Historique -->
+    <!-- Historique cycles -->
     <div class="card">
-      <div class="card-title">Historique des operations</div>
+      <div class="card-title">Historique des cycles de production</div>
       <div id="plantCyclesHisto"></div>
     </div>
 
   </div>
 
-  <!-- SAISIE -->
+  <!-- ONGLET 2 : SAISIE -->
   <div id="plantation-saisie" style="display:none">
 
-    <!-- Achat eau -->
+    <!-- Achat -->
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#0a1a3a;display:flex;align-items:center;justify-content:center;font-size:14px">💧</div>
-        <div class="card-title" style="margin-bottom:0">Achat eau + graines + pots (Roxwood)</div>
+        <div style="width:24px;height:24px;border-radius:50%;background:#0a1a3a;display:flex;align-items:center;justify-content:center;font-size:14px">🛒</div>
+        <div class="card-title" style="margin-bottom:0">Achat materiel (Roxwood + LTD rouge)</div>
       </div>
       <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Graine 75$/u - Pot 75$/u - Eau 5$/bouteille (LTD rouge)
+        Graine 75$/u · Pot 75$/u · Eau 5$/bouteille · Fertilisant gratuit (zone taxee)
       </div>
       <div class="form-grid">
-        <div class="field"><label>Bouteilles eau achetees</label><input type="number" id="plantAchatEau" placeholder="Ex: 324" min="0" step="1" oninput="updatePlantAchatEstim()"/></div>
-        <div class="field"><label>Graines achetees</label><input type="number" id="plantAchatGraines" placeholder="Ex: 54" min="0" max="54" step="1" oninput="updatePlantAchatEstim()"/></div>
-        <div class="field"><label>Pots achetes</label><input type="number" id="plantAchatPots" placeholder="Ex: 54" min="0" max="54" step="1" oninput="updatePlantAchatEstim()"/></div>
+        <div class="field"><label>Bouteilles eau</label><input type="number" id="plantAchatEau" placeholder="Ex: 324" min="0" step="1" oninput="updatePlantAchatEstim()"/></div>
+        <div class="field"><label>Graines</label><input type="number" id="plantAchatGraines" placeholder="Ex: 54" min="0" max="54" step="1" oninput="updatePlantAchatEstim()"/></div>
+        <div class="field"><label>Pots</label><input type="number" id="plantAchatPots" placeholder="Ex: 54" min="0" max="54" step="1" oninput="updatePlantAchatEstim()"/></div>
+        <div class="field"><label>Fertilisant recup</label><input type="number" id="plantAchatFert" placeholder="Ex: 324" min="0" step="1" oninput="updatePlantAchatEstim()"/></div>
+        <div class="field"><label>Taxe fert ($)</label><input type="number" id="plantFertTaxe" placeholder="0 si pas taxe" min="0" step="1"/></div>
         <div class="field"><label>Acheteur</label><select id="plantAcheteur"><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Sun + Moon (50/50)</option></select></div>
       </div>
       <div id="plantAchatEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
       <button class="btn btn-primary" onclick="savePlantAchat()">Enregistrer l'achat</button>
     </div>
 
-    <!-- Recuperation fertilisant -->
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#0a2a1a;display:flex;align-items:center;justify-content:center;font-size:14px">🌿</div>
-        <div class="card-title" style="margin-bottom:0">Recuperation fertilisant (sous le pont)</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
-        Zone revendiqueee - gratuit si pas taxe - 5kg/unite
-      </div>
-      <div class="form-grid">
-        <div class="field"><label>Unites recuperees</label><input type="number" id="plantFertRecup" placeholder="Ex: 100" min="1" step="1" oninput="updatePlantFertEstim()"/></div>
-        <div class="field"><label>Taxe payee ($)</label><input type="number" id="plantFertTaxe" placeholder="0 si pas taxe" min="0" step="1"/></div>
-        <div class="field"><label>Recuperateur</label><select id="plantFertPlayer"><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Sun + Moon</option></select></div>
-      </div>
-      <div id="plantFertEstim" style="font-size:12px;color:var(--txt3);margin-bottom:12px"></div>
-      <button class="btn btn-primary" onclick="savePlantFertRecup()">Enregistrer la recuperation</button>
-    </div>
-
-    <!-- Plantation + recolte -->
+    <!-- Cycle production -->
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div style="width:24px;height:24px;border-radius:50%;background:#1a3a1a;display:flex;align-items:center;justify-content:center;font-size:14px">🌱</div>
-        <div class="card-title" style="margin-bottom:0">Cycle plantation - recolte</div>
+        <div class="card-title" style="margin-bottom:0">Cycle de production</div>
       </div>
       <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Stock eau : <span id="plantEauDisp" style="color:var(--txt);font-weight:500">0</span> bouteilles -
-        Stock fertilisant : <span id="plantFertDisp" style="color:var(--txt);font-weight:500">0</span> unites
+        Stock : <span id="plantEauDisp" style="color:var(--txt);font-weight:500">0</span> bouteilles eau ·
+        <span id="plantFertDisp" style="color:var(--txt);font-weight:500">0</span> unites fert
       </div>
       <div class="form-grid">
         <div class="field"><label>Pieds plantes</label><input type="number" id="plantNbPieds" placeholder="Max 54" min="1" max="54" step="1" oninput="updatePlantCycleEstim()"/></div>
         <div class="field"><label>Branches recoltees</label><input type="number" id="plantBranches" placeholder="Max 9 x pieds" min="1" step="1" oninput="updatePlantCycleEstim()"/></div>
+        <div class="field"><label>Jardinier</label><select id="plantJardinier"><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Sun + Moon</option></select></div>
         <div class="field"><label>Destination branches</label>
           <select id="plantDest">
             <option value="entrepot">Entrepot</option>
@@ -629,21 +589,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
-        <div class="card-title" style="margin-bottom:0">Livraison / vente - argent sale</div>
+        <div class="card-title" style="margin-bottom:0">Livraison / vente (argent sale)</div>
       </div>
       <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Stock total : <span id="plantStockTotal" style="color:var(--txt);font-weight:500">0</span> branches - Prix : 70$/branche
+        Stock total : <span id="plantStockTotal" style="color:var(--txt);font-weight:500">0</span> branches · Prix : 70$/branche
       </div>
       <div class="form-grid">
         <div class="field"><label>Branches vendues</label><input type="number" id="plantVenteBranches" placeholder="Ex: 1000" min="1" step="1" oninput="updatePlantVenteEstim()"/></div>
         <div class="field"><label>Revenus encaisses ($)</label><input type="number" id="plantVenteRevenu" placeholder="Auto : branches x 70$" min="0" step="1" oninput="updatePlantVenteEstim()"/></div>
         <div class="field"><label>Source</label>
           <select id="plantVenteSrc">
+            <option value="all">Tout (tous les stocks)</option>
             <option value="entrepot">Entrepot</option>
             <option value="vanSun">Moon Beam (Sun)</option>
             <option value="vanMoon">Van Moon</option>
             <option value="appart">Appartement</option>
-            <option value="all">Tout (tous les stocks)</option>
           </select>
         </div>
         <div class="field"><label>Note</label><input type="text" id="plantVenteNote" placeholder="Ex: Livraison commande..."/></div>
@@ -1301,6 +1261,49 @@ window.fixPlantRessource = async type => {
   state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
   state.plantationStock[type==='eau'?'eau':'fert'] = val;
   await saveState();
+  if(type==='eau'// -- PLANTATION ---------------------------------------------------
+const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300, appart:700};
+const PRIX_BRANCHE = 70;
+const POIDS_BRANCHE = 0.5;
+
+window.switchPlantationTab = tab => {
+  $('plantation-stats').style.display = tab==='stats'?'block':'none';
+  $('plantation-saisie').style.display = tab==='saisie'?'block':'none';
+  $('ptab-stats').classList.toggle('active', tab==='stats');
+  $('ptab-saisie').classList.toggle('active', tab==='saisie');
+};
+
+window.addCommande = async () => {
+  const nom = $('cmdNom').value.trim();
+  const qty = parseInt($('cmdQty').value)||0;
+  if(!nom||!qty){ showToast('Nom et quantite requis', false); return; }
+  state.commandes = state.commandes||[];
+  state.commandes.push({id:Date.now(), nom, qty, date:today(), livree:false});
+  await saveState();
+  $('cmdNom').value=''; $('cmdQty').value='';
+  showToast('Commande ajoutee : '+nom+' ('+qty+' branches)');
+};
+
+window.cloturerCommande = async id => {
+  if(!confirm('Marquer cette commande comme livree ?')) return;
+  state.commandes = (state.commandes||[]).map(c=>c.id===id?{...c,livree:true,dateLivraison:today()}:c);
+  await saveState();
+  showToast('Commande cloturee !');
+};
+
+window.supprimerCommande = async id => {
+  if(!confirm('Supprimer cette commande ?')) return;
+  state.commandes = (state.commandes||[]).filter(c=>c.id!==id);
+  await saveState();
+  showToast('Commande supprimee');
+};
+
+window.fixPlantRessource = async type => {
+  const val = parseInt(type==='eau'?$('fixEau').value:$('fixFert').value);
+  if(isNaN(val)||val<0){ showToast('Quantite invalide', false); return; }
+  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+  state.plantationStock[type==='eau'?'eau':'fert'] = val;
+  await saveState();
   if(type==='eau') $('fixEau').value=''; else $('fixFert').value='';
   showToast((type==='eau'?'Eau':'Fertilisant')+' corrige : '+val);
 };
@@ -1314,7 +1317,7 @@ window.fixPlantStock = async type => {
   state.plantationStock[type] = val;
   await saveState();
   $(ids[type]).value='';
-  showToast('Stock '+type+' corrige : '+val+' branches');
+  showToast('Stock '+type+' : '+val+' branches');
 };
 
 window.updatePlantAchatEstim = () => {
@@ -1324,12 +1327,7 @@ window.updatePlantAchatEstim = () => {
   const total = (eau*5)+(graines*75)+(pots*75);
   const el = $('plantAchatEstim');
   if(!eau&&!graines&&!pots){ el.innerHTML=''; return; }
-  el.innerHTML = 'Eau : '+fmt(eau*5)+' - Graines : '+fmt(graines*75)+' - Pots : '+fmt(pots*75)+' = <strong style="color:#d85a30">'+fmt(total)+'</strong>';
-};
-
-window.updatePlantFertEstim = () => {
-  const n = parseInt($('plantFertRecup').value)||0;
-  $('plantFertEstim').textContent = n>0 ? n+' unites = '+(n*5)+' kg' : '';
+  el.innerHTML = 'Eau : '+fmt(eau*5)+' · Graines : '+fmt(graines*75)+' · Pots : '+fmt(pots*75)+' = <strong style="color:#d85a30">'+fmt(total)+'</strong>';
 };
 
 window.updatePlantCycleEstim = () => {
@@ -1339,8 +1337,12 @@ window.updatePlantCycleEstim = () => {
   if(!pieds){ el.innerHTML=''; return; }
   const eauNeed = pieds*6, fertNeed = pieds*6;
   const stock = state.plantationStock||{eau:0,fert:0};
-  const eauOk = stock.eau >= eauNeed, fertOk = stock.fert >= fertNeed;
-  el.innerHTML = 'Eau : <strong style="color:'+(eauOk?'#1d9e75':'#d85a30')+'">'+eauNeed+'</strong> (stock: '+stock.eau+') - Fertilisant : <strong style="color:'+(fertOk?'#1d9e75':'#d85a30')+'">'+fertNeed+'</strong> (stock: '+stock.fert+')'+(branches?' - Valeur : <strong style="color:#ef9f27">'+fmt(branches*PRIX_BRANCHE)+'</strong>':'');
+  const eauOk = stock.eau>=eauNeed, fertOk = stock.fert>=fertNeed;
+  const rendement = pieds>0&&branches>0 ? ((branches/(pieds*9))*100).toFixed(0) : null;
+  el.innerHTML =
+    'Eau : <strong style="color:'+(eauOk?'#1d9e75':'#d85a30')+'">'+eauNeed+'</strong> (stock: '+stock.eau+') · '+
+    'Fert : <strong style="color:'+(fertOk?'#1d9e75':'#d85a30')+'">'+fertNeed+'</strong> (stock: '+stock.fert+')'+
+    (rendement?' · Rendement : <strong style="color:#ef9f27">'+rendement+'%</strong> ('+branches+'/'+(pieds*9)+' max)':'');
 };
 
 window.updatePlantVenteEstim = () => {
@@ -1348,7 +1350,7 @@ window.updatePlantVenteEstim = () => {
   const revenu = parseFloat($('plantVenteRevenu').value)||(branches*PRIX_BRANCHE);
   const el = $('plantVenteEstim');
   if(!branches){ el.innerHTML=''; return; }
-  el.innerHTML = 'Poids : '+(branches*POIDS_BRANCHE).toFixed(0)+'kg - Prix moy : '+fmt(Math.round(revenu/branches))+'/branche - Total : <strong style="color:#ef9f27">'+fmt(revenu)+'</strong>';
+  el.innerHTML = 'Poids : '+(branches*POIDS_BRANCHE).toFixed(0)+'kg · Prix moy : '+fmt(Math.round(revenu/branches))+'/branche · Total : <strong style="color:#ef9f27">'+fmt(revenu)+'</strong>';
   if(!$('plantVenteRevenu').value) $('plantVenteRevenu').placeholder = String(branches*PRIX_BRANCHE);
 };
 
@@ -1356,32 +1358,26 @@ window.savePlantAchat = async () => {
   const eau = parseInt($('plantAchatEau').value)||0;
   const graines = parseInt($('plantAchatGraines').value)||0;
   const pots = parseInt($('plantAchatPots').value)||0;
-  if(!eau&&!graines&&!pots){ showToast('Rien a enregistrer', false); return; }
-  const total = (eau*5)+(graines*75)+(pots*75);
+  const fert = parseInt($('plantAchatFert').value)||0;
+  if(!eau&&!graines&&!pots&&!fert){ showToast('Rien a enregistrer', false); return; }
+  const taxe = parseFloat($('plantFertTaxe').value)||0;
+  const total = (eau*5)+(graines*75)+(pots*75)+taxe;
   const acheteur = $('plantAcheteur').value;
-  await addDoc(collection(db,'plantation'), {type:'achat',eau,graines,pots,totalCout:total,acheteur,ts:serverTimestamp(),date:today()});
+  await addDoc(collection(db,'plantation'), {type:'achat',eau,graines,pots,fert,taxeFert:taxe,totalCout:total,acheteur,ts:serverTimestamp(),date:today()});
   state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
   state.plantationStock.eau += eau;
-  state.ajustements = state.ajustements||{sun:0,moon:0};
-  const part = acheteur==='both'?total/2:total;
-  if(acheteur==='sun'||acheteur==='both') state.ajustements.sun -= part;
-  if(acheteur==='moon'||acheteur==='both') state.ajustements.moon -= part;
+  state.plantationStock.fert += fert;
+  if(total>0){
+    state.ajustements = state.ajustements||{sun:0,moon:0};
+    const part = acheteur==='both'?total/2:total;
+    if(acheteur==='sun'||acheteur==='both') state.ajustements.sun -= part;
+    if(acheteur==='moon'||acheteur==='both') state.ajustements.moon -= part;
+  }
   await saveState();
-  $('plantAchatEau').value=''; $('plantAchatGraines').value=''; $('plantAchatPots').value=''; $('plantAchatEstim').innerHTML='';
-  showToast('Achat enregistre - '+fmt(total)+' deduits !');
+  ['plantAchatEau','plantAchatGraines','plantAchatPots','plantAchatFert','plantFertTaxe'].forEach(id=>$(id).value='');
+  $('plantAchatEstim').innerHTML='';
+  showToast('Achat enregistre'+( total>0?' - '+fmt(total)+' deduits !':'!'));
   switchPlantationTab('stats');
-};
-
-window.savePlantFertRecup = async () => {
-  const n = parseInt($('plantFertRecup').value)||0;
-  if(!n){ showToast('Quantite requise', false); return; }
-  const taxe = parseFloat($('plantFertTaxe').value)||0;
-  await addDoc(collection(db,'plantation'), {type:'fertilisant',quantite:n,poids:n*5,taxe,player:$('plantFertPlayer').value,ts:serverTimestamp(),date:today()});
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  state.plantationStock.fert += n;
-  await saveState();
-  $('plantFertRecup').value=''; $('plantFertTaxe').value=''; $('plantFertEstim').textContent='';
-  showToast(n+' unites de fertilisant ajoutees !');
 };
 
 window.savePlantCycle = async () => {
@@ -1390,17 +1386,19 @@ window.savePlantCycle = async () => {
   if(!pieds||!branches){ showToast('Pieds et branches requis', false); return; }
   const eauNeed = pieds*6, fertNeed = pieds*6;
   const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  if(stock.eau < eauNeed){ showToast('Eau insuffisante - besoin '+eauNeed+', stock '+stock.eau, false); return; }
-  if(stock.fert < fertNeed){ showToast('Fertilisant insuffisant - besoin '+fertNeed+', stock '+stock.fert, false); return; }
+  if(stock.eau<eauNeed){ showToast('Eau insuffisante - besoin '+eauNeed+', stock '+stock.eau, false); return; }
+  if(stock.fert<fertNeed){ showToast('Fert insuffisant - besoin '+fertNeed+', stock '+stock.fert, false); return; }
   const dest = $('plantDest').value;
-  if((stock[dest]||0)+branches > PLANT_MAX[dest]){ showToast('Capacite depassee pour '+dest, false); return; }
-  await addDoc(collection(db,'plantation'), {type:'cycle',pieds,branches,dest,note:$('plantNote').value,eauUtilisee:eauNeed,fertUtilise:fertNeed,ts:serverTimestamp(),date:today()});
+  if((stock[dest]||0)+branches>PLANT_MAX[dest]){ showToast('Capacite depassee pour '+dest, false); return; }
+  const rendement = parseFloat(((branches/(pieds*9))*100).toFixed(1));
+  await addDoc(collection(db,'plantation'), {type:'cycle',pieds,branches,rendement,jardinier:$('plantJardinier').value,dest,note:$('plantNote').value,eauUtilisee:eauNeed,fertUtilise:fertNeed,ts:serverTimestamp(),date:today()});
   state.plantationStock.eau -= eauNeed;
   state.plantationStock.fert -= fertNeed;
   state.plantationStock[dest] = (stock[dest]||0)+branches;
   await saveState();
-  $('plantNbPieds').value=''; $('plantBranches').value=''; $('plantNote').value=''; $('plantCycleEstim').innerHTML='';
-  showToast('Cycle enregistre - '+branches+' branches ajoutees !');
+  ['plantNbPieds','plantBranches','plantNote'].forEach(id=>$(id).value='');
+  $('plantCycleEstim').innerHTML='';
+  showToast('Cycle enregistre - '+branches+' branches (rendement '+rendement+'%)');
   switchPlantationTab('stats');
 };
 
@@ -1415,20 +1413,21 @@ window.savePlantVente = async () => {
   if(src!=='all'&&branches>(stock[src]||0)){ showToast('Stock insuffisant dans '+src, false); return; }
   await addDoc(collection(db,'plantation'), {type:'vente',branches,revenu,src,monnaie:'sale',note:$('plantVenteNote').value,ts:serverTimestamp(),date:today()});
   if(src==='all'){
-    let reste = branches;
+    let reste=branches;
     for(const loc of ['entrepot','vanSun','vanMoon','appart']){
-      const pris = Math.min(reste, stock[loc]||0);
-      state.plantationStock[loc] = (stock[loc]||0)-pris;
-      reste -= pris;
+      const pris=Math.min(reste,stock[loc]||0);
+      state.plantationStock[loc]=(stock[loc]||0)-pris;
+      reste-=pris;
       if(reste<=0) break;
     }
   } else {
-    state.plantationStock[src] = (stock[src]||0)-branches;
+    state.plantationStock[src]=(stock[src]||0)-branches;
   }
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  state.soldes.potCommun = (state.soldes.potCommun||0)+revenu;
+  state.soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  state.soldes.potCommun=(state.soldes.potCommun||0)+revenu;
   await saveState();
-  $('plantVenteBranches').value=''; $('plantVenteRevenu').value=''; $('plantVenteNote').value=''; $('plantVenteEstim').innerHTML='';
+  ['plantVenteBranches','plantVenteRevenu','plantVenteNote'].forEach(id=>$(id).value='');
+  $('plantVenteEstim').innerHTML='';
   showToast('Vente enregistree - '+fmt(revenu)+' en sale !');
   switchPlantationTab('stats');
 };
@@ -1442,86 +1441,98 @@ window.delPlantOp = async id => {
 function renderPlantation(){
   const ops = state.plantation||[];
   const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  const commande = stock.commande||1000;
+  const commandes = state.commandes||[];
   const totalBranches = stock.entrepot+stock.vanSun+stock.vanMoon+stock.appart;
   const totalVentes = ops.filter(o=>o.type==='vente').reduce((a,o)=>a+o.revenu,0);
   const totalCouts = ops.filter(o=>o.type==='achat').reduce((a,o)=>a+o.totalCout,0);
-  const totalTaxes = ops.filter(o=>o.type==='fertilisant').reduce((a,o)=>a+(o.taxe||0),0);
   const totalBranchesRecoltees = ops.filter(o=>o.type==='cycle').reduce((a,o)=>a+o.branches,0);
+  const totalBranchesVendues = ops.filter(o=>o.type==='vente').reduce((a,o)=>a+o.branches,0);
   const piedsPossibles = Math.floor(Math.min(stock.eau, stock.fert)/6);
 
-  const ki = $('plantationKpis');
-  if(ki) ki.innerHTML =
-    '<div class="kpi"><div class="kpi-label">Revenus (sale)</div><div class="kpi-val amber">'+fmt(totalVentes)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Couts totaux</div><div class="kpi-val red">'+fmt(totalCouts+totalTaxes)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Benefice net</div><div class="kpi-val amber">'+fmt(totalVentes-totalCouts-totalTaxes)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Branches recoltees</div><div class="kpi-val">'+totalBranchesRecoltees+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">En stock</div><div class="kpi-val">'+totalBranches+'</div></div>';
+  // KPIs
+  const ki=$('plantationKpis');
+  if(ki) ki.innerHTML=
+    '<div class="kpi"><div class="kpi-label">CA (sale)</div><div class="kpi-val amber">'+fmt(totalVentes)+'</div></div>'+
+    '<div class="kpi"><div class="kpi-label">Couts</div><div class="kpi-val red">'+fmt(totalCouts)+'</div></div>'+
+    '<div class="kpi"><div class="kpi-label">Benefice net</div><div class="kpi-val amber">'+fmt(totalVentes-totalCouts)+'</div></div>'+
+    '<div class="kpi"><div class="kpi-label">Branches prod.</div><div class="kpi-val">'+totalBranchesRecoltees+'</div></div>'+
+    '<div class="kpi"><div class="kpi-label">Branches vend.</div><div class="kpi-val">'+totalBranchesVendues+'</div></div>';
 
-  const cmdPct = Math.min(100, Math.round(totalBranches/commande*100));
-  const cb=$('plantCmdBar'); if(cb){cb.style.width=cmdPct+'%';cb.style.background=cmdPct>=100?'#1d9e75':cmdPct>50?'#ef9f27':'#6c6fcf';}
-  const cp=$('plantCmdPct'); if(cp) cp.textContent=cmdPct+'%';
-  const cl=$('plantCmdLabel'); if(cl) cl.textContent=totalBranches+' / '+commande+' branches';
-  const ct=$('plantCmdTarget'); if(ct&&!ct.value) ct.placeholder=String(commande);
-
+  // Ressources
   const eauPct=Math.min(100,stock.eau>0?Math.round(stock.eau/324*100):0);
   const fertPct=Math.min(100,stock.fert>0?Math.round(stock.fert/324*100):0);
-  const ev=$('plantEauVal'); if(ev) ev.textContent=stock.eau+' bouteilles';
+  const ev=$('plantEauVal'); if(ev) ev.textContent=stock.eau;
   const eb=$('plantEauBar'); if(eb) eb.style.width=eauPct+'%';
-  const fv=$('plantFertVal'); if(fv) fv.textContent=stock.fert+' unites ('+(stock.fert*5)+'kg)';
+  const fv=$('plantFertVal'); if(fv) fv.textContent=stock.fert;
   const fb=$('plantFertBar'); if(fb) fb.style.width=fertPct+'%';
   const pp=$('plantPiedsPossibles'); if(pp) pp.textContent=piedsPossibles;
-  const ps2=$('plantPiedsPossiblesSub'); if(ps2) ps2.textContent=piedsPossibles>=54?'Cycle complet possible !':piedsPossibles>0?'Cycle partiel possible':'Ressources insuffisantes';
+  const ps=$('plantPiedsSub'); if(ps) ps.textContent=' / 54 max'+(piedsPossibles>=54?' - cycle complet possible !':'');
 
+  // Stock branches
   const sb=$('plantStockBlock');
   if(sb){
-    const locs=[{key:'entrepot',label:'Entrepot',max:700},{key:'vanSun',label:'Moon Beam (Sun)',max:300},{key:'vanMoon',label:'Van Moon',max:300},{key:'appart',label:'Appartement',max:700}];
+    const locs=[{key:'entrepot',label:'Entrepot',max:700},{key:'vanSun',label:'Moon Beam',max:300},{key:'vanMoon',label:'Van Moon',max:300},{key:'appart',label:'Appart',max:700}];
     sb.innerHTML=locs.map(l=>{
-      const qty=stock[l.key]||0,pct=Math.round(qty/l.max*100),col=pct>90?'#d85a30':pct>60?'#ef9f27':'#1d9e75';
-      return '<div style="padding:6px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span style="color:var(--txt2)">'+l.label+'</span><span style="color:var(--txt);font-weight:500">'+qty+' / '+l.max+'</span></div><div class="progress-bg" style="height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div></div>';
-    }).join('')+'<div style="padding:6px 0;font-size:13px;display:flex;justify-content:space-between"><span style="color:var(--txt2)">Total</span><span style="color:var(--txt);font-weight:500">'+totalBranches+' branches - '+(totalBranches*POIDS_BRANCHE).toFixed(0)+'kg</span></div>';
+      const qty=stock[l.key]||0, pct=Math.round(qty/l.max*100), col=pct>90?'#d85a30':pct>60?'#ef9f27':'#1d9e75';
+      return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--border)">'+
+        '<span style="font-size:11px;color:var(--txt2);min-width:70px">'+l.label+'</span>'+
+        '<div class="progress-bg" style="flex:1;height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div>'+
+        '<span style="font-size:12px;font-weight:500;color:var(--txt);min-width:60px;text-align:right">'+qty+'/'+l.max+'</span></div>';
+    }).join('')+
+    '<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:12px">'+
+    '<span style="color:var(--txt3)">Total</span>'+
+    '<span style="color:var(--txt);font-weight:500">'+totalBranches+' branches ('+( totalBranches*POIDS_BRANCHE).toFixed(0)+'kg)</span></div>';
   }
 
+  // Saisie : stock dispo
   const ed=$('plantEauDisp'); if(ed) ed.textContent=stock.eau;
-  const fd2=$('plantFertDisp'); if(fd2) fd2.textContent=stock.fert;
+  const fd=$('plantFertDisp'); if(fd) fd.textContent=stock.fert;
   const st=$('plantStockTotal'); if(st) st.textContent=totalBranches;
 
+  // Commandes
+  const cl=$('plantCommandesList');
+  if(cl){
+    const actives = commandes.filter(c=>!c.livree);
+    const livrees = commandes.filter(c=>c.livree);
+    if(!commandes.length){ cl.innerHTML='<div class="empty-state" style="padding:1rem">Aucune commande</div>'; }
+    else {
+      cl.innerHTML = actives.map(cmd=>{
+        const pct=Math.min(100,Math.round(totalBranches/cmd.qty*100));
+        const col=pct>=100?'#1d9e75':pct>50?'#ef9f27':'#6c6fcf';
+        return '<div style="padding:8px 0;border-bottom:0.5px solid var(--border)">'+
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'+
+          '<span style="flex:1;font-size:13px;font-weight:500;color:var(--txt)">'+cmd.nom+'</span>'+
+          '<span style="font-size:12px;color:'+col+';font-weight:500">'+pct+'%</span>'+
+          (pct>=100?'<button class="btn btn-primary" onclick="cloturerCommande('+cmd.id+')" style="padding:3px 8px;font-size:11px">Livrer</button>':'')+
+          '<button class="btn-del" onclick="supprimerCommande('+cmd.id+')">x</button></div>'+
+          '<div style="font-size:11px;color:var(--txt3);margin-bottom:4px">'+totalBranches+' / '+cmd.qty+' branches</div>'+
+          '<div class="progress-bg" style="height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div></div>';
+      }).join('')+
+      (livrees.length?'<div style="font-size:11px;color:var(--txt3);margin-top:8px">'+livrees.length+' commande(s) livree(s)</div>':'');
+    }
+  }
+
+  // Historique cycles
   const ho=$('plantCyclesHisto');
   if(!ho) return;
-  if(!ops.length){ho.innerHTML='<div class="empty-state">Aucune operation enregistree</div>';return;}
-  const icons={achat:'🛒',fertilisant:'🌿',cycle:'🌱',vente:'💰'};
-  const labels={achat:'Achat materiel',fertilisant:'Fertilisant recup',cycle:'Cycle plantation',vente:'Vente'};
-  ho.innerHTML=ops.slice(0,15).map(op=>
-    '<div class="row"><span style="font-size:16px">'+icons[op.type]+'</span>'+
-    '<div style="flex:1;margin-left:6px"><div style="font-size:13px;font-weight:500;color:var(--txt)">'+labels[op.type]+
-    (op.type==='achat'?' - eau:'+op.eau+' graines:'+op.graines:'')+''+
-    (op.type==='fertilisant'?' - '+op.quantite+' unites':'')+''+
-    (op.type==='cycle'?' - '+op.pieds+' pieds > '+op.branches+' branches':'')+''+
-    (op.type==='vente'?' - '+op.branches+' branches':'')+'</div>'+
-    '<div style="font-size:11px;color:var(--txt3)">'+(op.note||'')+(op.taxe?' taxe: '+fmt(op.taxe):'')+'</div></div>'+
-    (op.type==='vente'?'<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">'+fmt(op.revenu)+'</span>':'')+''+
-    (op.type==='achat'?'<span style="color:#d85a30;font-size:12px">-'+fmt(op.totalCout)+'</span>':'')+''+
-    '<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'+
-    '<button class="btn-del" onclick="delPlantOp(this.dataset.id)" data-id="'+op._id+'">x</button></div>'
-  ).join('');
+  const cycles = ops.filter(o=>o.type==='cycle');
+  if(!cycles.length){ ho.innerHTML='<div class="empty-state">Aucun cycle enregistre</div>'; return; }
+  ho.innerHTML=cycles.slice(0,10).map(op=>{
+    const rendCol = op.rendement>=90?'#1d9e75':op.rendement>=70?'#ef9f27':'#d85a30';
+    return '<div class="row">'+
+      '<span style="font-size:16px">🌱</span>'+
+      '<div style="flex:1;margin-left:6px">'+
+      '<div style="font-size:13px;font-weight:500;color:var(--txt)">'+op.pieds+' pieds - '+op.branches+' branches - '+op.dest+'</div>'+
+      '<div style="font-size:11px;color:var(--txt3)">'+(op.jardinier||'')+(op.note?' · '+op.note:'')+'</div></div>'+
+      '<div style="text-align:right">'+
+      '<div style="font-size:13px;font-weight:500;color:'+rendCol+'">'+op.rendement+'%</div>'+
+      '<div style="font-size:10px;color:var(--txt3)">rendement</div></div>'+
+      '<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'+
+      '<button class="btn-del" onclick="delPlantOp(''+op._id+'')">x</button></div>';
+  }).join('');
 }
 
-function renderAll(){ renderHQ(); renderPechePage(); renderSaisieCounters(); renderHistorique(); renderEmplois(); renderObjectifs(); renderAchatsHisto(); renderSalvia(); renderCommandes(); renderPlantation(); }
-
-function renderHQ(){
-  const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
-  // Soldes calculés automatiquement (shifts + pêche - achats + ajustements)
-  const soldeSun  = calcSoldeAuto('sun');
-  const soldeMoon = calcSoldeAuto('moon');
-  const totalSale = soldes.potCommun||0;
-  const totalPropre = soldeSun + soldeMoon;
-  const totalApollo = totalPropre + totalSale;
-
-  // Participation (toutes activités depuis le début)
-  const sunPartic=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0);
-  const moonPartic=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0);
-  const totalPartic=sunPartic+moonPartic, sunPct=totalPartic>0?Math.round(sunPartic/totalPartic*100):50, moonPct=totalPartic>0?Math.round(moonPartic/totalPartic*100):50;
-  const todaySess=state.sessions.filter(s=>s.date===today()), todayShifts=shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
+shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
   const propreJour=todaySess.reduce((a,s)=>a+s.revenu,0)+todayShifts.reduce((a,s)=>a+s.gains,0), depJour=todayAchats.reduce((a,x)=>a+x.cost,0), netJour=propreJour-depJour;
 
   $('totalApolloVal').textContent=fmt(totalApollo); $('totalPropreVal').textContent=fmt(totalPropre); $('totalSaleVal').textContent=fmt(totalSale);
