@@ -1247,35 +1247,6 @@ window.switchPlantationTab = tab => {
   $('ptab-saisie').classList.toggle('active', tab==='saisie');
 };
 
-window.updatePlantCmdTarget = async () => {
-  const val = parseInt($('plantCmdTarget').value)||1000;
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  state.plantationStock.commande = val;
-  await saveState();
-  showToast('Objectif commande mis a jour : '+val+' branches');
-};
-
-window.fixPlantRessource = async type => {
-  const val = parseInt(type==='eau'?$('fixEau').value:$('fixFert').value);
-  if(isNaN(val)||val<0){ showToast('Quantite invalide', false); return; }
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  state.plantationStock[type==='eau'?'eau':'fert'] = val;
-  await saveState();
-  if(type==='eau') $('fixEau').value=''; else $('fixFert').value='';
-  showToast((type==='eau'?'Eau':'Fertilisant')+' corrige : '+val);
-};
-// -- PLANTATION ---------------------------------------------------
-const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300, appart:700};
-const PRIX_BRANCHE = 70;
-const POIDS_BRANCHE = 0.5;
-
-window.switchPlantationTab = tab => {
-  $('plantation-stats').style.display = tab==='stats'?'block':'none';
-  $('plantation-saisie').style.display = tab==='saisie'?'block':'none';
-  $('ptab-stats').classList.toggle('active', tab==='stats');
-  $('ptab-saisie').classList.toggle('active', tab==='saisie');
-};
-
 window.addCommande = async () => {
   const nom = $('cmdNom').value.trim();
   const qty = parseInt($('cmdQty').value)||0;
