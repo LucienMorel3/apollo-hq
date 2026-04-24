@@ -1502,7 +1502,7 @@ function renderPlantation(){
     (op.type==='vente'?'<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">'+fmt(op.revenu)+'</span>':'')+''+
     (op.type==='achat'?'<span style="color:#d85a30;font-size:12px">-'+fmt(op.totalCout)+'</span>':'')+''+
     '<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'+
-    '<button class="btn-del" onclick="delPlantOp(''+op._id+'')">x</button></div>'
+    '<button class="btn-del" onclick="delPlantOp(this.dataset.id)" data-id="'+op._id+'">x</button></div>'
   ).join('');
 }
 
