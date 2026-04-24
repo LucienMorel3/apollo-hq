@@ -1261,7 +1261,10 @@ window.fixPlantRessource = async type => {
   state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
   state.plantationStock[type==='eau'?'eau':'fert'] = val;
   await saveState();
-  if(type==='eau'// -- PLANTATION ---------------------------------------------------
+  if(type==='eau') $('fixEau').value=''; else $('fixFert').value='';
+  showToast((type==='eau'?'Eau':'Fertilisant')+' corrige : '+val);
+};
+// -- PLANTATION ---------------------------------------------------
 const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300, appart:700};
 const PRIX_BRANCHE = 70;
 const POIDS_BRANCHE = 0.5;
