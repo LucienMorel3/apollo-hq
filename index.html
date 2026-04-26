@@ -3,46 +3,49 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Apollo HQ — Flashback FA</title>
+<title>Apollo HQ - Flashback FA</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#07091a;--bg2:#0d1128;--bg3:#131830;--bg4:#1a2040;
   --txt:#dde2f0;--txt2:#7a82a8;--txt3:#424868;
-  --acc:#6c6fcf;--acc2:#4a4fa8;
-  --border:rgba(100,120,255,0.1);--border2:rgba(100,120,255,0.18);
-  --sun:#f5c842;--moon:#7fc8f8;--r:8px;--rl:12px;
-  --peche:#2a6db5;--peche2:rgba(55,138,221,0.15);--peche-border:rgba(55,138,221,0.3);
-  --salvia:#1a7a52;--salvia2:rgba(29,158,117,0.15);--salvia-border:rgba(29,158,117,0.3)
+  --acc:#6c6fcf;--border:rgba(100,120,255,0.1);--border2:rgba(100,120,255,0.18);
+  --sun:#f5c842;--moon:#7fc8f8;--r:8px;--rl:12px
 }
-.light{--bg:#f0f2fa;--bg2:#ffffff;--bg3:#e8eaf5;--bg4:#dde0f0;--txt:#0d1030;--txt2:#4a5070;--txt3:#8890b0;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12)}
+.light{--bg:#f0f2fa;--bg2:#fff;--bg3:#e8eaf5;--bg4:#dde0f0;--txt:#0d1030;--txt2:#4a5070;--txt3:#8890b0;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12)}
 body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;position:relative}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(1px 1px at 15% 20%,rgba(255,255,255,0.55) 0%,transparent 100%),radial-gradient(1px 1px at 73% 8%,rgba(255,255,255,0.45) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 88% 35%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 42% 55%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 6% 68%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 60% 78%,rgba(255,255,255,0.35) 0%,transparent 100%),radial-gradient(1px 1px at 31% 88%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 95% 62%,rgba(255,255,255,0.45) 0%,transparent 100%),radial-gradient(1px 1px at 52% 15%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 22% 44%,rgba(255,255,255,0.35) 0%,transparent 100%),radial-gradient(1px 1px at 80% 90%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 4% 38%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 67% 48%,rgba(255,255,255,0.25) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 45% 72%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 92% 15%,rgba(255,255,255,0.35) 0%,transparent 100%)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+background-image:radial-gradient(1px 1px at 15% 20%,rgba(255,255,255,0.55) 0%,transparent 100%),
+radial-gradient(1px 1px at 73% 8%,rgba(255,255,255,0.45) 0%,transparent 100%),
+radial-gradient(1.5px 1.5px at 88% 35%,rgba(255,255,255,0.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 42% 55%,rgba(255,255,255,0.3) 0%,transparent 100%),
+radial-gradient(1px 1px at 6% 68%,rgba(255,255,255,0.5) 0%,transparent 100%),
+radial-gradient(1.5px 1.5px at 60% 78%,rgba(255,255,255,0.35) 0%,transparent 100%),
+radial-gradient(1px 1px at 31% 88%,rgba(255,255,255,0.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 95% 62%,rgba(255,255,255,0.45) 0%,transparent 100%),
+radial-gradient(1px 1px at 52% 15%,rgba(255,255,255,0.3) 0%,transparent 100%),
+radial-gradient(1.5px 1.5px at 22% 44%,rgba(255,255,255,0.35) 0%,transparent 100%),
+radial-gradient(1px 1px at 80% 90%,rgba(255,255,255,0.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 67% 48%,rgba(255,255,255,0.25) 0%,transparent 100%)}
 .light body::before{display:none}
-.wrap{position:relative;z-index:1}
-.wrap{padding:16px;max-width:960px;margin:0 auto}
+.wrap{padding:16px;max-width:960px;margin:0 auto;position:relative;z-index:1}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap;padding:12px 16px;background:rgba(13,17,40,0.8);border-radius:var(--rl);border:0.5px solid var(--border);backdrop-filter:blur(8px);margin:-16px -16px 20px -16px}
-.logo{width:38px;height:38px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#fff;flex-shrink:0}
-.org-name{font-size:17px;font-weight:500;color:var(--txt)}.org-sub{font-size:12px;color:var(--txt2)}
-.topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .theme-btn{padding:5px 12px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg2);color:var(--txt2);cursor:pointer;font-size:12px}
-.theme-btn:hover{color:var(--txt);border-color:var(--acc)}
 .date-badge{font-size:12px;color:var(--txt3);padding:5px 10px;border-radius:var(--r);background:var(--bg3);border:0.5px solid var(--border)}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:#555a70;display:inline-block;margin-right:5px;transition:background .3s}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#555a70;display:inline-block;margin-right:5px}
 .sync-dot.live{background:#1d9e75;animation:pulse 2s infinite}.sync-dot.error{background:#d85a30}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .sync-label{font-size:12px;color:var(--txt3)}
 .nav{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap}
-.nav-btn{padding:7px 16px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;transition:all .15s}
-.nav-btn:hover{background:var(--bg3);color:var(--txt)}.nav-btn.active{background:linear-gradient(135deg,#6c6fcf,#4a4fa8);color:#fff;border-color:#6c6fcf;box-shadow:0 0 12px rgba(108,111,207,0.35)}
-.nav-btn.active-peche{background:linear-gradient(135deg,#2a6db5,#1a4d8a);color:#fff;border-color:#2a6db5;box-shadow:0 0 12px rgba(42,109,181,0.35)}
-.nav-btn.active-salvia{background:linear-gradient(135deg,#1a7a52,#0f5a3a);color:#fff;border-color:#1a7a52;box-shadow:0 0 12px rgba(26,122,82,0.35)}
+.nav-btn{padding:7px 14px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;transition:all .15s}
+.nav-btn:hover{background:var(--bg3);color:var(--txt)}
+.nav-btn.active{background:linear-gradient(135deg,#6c6fcf,#4a4fa8);color:#fff;border-color:#6c6fcf;box-shadow:0 0 12px rgba(108,111,207,0.35)}
 .page{display:none}.page.active{display:block}
-.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px;backdrop-filter:blur(4px)}
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px}
 .card-title{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;font-weight:500}
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
-.kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:14px 16px;position:relative;overflow:hidden}
+.kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:14px 16px}
 .kpi-label{font-size:11px;color:var(--txt3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
 .kpi-val{font-size:22px;font-weight:500;color:var(--txt)}.kpi-val.green{color:#1d9e75}.kpi-val.red{color:#d85a30}.kpi-val.amber{color:#ef9f27}
 .kpi-sub{font-size:11px;color:var(--txt3);margin-top:3px}
@@ -57,8 +60,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .badge-sale{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500;background:rgba(239,159,39,.15);color:#ef9f27}
 .inner-tab{padding:6px 16px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;transition:all .15s}
 .inner-tab:hover{background:var(--bg3);color:var(--txt)}.inner-tab.active{background:var(--bg3);color:var(--txt);border-color:var(--border2)}
-.peche-tab.active{background:rgba(42,109,181,0.2);color:#7ab8f5;border-color:#2a6db5}
-.salvia-tab.active{background:rgba(26,122,82,0.2);color:#5dcaa5;border-color:#1a7a52}
 .fish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
 .fish-card{background:var(--bg3);border-radius:var(--r);padding:12px;border:0.5px solid var(--border)}
 .fish-name{font-size:12px;color:var(--txt2);margin-bottom:2px}.fish-price{font-size:14px;font-weight:500;color:var(--txt)}.fish-type{font-size:10px;margin-top:2px}
@@ -68,7 +69,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .field input,.field select{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:8px 10px;font-size:13px;color:var(--txt);width:100%}
 .field input:focus,.field select:focus{outline:none;border-color:var(--acc)}
 .btn{padding:8px 18px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg3);color:var(--txt);cursor:pointer;font-size:13px;transition:all .15s}
-.btn:hover{border-color:var(--acc);color:var(--acc)}.btn-primary{background:linear-gradient(135deg,#6c6fcf,#4a4fa8);color:#fff;border-color:#6c6fcf}.btn-primary:hover{background:linear-gradient(135deg,#7c7fdf,#5a5fb8);color:#fff}.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn-primary{background:linear-gradient(135deg,#6c6fcf,#4a4fa8);color:#fff;border-color:#6c6fcf}
+.btn-primary:hover{background:linear-gradient(135deg,#7c7fdf,#5a5fb8);color:#fff}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
 .btn-sm{padding:5px 12px;font-size:12px}.btn-del{color:#d85a30;border-color:transparent;background:transparent;padding:4px 8px;font-size:12px;cursor:pointer}
 .htable{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 .htable th{font-size:11px;color:var(--txt3);text-align:left;padding:8px 10px;border-bottom:0.5px solid var(--border);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
@@ -96,36 +100,27 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 </style>
 </head>
 <body>
-<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div style="color:var(--txt2);font-size:13px">Connexion à Apollo HQ...</div></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div style="color:var(--txt2);font-size:13px">Connexion a Apollo HQ...</div></div>
 <div class="toast" id="toast"></div>
 <div class="wrap" id="root">
 
 <div class="topbar">
   <div style="display:flex;align-items:center;gap:12px">
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="18" cy="18" r="18" fill="#0d1128"/>
-      <path d="M22 6c0 0-8 4-10 12-0.8 3 0.5 5.5 2.5 7 2 1.5 4.8 2 7.5 0.5 3.5-2 4-6 3-9C23.5 11 22 6 22 6z" fill="#6c6fcf" opacity="0.9"/>
-      <path d="M22 6 L24 10 L20 9 Z" fill="#9a9ee8"/>
-      <ellipse cx="15" cy="24" rx="3" ry="1.5" fill="#4a4fa8" opacity="0.7" transform="rotate(-30 15 24)"/>
-      <circle cx="21" cy="16" r="1.5" fill="#dde2f0" opacity="0.6"/>
-    </svg>
-    <div>
-      <div style="font-size:18px;font-weight:600;color:var(--txt);letter-spacing:.02em;font-family:Georgia,serif;font-style:italic">Apollo</div>
-      <div class="org-sub">Sun & Moon — Flashback FA</div>
-    </div>
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#0d1128"/><path d="M22 6c0 0-8 4-10 12-0.8 3 0.5 5.5 2.5 7 2 1.5 4.8 2 7.5 0.5 3.5-2 4-6 3-9C23.5 11 22 6 22 6z" fill="#6c6fcf" opacity="0.9"/><path d="M22 6 L24 10 L20 9 Z" fill="#9a9ee8"/><ellipse cx="15" cy="24" rx="3" ry="1.5" fill="#4a4fa8" opacity="0.7" transform="rotate(-30 15 24)"/><circle cx="21" cy="16" r="1.5" fill="#dde2f0" opacity="0.6"/></svg>
+    <div><div style="font-size:18px;font-weight:600;color:var(--txt);font-family:Georgia,serif;font-style:italic">Apollo</div><div style="font-size:12px;color:var(--txt2)">Sun & Moon - Flashback FA</div></div>
   </div>
-  <div class="topbar-right">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
     <div class="date-badge" id="dateBadge"></div>
     <div style="display:flex;align-items:center;padding:5px 10px;border-radius:var(--r);background:var(--bg3);border:0.5px solid var(--border)">
       <span class="sync-dot" id="syncDot"></span><span class="sync-label" id="syncLabel">Connexion...</span>
     </div>
-    <button class="theme-btn" onclick="toggleTheme()">Thème</button>
+    <button class="theme-btn" onclick="toggleTheme()">Theme</button>
   </div>
 </div>
 
 <div class="nav">
   <button class="nav-btn active" onclick="showPage('hq')">Apollo HQ</button>
-  <button class="nav-btn" onclick="showPage('peche')">Pêche</button>
+  <button class="nav-btn" onclick="showPage('peche')">Peche</button>
   <button class="nav-btn" onclick="showPage('salvia')">Salvia</button>
   <button class="nav-btn" onclick="showPage('plantation')">Plantation</button>
   <button class="nav-btn" onclick="showPage('emplois')">Emplois</button>
@@ -144,15 +139,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div style="text-align:center"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">SALE</div><div style="font-size:20px;font-weight:500;color:#ef9f27" id="totalSaleVal">$0</div></div>
     </div>
   </div>
-
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
-    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Participation — Sun vs Moon</div>
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Participation - Sun vs Moon</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center">
       <div style="position:relative;height:180px"><canvas id="hqPieChart" role="img" aria-label="Participation">Participation</canvas></div>
       <div id="participationBlock"></div>
     </div>
   </div>
-
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Aujourd'hui</div>
     <div style="display:grid;grid-template-columns:1fr 0.5px 1fr 0.5px 1fr;align-items:center">
@@ -163,114 +156,90 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div style="text-align:center;padding:0 12px"><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">SALE DU JOUR</div><div style="font-size:22px;font-weight:500;color:#ef9f27" id="saleJourVal">$0</div></div>
     </div>
   </div>
-
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
-    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Évolution Apollo — 14 jours</div>
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Evolution Apollo - 14 jours</div>
     <div style="display:flex;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:12px">
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(29,158,117,0.6);display:inline-block"></span>Net du jour</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:22px;height:2px;background:#7f77dd;display:inline-block;border-radius:2px"></span>Total cumulé</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:22px;height:2px;background:#7f77dd;display:inline-block;border-radius:2px"></span>Total cumule</span>
     </div>
-    <div class="chart-wrap" style="height:220px"><canvas id="hqComboChart" role="img" aria-label="Évolution Apollo">Graphique</canvas></div>
+    <div class="chart-wrap" style="height:220px"><canvas id="hqComboChart" role="img" aria-label="Evolution Apollo">Graphique</canvas></div>
   </div>
-
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
-    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Mise à jour des soldes</div>
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Mise a jour des soldes</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
       <div>
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div class="av av-sun" style="width:24px;height:24px;font-size:10px">SU</div><span style="font-size:13px;color:var(--txt2)">Sun — <span style="color:#1d9e75;font-weight:500" id="sunSoldeSmall">$0</span></span></div>
-        <div style="display:flex;gap:6px"><input type="number" id="sunSolde" placeholder="Solde réel en jeu" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updateSolde('sun')" style="padding:7px 12px;font-size:12px">Màj</button></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div class="av av-sun" style="width:24px;height:24px;font-size:10px">SU</div><span style="font-size:13px;color:var(--txt2)">Sun - <span style="color:#1d9e75;font-weight:500" id="sunSoldeSmall">$0</span></span></div>
+        <div style="display:flex;gap:6px"><input type="number" id="sunSolde" placeholder="Solde reel en jeu" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updateSolde('sun')" style="padding:7px 12px;font-size:12px">Maj</button></div>
       </div>
       <div>
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div class="av av-moon" style="width:24px;height:24px;font-size:10px">MO</div><span style="font-size:13px;color:var(--txt2)">Moon — <span style="color:#1d9e75;font-weight:500" id="moonSoldeSmall">$0</span></span></div>
-        <div style="display:flex;gap:6px"><input type="number" id="moonSolde" placeholder="Solde réel en jeu" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updateSolde('moon')" style="padding:7px 12px;font-size:12px">Màj</button></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div class="av av-moon" style="width:24px;height:24px;font-size:10px">MO</div><span style="font-size:13px;color:var(--txt2)">Moon - <span style="color:#1d9e75;font-weight:500" id="moonSoldeSmall">$0</span></span></div>
+        <div style="display:flex;gap:6px"><input type="number" id="moonSolde" placeholder="Solde reel en jeu" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updateSolde('moon')" style="padding:7px 12px;font-size:12px">Maj</button></div>
       </div>
       <div>
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div style="width:24px;height:24px;border-radius:50%;background:rgba(239,159,39,.18);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:#ef9f27">$S</div><span style="font-size:13px;color:var(--txt2)">Sale — <span style="color:#ef9f27;font-weight:500" id="saleSmall">$0</span></span></div>
-        <div style="display:flex;gap:6px"><input type="number" id="potCommun" placeholder="Nouveau solde" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updatePotCommun()" style="padding:7px 12px;font-size:12px">Màj</button></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><div style="width:24px;height:24px;border-radius:50%;background:rgba(239,159,39,.18);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:#ef9f27">$S</div><span style="font-size:13px;color:var(--txt2)">Sale - <span style="color:#ef9f27;font-weight:500" id="saleSmall">$0</span></span></div>
+        <div style="display:flex;gap:6px"><input type="number" id="potCommun" placeholder="Nouveau solde" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="updatePotCommun()" style="padding:7px 12px;font-size:12px">Maj</button></div>
       </div>
     </div>
   </div>
-
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
     <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Alertes & stocks</div>
     <div id="alertsBlock"></div>
   </div>
-
   <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px">
-    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Dernières opérations</div>
+    <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Dernieres operations</div>
     <div id="recentOps"></div>
   </div>
 </div>
 
-<!-- PÊCHE -->
+<!-- PECHE -->
 <div class="page" id="page-peche">
   <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
-    <button class="inner-tab peche-tab active" id="itab-stats" onclick="switchInnerTab('stats')">Stats & graphiques</button>
-    <button class="inner-tab peche-tab" id="itab-saisie" onclick="switchInnerTab('saisie')">Saisie de session</button>
+    <button class="inner-tab active" id="itab-stats" onclick="switchInnerTab('stats')">Stats & graphiques</button>
+    <button class="inner-tab" id="itab-saisie" onclick="switchInnerTab('saisie')">Saisie de session</button>
   </div>
   <div id="inner-stats">
-    <div class="card"><div class="card-title">Catalogue — espèces & prix</div><div class="fish-grid" id="fishCatalog"></div></div>
+    <div class="card"><div class="card-title">Catalogue - especes & prix</div><div class="fish-grid" id="fishCatalog"></div></div>
     <div class="kpi-row" id="pecheKpis"></div>
     <div class="two-col">
-      <div class="card">
-        <div class="card-title">Stock actuel</div>
-        <div id="stockBlock"></div>
+      <div class="card"><div class="card-title">Stock actuel</div><div id="stockBlock"></div>
         <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
           <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Corriger le stock</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div>
-              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Appâts en inventaire</div>
-              <div style="display:flex;gap:6px">
-                <input type="number" id="fixAppats" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixStock('appats')" style="padding:7px 12px;font-size:12px">Màj</button>
-              </div>
-            </div>
-            <div>
-              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Cannes en inventaire</div>
-              <div style="display:flex;gap:6px">
-                <input type="number" id="fixCannes" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixStock('cannes')" style="padding:7px 12px;font-size:12px">Màj</button>
-              </div>
-            </div>
+            <div><div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Appats en inventaire</div><div style="display:flex;gap:6px"><input type="number" id="fixAppats" placeholder="Quantite reelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixStock('appats')" style="padding:7px 12px;font-size:12px">Maj</button></div></div>
+            <div><div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Cannes en inventaire</div><div style="display:flex;gap:6px"><input type="number" id="fixCannes" placeholder="Quantite reelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixStock('cannes')" style="padding:7px 12px;font-size:12px">Maj</button></div></div>
           </div>
         </div>
       </div>
-      <div class="card"><div class="card-title">Bénéfice net — sessions</div><div class="chart-wrap" style="height:180px"><canvas id="lineChart" role="img" aria-label="Sessions">Sessions</canvas></div></div>
+      <div class="card"><div class="card-title">Benefice net - sessions</div><div class="chart-wrap" style="height:180px"><canvas id="lineChart">Sessions</canvas></div></div>
     </div>
-    <div class="card"><div class="card-title">Répartition espèces</div><div class="legend-row" id="pieLegend"></div><div class="chart-wrap" style="height:180px"><canvas id="pieChart" role="img" aria-label="Espèces">Espèces</canvas></div></div>
-    <div class="card"><div class="card-title">Sun vs Moon — contribution pêche</div><div class="chart-wrap" style="height:160px"><canvas id="teamChart" role="img" aria-label="Comparaison">Comparaison</canvas></div></div>
+    <div class="card"><div class="card-title">Repartition especes</div><div class="legend-row" id="pieLegend"></div><div class="chart-wrap" style="height:180px"><canvas id="pieChart">Especes</canvas></div></div>
+    <div class="card"><div class="card-title">Sun vs Moon - contribution peche</div><div class="chart-wrap" style="height:160px"><canvas id="teamChart">Comparaison</canvas></div></div>
   </div>
   <div id="inner-saisie" style="display:none">
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff">1</div>
-        <div class="card-title" style="margin-bottom:0">Achat matériel — avant la session</div>
-      </div>
-      <div style="margin-bottom:12px;padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Stock actuel — <span id="stockResume" style="color:var(--txt);font-weight:500">chargement...</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff">1</div><div class="card-title" style="margin-bottom:0">Achat materiel - avant la session</div></div>
+      <div style="margin-bottom:12px;padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Stock actuel - <span id="stockResume" style="color:var(--txt);font-weight:500">chargement...</span></div>
       <div class="form-grid">
-        <div class="field"><label>Type</label><select id="matType" onchange="document.getElementById('monnaieField').style.display=this.value==='canne'?'flex':'none'"><option value="appat">Appâts</option><option value="canne">Cannes à pêche</option></select></div>
-        <div class="field"><label>Quantité reçue</label><input type="number" id="matQty" placeholder="Ex: 275" min="1" step="1"/></div>
-        <div class="field"><label>Coût payé ($)</label><input type="number" id="matCost" placeholder="Ex: 7500" min="0" step="1"/></div>
+        <div class="field"><label>Type</label><select id="matType" onchange="document.getElementById('monnaieField').style.display=this.value==='canne'?'flex':'none'"><option value="appat">Appats</option><option value="canne">Cannes a peche</option></select></div>
+        <div class="field"><label>Quantite recue</label><input type="number" id="matQty" placeholder="Ex: 275" min="1" step="1"/></div>
+        <div class="field"><label>Cout paye ($)</label><input type="number" id="matCost" placeholder="Ex: 7500" min="0" step="1"/></div>
         <div class="field"><label>Acheteur</label><select id="matPerson"><option value="sun">Sun</option><option value="moon">Moon</option></select></div>
         <div class="field" id="monnaieField" style="display:none"><label>Monnaie</label><select id="matMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select></div>
       </div>
       <button class="btn btn-primary" id="btnAchat" onclick="saveAchat()">Enregistrer l'achat</button>
     </div>
     <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:14px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff">2</div>
-        <div class="card-title" style="margin-bottom:0">Session de pêche — gains & consommation</div>
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="width:24px;height:24px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff">2</div><div class="card-title" style="margin-bottom:0">Session de peche - gains & consommation</div></div>
       <div class="form-grid" style="margin-bottom:12px">
-        <div class="field"><label>Pêcheur(s)</label><select id="qPeche"><option value="sun">Sun (Lucien Morel)</option><option value="moon">Moon (Oscar Marchemont)</option><option value="both">Sun + Moon ensemble</option></select></div>
-        <div class="field"><label>Appâts utilisés</label><input type="number" id="qAppats" placeholder="Ex: 50" min="0" step="1" oninput="checkStockLive()"/></div>
-        <div class="field"><label>Cannes utilisées</label><input type="number" id="qCannes" placeholder="Ex: 2" min="0" step="1" oninput="checkStockLive()"/></div>
-        <div class="field"><label>Vendu à</label><select id="qVente"><option value="ltd">LTD Cayo (illégal)</option><option value="pnj">PNJ Canal (légal)</option><option value="both">Les deux</option></select></div>
-        <div class="field"><label>Revenus session ($)</label><input type="number" id="qRevenu" placeholder="Total encaissé" min="0" step="1"/></div>
+        <div class="field"><label>Pecheur(s)</label><select id="qPeche"><option value="sun">Sun (Lucien Morel)</option><option value="moon">Moon (Oscar Marchemont)</option><option value="both">Sun + Moon ensemble</option></select></div>
+        <div class="field"><label>Appats utilises</label><input type="number" id="qAppats" placeholder="Ex: 50" min="0" step="1" oninput="checkStockLive()"/></div>
+        <div class="field"><label>Cannes utilisees</label><input type="number" id="qCannes" placeholder="Ex: 2" min="0" step="1" oninput="checkStockLive()"/></div>
+        <div class="field"><label>Vendu a</label><select id="qVente"><option value="ltd">LTD Cayo</option><option value="pnj">PNJ Canal</option><option value="both">Les deux</option></select></div>
+        <div class="field"><label>Revenus session ($)</label><input type="number" id="qRevenu" placeholder="Total encaisse" min="0" step="1"/></div>
         <div class="field"><label>Note</label><input type="text" id="qNote" placeholder="Optionnel..."/></div>
       </div>
       <div id="stockWarning" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:var(--r);background:rgba(216,90,48,.12);border:0.5px solid rgba(216,90,48,.3);color:#f0997b;font-size:13px"></div>
-      <div class="card-title" style="margin-bottom:8px">Poissons pêchés</div>
+      <div class="card-title" style="margin-bottom:8px">Poissons peches</div>
       <div id="fishCounters"></div>
       <div style="margin-top:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <button class="btn btn-primary" id="btnSession" onclick="saveSession()">Enregistrer la session</button>
@@ -283,139 +252,61 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 <!-- SALVIA -->
 <div class="page" id="page-salvia">
   <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
-    <button class="inner-tab salvia-tab active" id="stab-stats" onclick="switchSalviaTab('stats')">Stats & stocks</button>
-    <button class="inner-tab salvia-tab" id="stab-saisie" onclick="switchSalviaTab('saisie')">Saisie</button>
+    <button class="inner-tab active" id="stab-stats" onclick="switchSalviaTab('stats')">Stats & stocks</button>
+    <button class="inner-tab" id="stab-saisie" onclick="switchSalviaTab('saisie')">Saisie</button>
   </div>
-
-  <!-- Stats Salvia -->
   <div id="salvia-stats">
     <div class="kpi-row" id="salviaKpis"></div>
     <div class="two-col">
-      <div class="card">
-        <div class="card-title">Stock actuel</div>
-        <div id="salviaStock"></div>
+      <div class="card"><div class="card-title">Stock actuel</div><div id="salviaStock"></div>
         <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
-          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Corriger le stock</div>
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;margin-bottom:10px">Corriger</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div>
-              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Feuilles en inventaire</div>
-              <div style="display:flex;gap:6px">
-                <input type="number" id="fixFeuilles" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixSalviaStock('feuilles')" style="padding:7px 12px;font-size:12px">Màj</button>
-              </div>
-            </div>
-            <div>
-              <div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Têtes en inventaire</div>
-              <div style="display:flex;gap:6px">
-                <input type="number" id="fixTetes" placeholder="Quantité réelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/>
-                <button class="btn btn-primary" onclick="fixSalviaStock('tetes')" style="padding:7px 12px;font-size:12px">Màj</button>
-              </div>
-            </div>
+            <div><div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Feuilles</div><div style="display:flex;gap:6px"><input type="number" id="fixFeuilles" placeholder="Qte reelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixSalviaStock('feuilles')" style="padding:7px 12px;font-size:12px">Maj</button></div></div>
+            <div><div style="font-size:12px;color:var(--txt2);margin-bottom:6px">Tetes</div><div style="display:flex;gap:6px"><input type="number" id="fixTetes" placeholder="Qte reelle" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:13px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixSalviaStock('tetes')" style="padding:7px 12px;font-size:12px">Maj</button></div></div>
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Revenus — historique sessions</div>
-        <div class="chart-wrap" style="height:180px"><canvas id="salviaChart" role="img" aria-label="Revenus salvia par session">Graphique salvia</canvas></div>
-      </div>
+      <div class="card"><div class="card-title">Revenus - historique</div><div class="chart-wrap" style="height:180px"><canvas id="salviaChart">Salvia</canvas></div></div>
     </div>
-    <div class="card">
-      <div class="card-title">Dernières opérations salvia</div>
-      <div id="salviaOpsHisto"></div>
-    </div>
+    <div class="card"><div class="card-title">Dernieres operations salvia</div><div id="salviaOpsHisto"></div></div>
   </div>
-
-  <!-- Saisie Salvia -->
   <div id="salvia-saisie" style="display:none">
-
-    <!-- Cueillette -->
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#1a4a2e;display:flex;align-items:center;justify-content:center;font-size:14px">🌿</div>
-        <div class="card-title" style="margin-bottom:0">Cueillette — Falaises de Cayo</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
-        Zone revendiquée — territoire gang local
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:#1a4a2e;display:flex;align-items:center;justify-content:center;font-size:14px">🌿</div><div class="card-title" style="margin-bottom:0">Cueillette - Falaises de Cayo</div></div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">Zone revendiqueee - territoire gang local</div>
       <div class="form-grid">
-        <div class="field"><label>Pêcheur(s)</label>
-          <select id="salvCueilPeche">
-            <option value="sun">Sun (Lucien Morel)</option>
-            <option value="moon">Moon (Oscar Marchemont)</option>
-            <option value="both">Sun + Moon ensemble</option>
-          </select>
-        </div>
-        <div class="field"><label>Feuilles récoltées</label>
-          <input type="number" id="salvFeuilles" placeholder="Ex: 50" min="1" step="1"/>
-        </div>
-        <div class="field"><label>Taxe payée ($)</label>
-          <input type="number" id="salvTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
-        </div>
-        <div class="field"><label>Note</label>
-          <input type="text" id="salvCueilNote" placeholder="Optionnel..."/>
-        </div>
+        <div class="field"><label>Pecheur(s)</label><select id="salvCueilPeche"><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Sun + Moon</option></select></div>
+        <div class="field"><label>Feuilles recoltees</label><input type="number" id="salvFeuilles" placeholder="Ex: 50" min="1" step="1"/></div>
+        <div class="field"><label>Taxe payee ($)</label><input type="number" id="salvTaxe" placeholder="0 si pas taxe" min="0" step="1"/></div>
+        <div class="field"><label>Note</label><input type="text" id="salvCueilNote" placeholder="Optionnel..."/></div>
       </div>
       <button class="btn btn-primary" onclick="saveSalviaCueillette()">Enregistrer la cueillette</button>
     </div>
-
-    <!-- Transformation -->
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#2a1a4a;display:flex;align-items:center;justify-content:center;font-size:14px">🔥</div>
-        <div class="card-title" style="margin-bottom:0">Transformation — Chalet montagne</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">
-        Zone revendiquée — entre téléphérique et scierie
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Stock feuilles disponibles — <span id="salviaFeuillesDisp" style="color:var(--txt);font-weight:500">0</span>
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:#2a1a4a;display:flex;align-items:center;justify-content:center;font-size:14px">🔥</div><div class="card-title" style="margin-bottom:0">Transformation - Chalet montagne</div></div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:rgba(216,90,48,.08);border:0.5px solid rgba(216,90,48,.2);font-size:12px;color:var(--txt2)">Zone revendiqueee - entre telepherique et scierie</div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Stock feuilles : <span id="salviaFeuillesDisp" style="color:var(--txt);font-weight:500">0</span></div>
       <div class="form-grid">
-        <div class="field"><label>Feuilles utilisées</label>
-          <input type="number" id="salvTransfFeuilles" placeholder="Ex: 30" min="1" step="1" oninput="updateSalviaTransfEstim()"/>
-        </div>
-        <div class="field"><label>Taxe payée ($)</label>
-          <input type="number" id="salvTransfTaxe" placeholder="0 si pas taxé" min="0" step="1"/>
-        </div>
-        <div class="field"><label>Note</label>
-          <input type="text" id="salvTransfNote" placeholder="Optionnel..."/>
-        </div>
+        <div class="field"><label>Feuilles utilisees</label><input type="number" id="salvTransfFeuilles" placeholder="Ex: 30" min="1" step="1" oninput="updateSalviaTransfEstim()"/></div>
+        <div class="field"><label>Taxe payee ($)</label><input type="number" id="salvTransfTaxe" placeholder="0 si pas taxe" min="0" step="1"/></div>
+        <div class="field"><label>Note</label><input type="text" id="salvTransfNote" placeholder="Optionnel..."/></div>
       </div>
       <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvTransfEstim"></div>
       <button class="btn btn-primary" onclick="saveSalviaTransfo()">Enregistrer la transformation</button>
     </div>
-
-    <!-- Vente -->
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
-        <div class="card-title" style="margin-bottom:0">Vente — argent sale</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Prix variable 60$–100$/tête · Stock têtes — <span id="salviaTetesDisp" style="color:var(--txt);font-weight:500">0</span>
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div><div class="card-title" style="margin-bottom:0">Vente - argent sale</div></div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Prix variable 60-100$/tete - Stock tetes : <span id="salviaTetesDisp" style="color:var(--txt);font-weight:500">0</span></div>
       <div class="form-grid">
-        <div class="field"><label>Têtes vendues</label>
-          <input type="number" id="salvVenteTetes" placeholder="Ex: 20" min="1" step="1" oninput="updateSalviaVenteEstim()"/>
-        </div>
-        <div class="field"><label>Revenus encaissés ($)</label>
-          <input type="number" id="salvVenteRevenu" placeholder="Total reçu" min="0" step="1" oninput="updateSalviaVenteEstim()"/>
-        </div>
-        <div class="field"><label>Vendeur</label>
-          <select id="salvVentePeche">
-            <option value="sun">Sun</option>
-            <option value="moon">Moon</option>
-            <option value="both">Sun + Moon</option>
-          </select>
-        </div>
-        <div class="field"><label>Note</label>
-          <input type="text" id="salvVenteNote" placeholder="Optionnel..."/>
-        </div>
+        <div class="field"><label>Tetes vendues</label><input type="number" id="salvVenteTetes" placeholder="Ex: 20" min="1" step="1" oninput="updateSalviaVenteEstim()"/></div>
+        <div class="field"><label>Revenus encaisses ($)</label><input type="number" id="salvVenteRevenu" placeholder="Total recu" min="0" step="1" oninput="updateSalviaVenteEstim()"/></div>
+        <div class="field"><label>Vendeur</label><select id="salvVentePeche"><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Sun + Moon</option></select></div>
+        <div class="field"><label>Note</label><input type="text" id="salvVenteNote" placeholder="Optionnel..."/></div>
       </div>
       <div style="margin-bottom:12px;font-size:12px;color:var(--txt3)" id="salvVenteEstim"></div>
       <button class="btn btn-primary" onclick="saveSalviaVente()">Enregistrer la vente</button>
     </div>
-
   </div>
 </div>
 
@@ -425,20 +316,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <button class="inner-tab active" id="ptab-stats" onclick="switchPlantationTab('stats')">Stats & stocks</button>
     <button class="inner-tab" id="ptab-saisie" onclick="switchPlantationTab('saisie')">Saisie</button>
   </div>
-
-  <!-- ONGLET 1 : STATS & STOCKS -->
   <div id="plantation-stats">
-
-    <!-- KPIs -->
     <div class="kpi-row" id="plantationKpis"></div>
-
     <div class="two-col">
-
-      <!-- Colonne gauche : stock -->
       <div class="card">
         <div class="card-title">Stock actuel</div>
-
-        <!-- Ressources -->
         <div style="margin-bottom:12px">
           <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Ressources</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -447,14 +329,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
               <div style="font-size:16px;font-weight:500;color:var(--txt)" id="plantEauVal">0</div>
               <div style="font-size:10px;color:var(--txt3)">bouteilles</div>
               <div class="progress-bg" style="margin-top:6px;height:3px"><div id="plantEauBar" class="progress-fill" style="background:#378add;height:3px;width:0%"></div></div>
-              <div style="font-size:10px;color:var(--txt3);margin-top:2px">besoin 54 pieds : 324</div>
+              <div style="font-size:10px;color:var(--txt3);margin-top:2px">besoin 54p : 324</div>
             </div>
             <div style="background:var(--bg3);border-radius:var(--r);padding:10px">
               <div style="font-size:11px;color:var(--txt3);margin-bottom:4px">Fertilisant</div>
               <div style="font-size:16px;font-weight:500;color:var(--txt)" id="plantFertVal">0</div>
               <div style="font-size:10px;color:var(--txt3)">unites</div>
               <div class="progress-bg" style="margin-top:6px;height:3px"><div id="plantFertBar" class="progress-fill" style="background:#1d9e75;height:3px;width:0%"></div></div>
-              <div style="font-size:10px;color:var(--txt3);margin-top:2px">besoin 54 pieds : 324</div>
+              <div style="font-size:10px;color:var(--txt3);margin-top:2px">besoin 54p : 324</div>
             </div>
           </div>
           <div style="margin-top:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--r);font-size:12px;color:var(--txt2)">
@@ -462,54 +344,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             <span style="font-size:11px;color:var(--txt3)" id="plantPiedsSub"></span>
           </div>
         </div>
-
-        <!-- Branches par lieu -->
         <div>
           <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Branches par lieu</div>
           <div id="plantStockBlock"></div>
         </div>
-
-        <!-- Correction stock -->
         <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">
-          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Corriger</div>
+          <div style="font-size:11px;color:var(--txt3);text-transform:uppercase;margin-bottom:8px">Corriger</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
-            <div style="display:flex;gap:4px;align-items:center">
-              <span style="font-size:11px;color:var(--txt2);min-width:40px">Eau</span>
-              <input type="number" id="fixEau" placeholder="reel" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantRessource('eau')" style="padding:5px 8px;font-size:11px">Ok</button>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span style="font-size:11px;color:var(--txt2);min-width:40px">Fert.</span>
-              <input type="number" id="fixFert" placeholder="reel" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantRessource('fert')" style="padding:5px 8px;font-size:11px">Ok</button>
-            </div>
+            <div style="display:flex;gap:4px;align-items:center"><span style="font-size:11px;color:var(--txt2);min-width:40px">Eau</span><input type="number" id="fixEau" placeholder="reel" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixPlantRessource('eau')" style="padding:5px 8px;font-size:11px">Ok</button></div>
+            <div style="display:flex;gap:4px;align-items:center"><span style="font-size:11px;color:var(--txt2);min-width:40px">Fert.</span><input type="number" id="fixFert" placeholder="reel" min="0" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixPlantRessource('fert')" style="padding:5px 8px;font-size:11px">Ok</button></div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-            <div style="display:flex;gap:4px;align-items:center">
-              <span style="font-size:11px;color:var(--txt2);min-width:40px">Entrepot</span>
-              <input type="number" id="fixEntrepot" placeholder="reel" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantStock('entrepot')" style="padding:5px 8px;font-size:11px">Ok</button>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span style="font-size:11px;color:var(--txt2);min-width:40px">M.Beam</span>
-              <input type="number" id="fixVanSun" placeholder="reel" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantStock('vanSun')" style="padding:5px 8px;font-size:11px">Ok</button>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span style="font-size:11px;color:var(--txt2);min-width:40px">Van Moon</span>
-              <input type="number" id="fixVanMoon" placeholder="reel" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantStock('vanMoon')" style="padding:5px 8px;font-size:11px">Ok</button>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span style="font-size:11px;color:var(--txt2);min-width:40px">Appart</span>
-              <input type="number" id="fixAppart" placeholder="reel" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/>
-              <button class="btn btn-primary" onclick="fixPlantStock('appart')" style="padding:5px 8px;font-size:11px">Ok</button>
-            </div>
+            <div style="display:flex;gap:4px;align-items:center"><span style="font-size:11px;color:var(--txt2);min-width:55px">Entrepot</span><input type="number" id="fixEntrepot" placeholder="reel" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixPlantStock('entrepot')" style="padding:5px 8px;font-size:11px">Ok</button></div>
+            <div style="display:flex;gap:4px;align-items:center"><span style="font-size:11px;color:var(--txt2);min-width:55px">M.Beam</span><input type="number" id="fixVanSun" placeholder="reel" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixPlantStock('vanSun')" style="padding:5px 8px;font-size:11px">Ok</button></div>
+            <div style="display:flex;gap:4px;align-items:center"><span style="font-size:11px;color:var(--txt2);min-width:55px">Van Moon</span><input type="number" id="fixVanMoon" placeholder="reel" min="0" max="300" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixPlantStock('vanMoon')" style="padding:5px 8px;font-size:11px">Ok</button></div>
+            <div style="display:flex;gap:4px;align-items:center"><span style="font-size:11px;color:var(--txt2);min-width:55px">Appart</span><input type="number" id="fixAppart" placeholder="reel" min="0" max="700" step="1" style="flex:1;min-width:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:12px;color:var(--txt)"/><button class="btn btn-primary" onclick="fixPlantStock('appart')" style="padding:5px 8px;font-size:11px">Ok</button></div>
           </div>
         </div>
       </div>
-
-      <!-- Colonne droite : commandes -->
       <div class="card">
         <div class="card-title">Commandes</div>
         <div id="plantCommandesList"></div>
@@ -522,29 +374,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
           <button class="btn btn-primary" style="width:100%" onclick="addCommande()">Ajouter la commande</button>
         </div>
       </div>
-
     </div>
-
-    <!-- Historique cycles -->
-    <div class="card">
-      <div class="card-title">Historique des cycles de production</div>
-      <div id="plantCyclesHisto"></div>
-    </div>
-
+    <div class="card"><div class="card-title">Historique des cycles de production</div><div id="plantCyclesHisto"></div></div>
   </div>
-
-  <!-- ONGLET 2 : SAISIE -->
   <div id="plantation-saisie" style="display:none">
-
-    <!-- Achat -->
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#0a1a3a;display:flex;align-items:center;justify-content:center;font-size:14px">🛒</div>
-        <div class="card-title" style="margin-bottom:0">Achat materiel (Roxwood + LTD rouge)</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Graine 75$/u · Pot 75$/u · Eau 5$/bouteille · Fertilisant gratuit (zone taxee)
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:#0a1a3a;display:flex;align-items:center;justify-content:center;font-size:14px">🛒</div><div class="card-title" style="margin-bottom:0">Achat materiel (Roxwood + LTD rouge)</div></div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Graine 75$/u - Pot 75$/u - Eau 5$/bouteille - Fertilisant gratuit (zone taxee)</div>
       <div class="form-grid">
         <div class="field"><label>Bouteilles eau</label><input type="number" id="plantAchatEau" placeholder="Ex: 324" min="0" step="1" oninput="updatePlantAchatEstim()"/></div>
         <div class="field"><label>Graines</label><input type="number" id="plantAchatGraines" placeholder="Ex: 54" min="0" max="54" step="1" oninput="updatePlantAchatEstim()"/></div>
@@ -556,62 +392,31 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div id="plantAchatEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
       <button class="btn btn-primary" onclick="savePlantAchat()">Enregistrer l'achat</button>
     </div>
-
-    <!-- Cycle production -->
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#1a3a1a;display:flex;align-items:center;justify-content:center;font-size:14px">🌱</div>
-        <div class="card-title" style="margin-bottom:0">Cycle de production</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Stock : <span id="plantEauDisp" style="color:var(--txt);font-weight:500">0</span> bouteilles eau ·
-        <span id="plantFertDisp" style="color:var(--txt);font-weight:500">0</span> unites fert
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:#1a3a1a;display:flex;align-items:center;justify-content:center;font-size:14px">🌱</div><div class="card-title" style="margin-bottom:0">Cycle de production</div></div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Stock : <span id="plantEauDisp" style="color:var(--txt);font-weight:500">0</span> bouteilles eau - <span id="plantFertDisp" style="color:var(--txt);font-weight:500">0</span> unites fert</div>
       <div class="form-grid">
         <div class="field"><label>Pieds plantes</label><input type="number" id="plantNbPieds" placeholder="Max 54" min="1" max="54" step="1" oninput="updatePlantCycleEstim()"/></div>
         <div class="field"><label>Branches recoltees</label><input type="number" id="plantBranches" placeholder="Max 9 x pieds" min="1" step="1" oninput="updatePlantCycleEstim()"/></div>
         <div class="field"><label>Jardinier</label><select id="plantJardinier"><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Sun + Moon</option></select></div>
-        <div class="field"><label>Destination branches</label>
-          <select id="plantDest">
-            <option value="entrepot">Entrepot</option>
-            <option value="vanSun">Moon Beam (Sun)</option>
-            <option value="vanMoon">Van Moon</option>
-            <option value="appart">Appartement</option>
-          </select>
-        </div>
+        <div class="field"><label>Destination</label><select id="plantDest"><option value="entrepot">Entrepot</option><option value="vanSun">Moon Beam (Sun)</option><option value="vanMoon">Van Moon</option><option value="appart">Appartement</option></select></div>
         <div class="field"><label>Note</label><input type="text" id="plantNote" placeholder="Optionnel..."/></div>
       </div>
       <div id="plantCycleEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
       <button class="btn btn-primary" onclick="savePlantCycle()">Enregistrer le cycle</button>
     </div>
-
-    <!-- Vente -->
     <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div>
-        <div class="card-title" style="margin-bottom:0">Livraison / vente (argent sale)</div>
-      </div>
-      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">
-        Stock total : <span id="plantStockTotal" style="color:var(--txt);font-weight:500">0</span> branches · Prix : 70$/branche
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:24px;height:24px;border-radius:50%;background:#1a2a4a;display:flex;align-items:center;justify-content:center;font-size:14px">💰</div><div class="card-title" style="margin-bottom:0">Livraison / vente (argent sale)</div></div>
+      <div style="margin-bottom:10px;padding:8px 12px;border-radius:var(--r);background:var(--bg3);font-size:12px;color:var(--txt2)">Stock total : <span id="plantStockTotal" style="color:var(--txt);font-weight:500">0</span> branches - Prix : 70$/branche</div>
       <div class="form-grid">
         <div class="field"><label>Branches vendues</label><input type="number" id="plantVenteBranches" placeholder="Ex: 1000" min="1" step="1" oninput="updatePlantVenteEstim()"/></div>
         <div class="field"><label>Revenus encaisses ($)</label><input type="number" id="plantVenteRevenu" placeholder="Auto : branches x 70$" min="0" step="1" oninput="updatePlantVenteEstim()"/></div>
-        <div class="field"><label>Source</label>
-          <select id="plantVenteSrc">
-            <option value="all">Tout (tous les stocks)</option>
-            <option value="entrepot">Entrepot</option>
-            <option value="vanSun">Moon Beam (Sun)</option>
-            <option value="vanMoon">Van Moon</option>
-            <option value="appart">Appartement</option>
-          </select>
-        </div>
+        <div class="field"><label>Source</label><select id="plantVenteSrc"><option value="all">Tout (tous les stocks)</option><option value="entrepot">Entrepot</option><option value="vanSun">Moon Beam</option><option value="vanMoon">Van Moon</option><option value="appart">Appartement</option></select></div>
         <div class="field"><label>Note</label><input type="text" id="plantVenteNote" placeholder="Ex: Livraison commande..."/></div>
       </div>
       <div id="plantVenteEstim" style="padding:10px 12px;border-radius:var(--r);background:var(--bg3);font-size:13px;color:var(--txt2);margin-bottom:12px"></div>
       <button class="btn btn-primary" onclick="savePlantVente()">Enregistrer la vente</button>
     </div>
-
   </div>
 </div>
 
@@ -621,32 +426,29 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   <div class="card">
     <div class="emploi-header">
       <div class="av av-sun">SU</div>
-      <div style="flex:1"><div style="font-size:15px;font-weight:500;color:var(--txt)">Lucien Morel <span style="color:var(--sun);font-size:12px">Sun</span></div><div style="font-size:12px;color:var(--txt2)">Technicien runner — Biotech & Horizon</div></div>
+      <div style="flex:1"><div style="font-size:15px;font-weight:500;color:var(--txt)">Lucien Morel <span style="color:var(--sun);font-size:12px">Sun</span></div><div style="font-size:12px;color:var(--txt2)">Technicien runner - Biotech & Horizon</div></div>
       <span class="badge-propre">100% propre</span>
     </div>
     <div style="background:var(--bg3);border-radius:var(--r);padding:12px;margin:12px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
-      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">PAR RUN</span><div style="font-size:15px;font-weight:500;color:var(--txt)">$4 480</div><div style="font-size:11px;color:var(--txt3)">140 composants → 560 jetons</div></div>
-      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">DURÉE</span><div style="font-size:15px;font-weight:500;color:var(--txt)">~35 min</div><div style="font-size:11px;color:var(--txt3)">Collecte 30min + transfo 5min</div></div>
-      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">PLAFOND HEBDO</span><div style="font-size:15px;font-weight:500;color:var(--txt)">$240 000</div><div style="font-size:11px;color:var(--txt3)">Reset chaque semaine</div></div>
+      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">PAR RUN</span><div style="font-size:15px;font-weight:500;color:var(--txt)">$4 480</div><div style="font-size:11px;color:var(--txt3)">140 composants &gt; 560 jetons</div></div>
+      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">DUREE</span><div style="font-size:15px;font-weight:500;color:var(--txt)">~35 min</div></div>
+      <div><span style="color:var(--txt3);font-size:11px;display:block;margin-bottom:2px">PLAFOND HEBDO</span><div style="font-size:15px;font-weight:500;color:var(--txt)">$240 000</div></div>
     </div>
     <div class="card-title" style="margin-bottom:10px">Enregistrer un shift</div>
     <div class="form-grid" style="margin-bottom:12px">
       <div class="field"><label>Nombre de runs</label><input type="number" id="sunRuns" placeholder="Ex: 3" min="1" step="1" oninput="updateSunEstim()"/></div>
-      <div class="field"><label>Gains réels ($)</label><input type="number" id="sunGains" placeholder="Auto-calculé ou forcer" min="0" step="1"/></div>
+      <div class="field"><label>Gains reels ($)</label><input type="number" id="sunGains" placeholder="Auto-calcule ou forcer" min="0" step="1"/></div>
       <div class="field"><label>Note</label><input type="text" id="sunNote" placeholder="Optionnel..."/></div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button class="btn btn-primary" onclick="saveShift('sun')">Enregistrer le shift</button>
-      <span id="sunEstim" style="font-size:12px;color:var(--txt3)"></span>
-    </div>
+    <div style="display:flex;gap:8px;align-items:center"><button class="btn btn-primary" onclick="saveShift('sun')">Enregistrer le shift</button><span id="sunEstim" style="font-size:12px;color:var(--txt3)"></span></div>
   </div>
   <div class="card">
     <div class="emploi-header">
       <div class="av av-moon">MO</div>
-      <div style="flex:1"><div style="font-size:15px;font-weight:500;color:var(--txt)">Oscar Marchemont <span style="color:var(--moon);font-size:12px">Moon</span></div><div style="font-size:12px;color:var(--txt2)">Runner — Club 77</div></div>
-      <span style="background:rgba(136,135,128,.15);color:#b4b2a9;padding:2px 8px;border-radius:999px;font-size:11px">À configurer</span>
+      <div style="flex:1"><div style="font-size:15px;font-weight:500;color:var(--txt)">Oscar Marchemont <span style="color:var(--moon);font-size:12px">Moon</span></div><div style="font-size:12px;color:var(--txt2)">Runner - Club 77</div></div>
+      <span style="background:rgba(136,135,128,.15);color:#b4b2a9;padding:2px 8px;border-radius:999px;font-size:11px">A configurer</span>
     </div>
-    <div style="padding:24px;text-align:center;color:var(--txt3);font-size:13px">Mécanisme de salaire à définir</div>
+    <div style="padding:24px;text-align:center;color:var(--txt3);font-size:13px">Mecanisme de salaire a definir</div>
   </div>
   <div class="card"><div class="card-title">Historique des shifts</div><div id="shiftsHisto"></div></div>
 </div>
@@ -655,110 +457,49 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 <div class="page" id="page-historique">
   <div class="card" style="padding:12px 16px;margin-bottom:14px">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <select id="filtType" style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--txt)"><option value="">Tout</option><option value="session">Sessions pêche</option><option value="achat">Achats matériel</option></select>
+      <select id="filtType" style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--txt)"><option value="">Tout</option><option value="session">Sessions peche</option><option value="achat">Achats materiel</option></select>
       <select id="filtPerson" style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--txt)"><option value="">Tous les joueurs</option><option value="sun">Sun</option><option value="moon">Moon</option><option value="both">Ensemble</option></select>
       <button class="btn btn-sm" onclick="renderHistorique()">Filtrer</button>
       <button class="btn btn-sm" style="color:#d85a30;margin-left:auto" onclick="confirmReset()">Reset tout</button>
     </div>
   </div>
   <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto">
-    <table class="htable"><thead><tr><th style="width:80px">Date</th><th style="width:80px">Type</th><th style="width:70px">Joueur</th><th style="width:90px">Revenu</th><th style="width:90px">Dépense</th><th style="width:80px">Net</th><th>Détail</th><th style="width:36px"></th></tr></thead><tbody id="histoBody"></tbody></table>
+    <table class="htable"><thead><tr><th style="width:80px">Date</th><th style="width:80px">Type</th><th style="width:70px">Joueur</th><th style="width:90px">Revenu</th><th style="width:90px">Depense</th><th style="width:80px">Net</th><th>Detail</th><th style="width:36px"></th></tr></thead><tbody id="histoBody"></tbody></table>
   </div></div>
 </div>
 
 <!-- OBJECTIFS -->
 <div class="page" id="page-objectifs">
-
-  <!-- Tabs internes -->
-  <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:0.5px solid var(--border);padding-bottom:12px">
-    <button class="inner-tab active" id="otab-achat" onclick="switchObjTab('achat')">🛒 Achats</button>
-    <button class="inner-tab" id="otab-commande" onclick="switchObjTab('commande')">📦 Commandes</button>
+  <div class="card">
+    <div class="card-title">Nouvel objectif</div>
+    <div class="form-grid">
+      <div class="field"><label>Nom</label><input type="text" id="objName" placeholder="Ex: Bateau de peche"/></div>
+      <div class="field"><label>Montant cible ($)</label><input type="number" id="objTarget" placeholder="Ex: 500000" min="0" step="1"/></div>
+      <div class="field"><label>Categorie</label><select id="objCat"><option value="vehicule">Vehicule</option><option value="immobilier">Immobilier</option><option value="business">Business</option><option value="equipement">Equipement</option><option value="divers">Divers</option></select></div>
+      <div class="field"><label>Type d'argent</label><select id="objMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select></div>
+      <div class="field"><label>Concerne</label><select id="objJoueur"><option value="both">Sun + Moon</option><option value="sun">Sun uniquement</option><option value="moon">Moon uniquement</option></select></div>
+    </div>
+    <button class="btn btn-primary" onclick="addObjectif()">Ajouter l'objectif</button>
   </div>
-
-  <!-- ONGLET ACHATS -->
-  <div id="obj-achat-panel">
-    <div class="card">
-      <div class="card-title">Nouvel objectif d'achat</div>
+  <div class="card"><div class="card-title">Objectifs en cours</div><div id="objList"></div></div>
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleDepenseForm()">
+      <div class="card-title" style="margin-bottom:0">Depense directe - achat non planifie</div>
+      <span id="depenseToggleIcon" style="font-size:12px;color:var(--txt3)">ourir</span>
+    </div>
+    <div id="depenseForm" style="display:none;margin-top:14px">
       <div class="form-grid">
-        <div class="field"><label>Nom</label><input type="text" id="objName" placeholder="Ex: Bateau de pêche"/></div>
-        <div class="field"><label>Montant cible ($)</label><input type="number" id="objTarget" placeholder="Ex: 500000" min="0" step="1"/></div>
-        <div class="field"><label>Catégorie</label>
-          <select id="objCat">
-            <option value="vehicule">🚗 Véhicule</option>
-            <option value="immobilier">🏠 Immobilier</option>
-            <option value="business">🏭 Business</option>
-            <option value="equipement">🔫 Équipement</option>
-            <option value="divers">📦 Divers</option>
-          </select>
-        </div>
-        <div class="field"><label>Type d'argent</label>
-          <select id="objMonnaie"><option value="propre">💰 Propre</option><option value="sale">🔴 Sale</option></select>
-        </div>
-        <div class="field"><label>Concerne</label>
-          <select id="objJoueur"><option value="both">Sun + Moon</option><option value="sun">Sun</option><option value="moon">Moon</option></select>
-        </div>
+        <div class="field"><label>Nom</label><input type="text" id="depNom" placeholder="Ex: Pistolet custom"/></div>
+        <div class="field"><label>Montant ($)</label><input type="number" id="depMontant" placeholder="Ex: 25000" min="0" step="1"/></div>
+        <div class="field"><label>Categorie</label><select id="depCat"><option value="vehicule">Vehicule</option><option value="immobilier">Immobilier</option><option value="business">Business</option><option value="equipement">Equipement</option><option value="divers">Divers</option></select></div>
+        <div class="field"><label>Type d'argent</label><select id="depMonnaie"><option value="propre">Argent propre</option><option value="sale">Argent sale</option></select></div>
+        <div class="field"><label>Paye par</label><select id="depJoueur"><option value="both">Sun + Moon (50/50)</option><option value="sun">Sun</option><option value="moon">Moon</option></select></div>
+        <div class="field"><label>Note</label><input type="text" id="depNote" placeholder="Optionnel..."/></div>
       </div>
-      <button class="btn btn-primary" onclick="addObjectif()">Ajouter l'objectif</button>
+      <button class="btn btn-primary" onclick="saveDepenseDirecte()">Enregistrer la depense</button>
     </div>
-    <div class="card"><div class="card-title">Objectifs d'achat en cours</div><div id="objList"></div></div>
-    <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleDepenseForm()">
-        <div class="card-title" style="margin-bottom:0">Dépense directe — achat non planifié</div>
-        <span id="depenseToggleIcon" style="font-size:12px;color:var(--txt3)">▼ ouvrir</span>
-      </div>
-      <div id="depenseForm" style="display:none;margin-top:14px">
-        <div class="form-grid">
-          <div class="field"><label>Nom</label><input type="text" id="depNom" placeholder="Ex: Pistolet custom"/></div>
-          <div class="field"><label>Montant ($)</label><input type="number" id="depMontant" placeholder="Ex: 25000" min="0" step="1"/></div>
-          <div class="field"><label>Catégorie</label>
-            <select id="depCat">
-              <option value="vehicule">🚗 Véhicule</option>
-              <option value="immobilier">🏠 Immobilier</option>
-              <option value="business">🏭 Business</option>
-              <option value="equipement">🔫 Équipement</option>
-              <option value="divers">📦 Divers</option>
-            </select>
-          </div>
-          <div class="field"><label>Type d'argent</label>
-            <select id="depMonnaie"><option value="propre">💰 Propre</option><option value="sale">🔴 Sale</option></select>
-          </div>
-          <div class="field"><label>Payé par</label>
-            <select id="depJoueur"><option value="both">Sun + Moon (50/50)</option><option value="sun">Sun</option><option value="moon">Moon</option></select>
-          </div>
-          <div class="field"><label>Note</label><input type="text" id="depNote" placeholder="Optionnel..."/></div>
-        </div>
-        <button class="btn btn-primary" onclick="saveDepenseDirecte()">Enregistrer la dépense</button>
-      </div>
-    </div>
-    <div class="card"><div class="card-title">Historique des achats</div><div id="achatsHisto"></div></div>
   </div>
-
-  <!-- ONGLET COMMANDES -->
-  <div id="obj-commande-panel" style="display:none">
-    <div class="card">
-      <div class="card-title">Nouvelle commande</div>
-      <div class="form-grid">
-        <div class="field"><label>Client / Gang</label><input type="text" id="cmdClient" placeholder="Ex: Los Santos Cartel"/></div>
-        <div class="field"><label>Produit</label>
-          <select id="cmdProduit">
-            <option value="salvia">🌿 Salvia</option>
-          </select>
-        </div>
-        <div class="field"><label>Quantité (kg)</label><input type="number" id="cmdQty" placeholder="Ex: 300" min="1" step="1"/></div>
-        <div class="field"><label>Priorité</label>
-          <select id="cmdPriorite">
-            <option value="haute">🔴 Haute</option>
-            <option value="normale">🟡 Normale</option>
-            <option value="basse">🟢 Basse</option>
-          </select>
-        </div>
-        <div class="field"><label>Commentaire</label><input type="text" id="cmdNote" placeholder="Optionnel..."/></div>
-      </div>
-      <button class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
-    </div>
-    <div class="card"><div class="card-title">Commandes en cours</div><div id="cmdList"></div></div>
-  </div>
-
+  <div class="card"><div class="card-title">Historique des achats</div><div id="achatsHisto"></div></div>
 </div>
 
 </div>
@@ -771,18 +512,23 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const FISH = [
-  {id:'dauphin',  name:'Dauphin',    price:575, type:'illegal', icon:'🐬'},
-  {id:'piranha',  name:'Piranha',    price:415, type:'illegal', icon:'🦷'},
-  {id:'espadon',  name:'Espadon',    price:325, type:'illegal', icon:'🐟'},
-  {id:'requin',   name:'Requin',     price:250, type:'illegal', icon:'🦈'},
-  {id:'thon',     name:'Thon rouge', price:77,  type:'legal',   icon:'🐠', priceNote:'~moy.'},
-  {id:'esturgeon',name:'Esturgeon',  price:74,  type:'legal',   icon:'🐡', priceNote:'~moy.'},
-  {id:'anchois',  name:'Anchois',    price:5,   type:'legal',   icon:'🐟', priceNote:'fixe'},
+  {id:'dauphin',name:'Dauphin',price:575,type:'illegal',icon:'🐬'},
+  {id:'piranha',name:'Piranha',price:415,type:'illegal',icon:'🦷'},
+  {id:'espadon',name:'Espadon',price:325,type:'illegal',icon:'🐟'},
+  {id:'requin',name:'Requin',price:250,type:'illegal',icon:'🦈'},
+  {id:'thon',name:'Thon rouge',price:77,type:'legal',icon:'🐠',priceNote:'~moy.'},
+  {id:'esturgeon',name:'Esturgeon',price:74,type:'legal',icon:'🐡',priceNote:'~moy.'},
+  {id:'anchois',name:'Anchois',price:5,type:'legal',icon:'🐟',priceNote:'fixe'},
 ];
-const FC = {requin:'#7f77dd',dauphin:'#1d9e75',espadon:'#378add',piranha:'#d85a30',anchois:'#ba7517',esturgeon:'#d4537e',thon:'#0f6e56'};
+const FC = {dauphin:'#1d9e75',piranha:'#d85a30',espadon:'#378add',requin:'#7f77dd',thon:'#0f6e56',esturgeon:'#d4537e',anchois:'#ba7517'};
 const PNAMES = {sun:'Sun',moon:'Moon',both:'Sun+Moon'};
+const CAT_ICONS = {vehicule:'🚗',immobilier:'🏠',business:'🏭',equipement:'🔫',divers:'📦'};
+const JOUEUR_LABELS = {both:'Sun + Moon',sun:'Sun',moon:'Moon'};
+const PLANT_MAX = {entrepot:700,vanSun:300,vanMoon:300,appart:700};
+const PRIX_BRANCHE = 70;
+const POIDS_BRANCHE = 0.5;
 
-let state = { sessions:[], achats:[], shifts:[], objectifs:[], stock:{appats:0,cannes:0}, soldes:{sun:0,moon:0,potCommun:0} };
+let state = { sessions:[], achats:[], shifts:[], salvia:[], plantation:[], depenses:[], objectifs:[], stock:{appats:0,cannes:0}, soldes:{sun:0,moon:0,potCommun:0}, salviaStock:{feuilles:0,tetes:0}, plantationStock:{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000}, commandes:[], ajustements:{sun:0,moon:0} };
 const tmpFish = {}; FISH.forEach(f => tmpFish[f.id]=0);
 let isDark = true;
 let CH = {};
@@ -799,64 +545,112 @@ function playerTag(p){ if(p==='sun') return '<span style="display:inline-block;p
 window.toggleTheme = () => { isDark=!isDark; $('root').classList.toggle('light',!isDark); document.body.classList.toggle('light',!isDark); };
 window.showPage = id => {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active','active-peche','active-salvia'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   $('page-'+id).classList.add('active');
-  const colorClass = id==='peche'?'active-peche':id==='salvia'?'active-salvia':'active';
-  ['hq','peche','salvia','plantation','emplois','historique','objectifs'].forEach((n,i)=>{ if(n===id) document.querySelectorAll('.nav-btn')[i].classList.add(colorClass); });
+  ['hq','peche','salvia','plantation','emplois','historique','objectifs'].forEach((n,i)=>{ if(n===id) document.querySelectorAll('.nav-btn')[i].classList.add('active'); });
   if(id==='peche') setTimeout(renderPecheCharts,80);
-  if(id==='salvia') setTimeout(renderSalviaChart,80);
 };
 window.switchInnerTab = tab => {
   $('inner-stats').style.display=tab==='stats'?'block':'none';
   $('inner-saisie').style.display=tab==='saisie'?'block':'none';
-  ['itab-stats','itab-saisie'].forEach(id=>{ $(id).classList.remove('active'); });
-  $(tab==='stats'?'itab-stats':'itab-saisie').classList.add('active');
+  $('itab-stats').classList.toggle('active',tab==='stats');
+  $('itab-saisie').classList.toggle('active',tab==='saisie');
   if(tab==='stats') setTimeout(renderPecheCharts,80);
+};
+window.switchSalviaTab = tab => {
+  $('salvia-stats').style.display=tab==='stats'?'block':'none';
+  $('salvia-saisie').style.display=tab==='saisie'?'block':'none';
+  $('stab-stats').classList.toggle('active',tab==='stats');
+  $('stab-saisie').classList.toggle('active',tab==='saisie');
+};
+window.switchPlantationTab = tab => {
+  $('plantation-stats').style.display=tab==='stats'?'block':'none';
+  $('plantation-saisie').style.display=tab==='saisie'?'block':'none';
+  $('ptab-stats').classList.toggle('active',tab==='stats');
+  $('ptab-saisie').classList.toggle('active',tab==='saisie');
 };
 
 function startListeners(){
   let loaded=0; const TOTAL=4; let rt=null;
-  const sr = () => { if(rt) clearTimeout(rt); rt=setTimeout(renderAll,80); };
-  const ol = () => { loaded++; if(loaded>=TOTAL){ setSyncStatus('live'); $('loadingOverlay').classList.add('hide'); } };
-  const eh = n => err => { console.error(n,err); setSyncStatus('error'); $('loadingOverlay').classList.add('hide'); };
-  onSnapshot(query(collection(db,'sessions'),orderBy('ts','desc')), snap=>{ state.sessions=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('sessions'));
-  onSnapshot(query(collection(db,'achats'),orderBy('ts','desc')), snap=>{ state.achats=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('achats'));
-  onSnapshot(query(collection(db,'shifts'),orderBy('ts','desc')), snap=>{ state.shifts=snap.docs.map(d=>({...d.data(),_id:d.id})); ol(); sr(); }, eh('shifts'));
-  onSnapshot(doc(db,'apollo','state'), snap=>{ if(snap.exists()){ const d=snap.data(); state.stock=d.stock||{appats:0,cannes:0}; state.objectifs=d.objectifs||[]; state.soldes=d.soldes||{sun:0,moon:0,potCommun:0}; state.ajustements=d.ajustements||{sun:0,moon:0}; state.salviaStock=d.salviaStock||{feuilles:0,tetes:0}; state.commandes=d.commandes||[]; } ol(); sr(); }, eh('state'));
-  onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')), snap=>{ state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('depenses',err));
-  onSnapshot(query(collection(db,'salvia'),orderBy('ts','desc')), snap=>{ state.salvia=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('salvia',err));
-  onSnapshot(query(collection(db,'plantation'),orderBy('ts','desc')), snap=>{ state.plantation=snap.docs.map(d=>({...d.data(),_id:d.id})); sr(); }, err=>console.error('plantation',err));
+  const sr=()=>{ if(rt) clearTimeout(rt); rt=setTimeout(renderAll,80); };
+  const ol=()=>{ loaded++; if(loaded>=TOTAL){setSyncStatus('live');$('loadingOverlay').classList.add('hide');} };
+  const eh=n=>err=>{console.error(n,err);setSyncStatus('error');$('loadingOverlay').classList.add('hide');};
+  onSnapshot(query(collection(db,'sessions'),orderBy('ts','desc')),snap=>{state.sessions=snap.docs.map(d=>({...d.data(),_id:d.id}));ol();sr();},eh('sessions'));
+  onSnapshot(query(collection(db,'achats'),orderBy('ts','desc')),snap=>{state.achats=snap.docs.map(d=>({...d.data(),_id:d.id}));ol();sr();},eh('achats'));
+  onSnapshot(query(collection(db,'shifts'),orderBy('ts','desc')),snap=>{state.shifts=snap.docs.map(d=>({...d.data(),_id:d.id}));ol();sr();},eh('shifts'));
+  onSnapshot(doc(db,'apollo','state'),snap=>{
+    if(snap.exists()){
+      const d=snap.data();
+      state.stock=d.stock||{appats:0,cannes:0};
+      state.objectifs=d.objectifs||[];
+      state.soldes=d.soldes||{sun:0,moon:0,potCommun:0};
+      state.ajustements=d.ajustements||{sun:0,moon:0};
+      state.salviaStock=d.salviaStock||{feuilles:0,tetes:0};
+      state.plantationStock=d.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+      state.commandes=d.commandes||[];
+    }
+    ol();sr();
+  },eh('state'));
+  onSnapshot(query(collection(db,'salvia'),orderBy('ts','desc')),snap=>{state.salvia=snap.docs.map(d=>({...d.data(),_id:d.id}));sr();},err=>console.error('salvia',err));
+  onSnapshot(query(collection(db,'plantation'),orderBy('ts','desc')),snap=>{state.plantation=snap.docs.map(d=>({...d.data(),_id:d.id}));sr();},err=>console.error('plantation',err));
+  onSnapshot(query(collection(db,'depenses'),orderBy('ts','desc')),snap=>{state.depenses=snap.docs.map(d=>({...d.data(),_id:d.id}));sr();},err=>console.error('depenses',err));
 }
 
-window.fixStock = async type => {
-  const val = parseInt(document.getElementById(type==='appats'?'fixAppats':'fixCannes').value);
-  if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
-  state.stock[type] = val;
-  await saveState();
-  document.getElementById(type==='appats'?'fixAppats':'fixCannes').value = '';
-  showToast(`Stock ${type==='appats'?'appâts':'cannes'} corrigé : ${val}`);
-};
-
-async function saveState(){ await setDoc(doc(db,'apollo','state'),{ stock:state.stock, objectifs:state.objectifs, soldes:state.soldes||{sun:0,moon:0,potCommun:0}, ajustements:state.ajustements||{sun:0,moon:0}, salviaStock:state.salviaStock||{feuilles:0,tetes:0}, plantationStock:state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000}, commandes:state.commandes||[], updatedAt:serverTimestamp() }); }
-
-// Calcule le solde automatique d'un joueur (shifts + sessions - achats)
-function calcSoldeAuto(player){
-  return (state.soldes||{})[player]||0;
+async function saveState(){
+  await setDoc(doc(db,'apollo','state'),{
+    stock:state.stock, objectifs:state.objectifs,
+    soldes:state.soldes||{sun:0,moon:0,potCommun:0},
+    ajustements:state.ajustements||{sun:0,moon:0},
+    salviaStock:state.salviaStock||{feuilles:0,tetes:0},
+    plantationStock:state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000},
+    commandes:state.commandes||[],
+    updatedAt:serverTimestamp()
+  });
 }
+
+function calcSoldeAuto(player){ return (state.soldes||{})[player]||0; }
 
 window.updateSolde = async player => {
   const val=parseFloat($(player+'Solde').value);
   if(isNaN(val)||val<0){showToast('Montant invalide',false);return;}
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  state.soldes[player] = val;
+  state.soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  state.soldes[player]=val;
   await saveState();
   $(player+'Solde').value='';
-  showToast(`Solde ${player==='sun'?'Sun':'Moon'} mis à jour : ${fmt(val)}`);
+  showToast('Solde '+(player==='sun'?'Sun':'Moon')+' mis a jour : '+fmt(val));
 };
-window.updatePotCommun = async () => { const val=parseFloat($('potCommun').value); if(isNaN(val)||val<0){showToast('Montant invalide',false);return;} state.soldes=state.soldes||{sun:0,moon:0,potCommun:0}; state.soldes.potCommun=val; await saveState(); $('potCommun').value=''; showToast(`Pot commun sale mis à jour : ${fmt(val)}`); };
+window.updatePotCommun = async () => {
+  const val=parseFloat($('potCommun').value);
+  if(isNaN(val)||val<0){showToast('Montant invalide',false);return;}
+  state.soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  state.soldes.potCommun=val;
+  await saveState();
+  $('potCommun').value='';
+  showToast('Pot commun sale mis a jour : '+fmt(val));
+};
 
-window.checkStockLive = () => { const a=parseInt($('qAppats').value)||0, c=parseInt($('qCannes').value)||0, w=$('stockWarning'), errs=[]; if(a>state.stock.appats) errs.push(`Appâts insuffisants - stock: ${state.stock.appats}`); if(c>state.stock.cannes) errs.push(`Cannes insuffisantes - stock: ${state.stock.cannes}`); w.style.display=errs.length?'block':'none'; if(errs.length) w.innerHTML=errs.join('<br>'); };
-window.chg = (id,d) => { tmpFish[id]=Math.max(0,(tmpFish[id]||0)+d); $('fc-'+id).textContent=tmpFish[id]; let est=0; FISH.forEach(f=>{if(f.price) est+=(tmpFish[f.id]||0)*f.price;}); $('sessionEstim').textContent=est>0?'Estimation : '+fmt(est):''; };
+window.fixStock = async type => {
+  const val=parseInt(type==='appats'?$('fixAppats').value:$('fixCannes').value);
+  if(isNaN(val)||val<0){showToast('Invalide',false);return;}
+  state.stock[type]=val;
+  await saveState();
+  $(type==='appats'?'fixAppats':'fixCannes').value='';
+  showToast('Stock '+(type==='appats'?'appats':'cannes')+' corrige : '+val);
+};
+
+window.checkStockLive = () => {
+  const a=parseInt($('qAppats').value)||0, c=parseInt($('qCannes').value)||0, w=$('stockWarning'), errs=[];
+  if(a>state.stock.appats) errs.push('Appats insuffisants - stock: '+state.stock.appats);
+  if(c>state.stock.cannes) errs.push('Cannes insuffisantes - stock: '+state.stock.cannes);
+  w.style.display=errs.length?'block':'none';
+  if(errs.length) w.innerHTML=errs.join('<br>');
+};
+window.chg = (id,d) => {
+  tmpFish[id]=Math.max(0,(tmpFish[id]||0)+d);
+  $('fc-'+id).textContent=tmpFish[id];
+  let est=0; FISH.forEach(f=>{if(f.price) est+=(tmpFish[f.id]||0)*f.price;});
+  $('sessionEstim').textContent=est>0?'Estimation : '+fmt(est):'';
+};
 
 window.saveSession = async () => {
   const btn=$('btnSession'); btn.disabled=true;
@@ -864,16 +658,18 @@ window.saveSession = async () => {
     const revenu=parseFloat($('qRevenu').value)||0, fish={};
     FISH.forEach(f=>fish[f.id]=tmpFish[f.id]||0);
     const totalFish=Object.values(fish).reduce((a,v)=>a+v,0);
-    if(!revenu&&!totalFish){showToast('Renseigne les revenus ou les poissons pêchés',false);btn.disabled=false;return;}
+    if(!revenu&&!totalFish){showToast('Renseigne les revenus ou les poissons',false);btn.disabled=false;return;}
     const appats=parseInt($('qAppats').value)||0, cannes=parseInt($('qCannes').value)||0;
     const errs=[];
-    if(appats>state.stock.appats) errs.push('Appâts insuffisants');
+    if(appats>state.stock.appats) errs.push('Appats insuffisants');
     if(cannes>state.stock.cannes) errs.push('Cannes insuffisantes');
     if(errs.length){$('stockWarning').style.display='block';$('stockWarning').innerHTML='Impossible - '+errs.join(' / ');showToast('Stock insuffisant !',false);btn.disabled=false;return;}
     await addDoc(collection(db,'sessions'),{peche:$('qPeche').value,appats,cannes,vente:$('qVente').value,revenu,monnaie:'propre',note:$('qNote').value,fish,ts:serverTimestamp(),date:today()});
     state.stock.appats-=appats; state.stock.cannes-=cannes; await saveState();
-    FISH.forEach(f=>{tmpFish[f.id]=0;$('fc-'+f.id).textContent='0';}); ['qRevenu','qAppats','qCannes','qNote'].forEach(id=>$(id).value=''); $('sessionEstim').textContent=''; $('stockWarning').style.display='none';
-    showToast('Session enregistrée !'); showPage('peche'); switchInnerTab('stats');
+    FISH.forEach(f=>{tmpFish[f.id]=0;$('fc-'+f.id).textContent='0';});
+    ['qRevenu','qAppats','qCannes','qNote'].forEach(id=>$(id).value='');
+    $('sessionEstim').textContent=''; $('stockWarning').style.display='none';
+    showToast('Session enregistree !'); showPage('peche'); switchInnerTab('stats');
   } catch(e){showToast('Erreur: '+e.message,false);}
   btn.disabled=false;
 };
@@ -882,631 +678,262 @@ window.saveAchat = async () => {
   const btn=$('btnAchat'); btn.disabled=true;
   try {
     const qty=parseInt($('matQty').value)||0, cost=parseFloat($('matCost').value)||0;
-    if(!qty||!cost){showToast('Quantité et coût requis',false);btn.disabled=false;return;}
+    if(!qty||!cost){showToast('Quantite et cout requis',false);btn.disabled=false;return;}
     const matType=$('matType').value, monnaie=matType==='canne'?$('matMonnaie').value:'propre';
     await addDoc(collection(db,'achats'),{matType,qty,cost,monnaie,person:$('matPerson').value,ts:serverTimestamp(),date:today()});
     if(matType==='appat') state.stock.appats+=qty; else state.stock.cannes+=qty;
-    await saveState(); $('matQty').value=''; $('matCost').value=''; showToast('Achat enregistré !');
+    await saveState();
+    $('matQty').value=''; $('matCost').value='';
+    showToast('Achat enregistre !');
   } catch(e){showToast('Erreur: '+e.message,false);}
   btn.disabled=false;
 };
 
-window.delSession = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'sessions',id)); showToast('Supprimé'); };
-window.delAchat   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'achats',id)); showToast('Supprimé'); };
-window.delShift   = async id => { if(!confirm('Supprimer ?')) return; await deleteDoc(doc(db,'shifts',id)); showToast('Supprimé'); };
-window.delDepense = async id => {
-  if(!confirm('Supprimer cet achat ? Les soldes ne seront pas recalculés automatiquement.')) return;
-  await deleteDoc(doc(db,'depenses',id));
-  showToast('Achat supprimé');
-};
-window.confirmReset = () => { if(!confirm('Supprimer TOUTES les données ?')) return; state.sessions.forEach(s=>deleteDoc(doc(db,'sessions',s._id))); state.achats.forEach(a=>deleteDoc(doc(db,'achats',a._id))); state.shifts.forEach(s=>deleteDoc(doc(db,'shifts',s._id))); state.stock={appats:0,cannes:0}; state.objectifs=[]; state.soldes={sun:0,moon:0,potCommun:0}; saveState(); showToast('Données réinitialisées'); };
+window.delSession = async id=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'sessions',id));showToast('Supprime');};
+window.delAchat   = async id=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'achats',id));showToast('Supprime');};
+window.delShift   = async id=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'shifts',id));showToast('Supprime');};
+window.confirmReset = ()=>{if(!confirm('Supprimer TOUTES les donnees ?'))return;state.sessions.forEach(s=>deleteDoc(doc(db,'sessions',s._id)));state.achats.forEach(a=>deleteDoc(doc(db,'achats',a._id)));state.shifts.forEach(s=>deleteDoc(doc(db,'shifts',s._id)));state.stock={appats:0,cannes:0};state.objectifs=[];state.soldes={sun:0,moon:0,potCommun:0};saveState();showToast('Reinitialise');};
 
-window.updateSunEstim = () => { const r=parseInt($('sunRuns').value)||0, e=r*4480; $('sunEstim').textContent=r>0?'Estimation : '+fmt(e):''; if(r>0) $('sunGains').placeholder=String(e); };
+window.updateSunEstim = ()=>{ const r=parseInt($('sunRuns').value)||0, e=r*4480; $('sunEstim').textContent=r>0?'Estimation : '+fmt(e):''; if(r>0) $('sunGains').placeholder=String(e); };
 window.saveShift = async player => {
   const runs=parseInt($(player+'Runs').value)||0, gains=parseFloat($(player+'Gains').value)||(runs*4480);
   if(!gains){showToast('Renseigne les gains ou le nombre de runs',false);return;}
   await addDoc(collection(db,'shifts'),{player,runs,gains,note:$(player+'Note').value,monnaie:'propre',activite:player==='sun'?'Biotech & Horizon':'Club 77',ts:serverTimestamp(),date:today()});
   $(player+'Runs').value=''; $(player+'Gains').value=''; $(player+'Note').value='';
   if(player==='sun') $('sunEstim').textContent='';
-  showToast('Shift enregistré !');
+  showToast('Shift enregistre !');
 };
 
-window.addObjectif = async () => { const name=$('objName').value.trim(), target=parseFloat($('objTarget').value)||0; if(!name||!target){showToast('Nom et montant requis',false);return;} state.objectifs.push({id:Date.now(),name,target,cat:$('objCat').value,monnaie:$('objMonnaie').value,joueur:$('objJoueur').value}); await saveState(); $('objName').value=''; $('objTarget').value=''; showToast('Objectif ajouté !'); };
-window.delObj = async id => { state.objectifs=state.objectifs.filter(o=>o.id!==id); await saveState(); };
-
-window.toggleDepenseForm = () => {
-  const f = $('depenseForm'), icon = $('depenseToggleIcon');
-  const open = f.style.display === 'none';
-  f.style.display = open ? 'block' : 'none';
-  icon.textContent = open ? '▲ fermer' : '▼ ouvrir';
-};
-
-window.validerAchat = async id => {
-  const o = state.objectifs.find(x=>x.id===id);
-  if(!o) return;
-  if(!confirm(`Valider l'achat "${o.name}" pour ${fmt(o.target)} ?`)) return;
-  await enregistrerDepense({ nom:o.name, montant:o.target, cat:o.cat, monnaie:o.monnaie||'propre', joueur:o.joueur||'both', note:'Objectif atteint', fromObjectif:true });
-  state.objectifs = state.objectifs.filter(x=>x.id!==id);
-  await saveState();
-  showToast(`Achat "${o.name}" validé - ${fmt(o.target)} déduits !`);
-};
-
-window.saveDepenseDirecte = async () => {
-  const nom = $('depNom').value.trim();
-  const montant = parseFloat($('depMontant').value)||0;
-  if(!nom||!montant){ showToast('Nom et montant requis', false); return; }
-  await enregistrerDepense({ nom, montant, cat:$('depCat').value, monnaie:$('depMonnaie').value, joueur:$('depJoueur').value, note:$('depNote').value });
-  $('depNom').value=''; $('depMontant').value=''; $('depNote').value='';
-  showToast('Dépense enregistrée !');
-};
-
-async function enregistrerDepense({nom, montant, cat, monnaie, joueur, note, fromObjectif=false}){
-  await addDoc(collection(db,'depenses'), { nom, montant, cat, monnaie, joueur, note:note||'', fromObjectif, ts:serverTimestamp(), date:today() });
-  // Déduire des soldes
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  if(monnaie==='sale'){
-    state.soldes.potCommun = Math.max(0, (state.soldes.potCommun||0) - montant);
-  } else {
-    if(joueur==='sun' || joueur==='both'){
-      const part = joueur==='both' ? montant/2 : montant;
-      state.ajustements = state.ajustements||{sun:0,moon:0};
-      state.ajustements.sun = (state.ajustements.sun||0) - part;
-    }
-    if(joueur==='moon' || joueur==='both'){
-      const part = joueur==='both' ? montant/2 : montant;
-      state.ajustements = state.ajustements||{sun:0,moon:0};
-      state.ajustements.moon = (state.ajustements.moon||0) - part;
-    }
-  }
-  await saveState();
-}
-
-// ── SALVIA ────────────────────────────────────────────────────
 window.switchSalviaTab = tab => {
-  $('salvia-stats').style.display = tab==='stats' ? 'block' : 'none';
-  $('salvia-saisie').style.display = tab==='saisie' ? 'block' : 'none';
-  ['stab-stats','stab-saisie'].forEach(id=>{ $(id).classList.remove('active'); });
-  $(tab==='stats'?'stab-stats':'stab-saisie').classList.add('active');
-  if(tab==='stats') setTimeout(renderSalviaChart, 80);
+  $('salvia-stats').style.display=tab==='stats'?'block':'none';
+  $('salvia-saisie').style.display=tab==='saisie'?'block':'none';
+  $('stab-stats').classList.toggle('active',tab==='stats');
+  $('stab-saisie').classList.toggle('active',tab==='saisie');
 };
-
-function getSalviaStock(){
-  const ops = state.salvia||[];
-  let feuilles = (state.salviaStock||{}).feuilles||0;
-  let tetes    = (state.salviaStock||{}).tetes||0;
-  return {feuilles, tetes};
-}
-
 window.fixSalviaStock = async type => {
-  const val = parseInt($(type==='feuilles'?'fixFeuilles':'fixTetes').value);
-  if(isNaN(val)||val<0){ showToast('Quantité invalide', false); return; }
-  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
-  state.salviaStock[type] = val;
+  const val=parseInt(type==='feuilles'?$('fixFeuilles').value:$('fixTetes').value);
+  if(isNaN(val)||val<0){showToast('Invalide',false);return;}
+  state.salviaStock=state.salviaStock||{feuilles:0,tetes:0};
+  state.salviaStock[type]=val;
   await saveState();
-  $(type==='feuilles'?'fixFeuilles':'fixTetes').value = '';
-  showToast(`Stock ${type} salvia corrigé : ${val}`);
+  $(type==='feuilles'?'fixFeuilles':'fixTetes').value='';
+  showToast('Stock '+type+' corrige : '+val);
 };
-
-window.updateSalviaTransfEstim = () => {
-  const n = parseInt($('salvTransfFeuilles').value)||0;
-  $('salvTransfEstim').textContent = n>0 ? `${n} feuilles → ${n} têtes (conversion 1:1)` : '';
-};
-
-window.updateSalviaVenteEstim = () => {
-  const tetes = parseInt($('salvVenteTetes').value)||0;
-  const revenu = parseFloat($('salvVenteRevenu').value)||0;
-  if(tetes>0 && revenu>0){
-    const moy = Math.round(revenu/tetes);
-    $('salvVenteEstim').textContent = `Prix moyen : ${fmt(moy)}/tête (fourchette 60$–100$)`;
-  } else {
-    $('salvVenteEstim').textContent = '';
-  }
-};
-
-window.saveSalviaCueillette = async () => {
-  const feuilles = parseInt($('salvFeuilles').value)||0;
-  if(!feuilles){ showToast('Nombre de feuilles requis', false); return; }
-  const taxe = parseFloat($('salvTaxe').value)||0;
-  await addDoc(collection(db,'salvia'), {
-    type:'cueillette', player:$('salvCueilPeche').value,
-    feuilles, taxe, note:$('salvCueilNote').value,
-    ts:serverTimestamp(), date:today()
-  });
-  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
-  state.salviaStock.feuilles += feuilles;
+window.updateSalviaTransfEstim = ()=>{ const n=parseInt($('salvTransfFeuilles').value)||0; $('salvTransfEstim').textContent=n>0?n+' feuilles > '+n+' tetes (1:1)':''; };
+window.updateSalviaVenteEstim = ()=>{ const t=parseInt($('salvVenteTetes').value)||0, r=parseFloat($('salvVenteRevenu').value)||0; if(t>0&&r>0){$('salvVenteEstim').textContent='Prix moy : '+fmt(Math.round(r/t))+'/tete';}else{$('salvVenteEstim').textContent='';} };
+window.saveSalviaCueillette = async ()=>{
+  const feuilles=parseInt($('salvFeuilles').value)||0;
+  if(!feuilles){showToast('Nombre de feuilles requis',false);return;}
+  const taxe=parseFloat($('salvTaxe').value)||0;
+  await addDoc(collection(db,'salvia'),{type:'cueillette',player:$('salvCueilPeche').value,feuilles,taxe,note:$('salvCueilNote').value,ts:serverTimestamp(),date:today()});
+  state.salviaStock=state.salviaStock||{feuilles:0,tetes:0};
+  state.salviaStock.feuilles+=feuilles;
   await saveState();
   $('salvFeuilles').value=''; $('salvTaxe').value=''; $('salvCueilNote').value='';
-  showToast(`Cueillette enregistrée - ${feuilles} feuilles ajoutées !`);
-  switchSalviaTab('stats');
+  showToast(feuilles+' feuilles ajoutees !'); switchSalviaTab('stats');
 };
-
-window.saveSalviaTransfo = async () => {
-  const feuilles = parseInt($('salvTransfFeuilles').value)||0;
-  if(!feuilles){ showToast('Nombre de feuilles requis', false); return; }
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  if(feuilles > stock.feuilles){
-    showToast(`Stock insuffisant - ${stock.feuilles} feuilles disponibles`, false); return;
-  }
-  const taxe = parseFloat($('salvTransfTaxe').value)||0;
-  const tetes = feuilles; // 1:1
-  await addDoc(collection(db,'salvia'), {
-    type:'transformation', feuilles, tetes, taxe,
-    note:$('salvTransfNote').value, ts:serverTimestamp(), date:today()
-  });
-  state.salviaStock.feuilles -= feuilles;
-  state.salviaStock.tetes += tetes;
+window.saveSalviaTransfo = async ()=>{
+  const feuilles=parseInt($('salvTransfFeuilles').value)||0;
+  if(!feuilles){showToast('Nombre de feuilles requis',false);return;}
+  const stock=state.salviaStock||{feuilles:0,tetes:0};
+  if(feuilles>stock.feuilles){showToast('Stock insuffisant - '+stock.feuilles+' feuilles',false);return;}
+  const taxe=parseFloat($('salvTransfTaxe').value)||0;
+  await addDoc(collection(db,'salvia'),{type:'transformation',feuilles,tetes:feuilles,taxe,note:$('salvTransfNote').value,ts:serverTimestamp(),date:today()});
+  state.salviaStock.feuilles-=feuilles; state.salviaStock.tetes+=feuilles;
   await saveState();
-  $('salvTransfFeuilles').value=''; $('salvTransfTaxe').value=''; $('salvTransfNote').value='';
-  $('salvTransfEstim').textContent='';
-  showToast(`Transformation enregistrée - ${tetes} têtes produites !`);
-  switchSalviaTab('stats');
+  $('salvTransfFeuilles').value=''; $('salvTransfTaxe').value=''; $('salvTransfNote').value=''; $('salvTransfEstim').textContent='';
+  showToast(feuilles+' tetes produites !'); switchSalviaTab('stats');
 };
-
-window.saveSalviaVente = async () => {
-  const tetes = parseInt($('salvVenteTetes').value)||0;
-  const revenu = parseFloat($('salvVenteRevenu').value)||0;
-  if(!tetes||!revenu){ showToast('Têtes et revenus requis', false); return; }
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  if(tetes > stock.tetes){
-    showToast(`Stock insuffisant - ${stock.tetes} têtes disponibles`, false); return;
-  }
-  await addDoc(collection(db,'salvia'), {
-    type:'vente', player:$('salvVentePeche').value,
-    tetes, revenu, monnaie:'sale',
-    note:$('salvVenteNote').value, ts:serverTimestamp(), date:today()
-  });
-  state.salviaStock.tetes -= tetes;
-  // Ajouter au pot commun sale
-  state.soldes = state.soldes||{sun:0,moon:0,potCommun:0};
-  state.soldes.potCommun = (state.soldes.potCommun||0) + revenu;
+window.saveSalviaVente = async ()=>{
+  const tetes=parseInt($('salvVenteTetes').value)||0, revenu=parseFloat($('salvVenteRevenu').value)||0;
+  if(!tetes||!revenu){showToast('Tetes et revenus requis',false);return;}
+  const stock=state.salviaStock||{feuilles:0,tetes:0};
+  if(tetes>stock.tetes){showToast('Stock insuffisant - '+stock.tetes+' tetes',false);return;}
+  await addDoc(collection(db,'salvia'),{type:'vente',player:$('salvVentePeche').value,tetes,revenu,monnaie:'sale',note:$('salvVenteNote').value,ts:serverTimestamp(),date:today()});
+  state.salviaStock.tetes-=tetes;
+  state.soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  state.soldes.potCommun=(state.soldes.potCommun||0)+revenu;
   await saveState();
-  $('salvVenteTetes').value=''; $('salvVenteRevenu').value='';
-  $('salvVenteNote').value=''; $('salvVenteEstim').textContent='';
-  showToast(`Vente enregistrée - ${fmt(revenu)} en sale ajoutés au pot commun !`);
-  switchSalviaTab('stats');
+  $('salvVenteTetes').value=''; $('salvVenteRevenu').value=''; $('salvVenteNote').value=''; $('salvVenteEstim').textContent='';
+  showToast('Vente salvia enregistree - '+fmt(revenu)+' en sale !'); switchSalviaTab('stats');
 };
+window.delSalviaOp = async id=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'salvia',id));showToast('Supprime');};
 
-window.delSalviaOp = async id => {
-  if(!confirm('Supprimer cette opération ?')) return;
-  await deleteDoc(doc(db,'salvia',id));
-  showToast('Supprimé');
-};
-
-let salviaChart;
-function renderSalviaChart(){
-  const ventes = (state.salvia||[]).filter(s=>s.type==='vente').slice(0,8).reverse();
-  const labels = ventes.map((_,i)=>'V'+(i+1));
-  const data   = ventes.map(s=>s.revenu);
-  if($('salviaChart')){
-    if(salviaChart) salviaChart.destroy();
-    salviaChart = new Chart($('salviaChart'),{
-      type:'bar',
-      data:{labels,datasets:[{label:'Revenus',data,backgroundColor:'rgba(108,111,207,0.6)',borderColor:'#6c6fcf',borderWidth:1}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
-        x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},
-        y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}
-      }}
-    });
-  }
-}
-
-function renderSalvia(){
-  const ops = state.salvia||[];
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  const totalVentes = ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.revenu,0);
-  const totalTaxes  = ops.reduce((a,s)=>a+(s.taxe||0),0);
-  const totalFeuilles = ops.filter(s=>s.type==='cueillette').reduce((a,s)=>a+s.feuilles,0);
-  const totalTetes  = ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.tetes,0);
-  const moy = totalTetes>0 ? Math.round(totalVentes/totalTetes) : 0;
-
-  const ki = $('salviaKpis');
-  if(ki) ki.innerHTML = `
-    <div class="kpi"><div class="kpi-label">Revenus bruts (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div>
-    <div class="kpi"><div class="kpi-label">Taxes payées</div><div class="kpi-val red">${fmt(totalTaxes)}</div></div>
-    <div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val amber">${fmt(totalVentes-totalTaxes)}</div></div>
-    <div class="kpi"><div class="kpi-label">Feuilles récoltées</div><div class="kpi-val">${totalFeuilles}</div></div>
-    <div class="kpi"><div class="kpi-label">Prix moy./tête</div><div class="kpi-val">${moy?fmt(moy):'-'}</div></div>
-  `;
-
-  const fPct = Math.min(100, stock.feuilles>0?Math.round(stock.feuilles/200*100):0);
-  const tPct = Math.min(100, stock.tetes>0?Math.round(stock.tetes/200*100):0);
-  const ss = $('salviaStock');
-  if(ss) ss.innerHTML = `
-    <div style="padding:8px 0;border-bottom:0.5px solid var(--border)">
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">🌿 Feuilles</span><span style="color:var(--txt);font-weight:500">${stock.feuilles} kg</span></div>
-      <div class="progress-bg"><div class="progress-fill" style="width:${fPct}%;background:#1d9e75"></div></div>
-    </div>
-    <div style="padding:8px 0">
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">💊 Têtes prêtes</span><span style="color:var(--txt);font-weight:500">${stock.tetes} kg</span></div>
-      <div class="progress-bg"><div class="progress-fill" style="width:${tPct}%;background:#6c6fcf"></div></div>
-    </div>
-  `;
-
-  // Stock dispo pour saisie
-  const fd = $('salviaFeuillesDisp'); if(fd) fd.textContent = stock.feuilles+' kg';
-  const td = $('salviaTetesDisp');   if(td) td.textContent = stock.tetes+' kg';
-
-  // Historique
-  const ho = $('salviaOpsHisto');
-  if(!ho) return;
-  if(!ops.length){ ho.innerHTML='<div class="empty-state">Aucune opération enregistrée</div>'; return; }
-  const icons = {cueillette:'🌿',transformation:'🔥',vente:'💰'};
-  const labels = {cueillette:'Cueillette',transformation:'Transformation',vente:'Vente'};
-  ho.innerHTML = ops.slice(0,10).map(op=>{
-    const detail = op.type==='cueillette' ? '- '+op.feuilles+' feuilles'
-      : op.type==='transformation' ? '- '+op.feuilles+'f → '+op.tetes+' têtes'
-      : op.type==='vente' ? '- '+op.tetes+' têtes' : '';
-    const taxeStr = op.taxe ? '  .  taxe : '+fmt(op.taxe) : '';
-    const venteHtml = op.type==='vente' ? '<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">'+fmt(op.revenu)+'</span>' : '';
-    const taxeHtml = op.taxe && op.type!=='vente' ? '<span style="color:#d85a30;font-size:12px">-'+fmt(op.taxe)+'</span>' : '';
-    return '<div class="row">'
-      +'<span style="font-size:16px">'+icons[op.type]+'</span>'
-      +'<div style="flex:1;margin-left:6px">'
-      +'<div style="font-size:13px;font-weight:500;color:var(--txt)">'+labels[op.type]+' '+detail+'</div>'
-      +'<div style="font-size:11px;color:var(--txt3)">'+(op.note||'')+taxeStr+'</div>'
-      +'</div>'
-      +venteHtml+taxeHtml
-      +'<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'
-      +'<button class="btn-del" onclick="delSalviaOp(&quot;'+op._id+'&quot;)">✕</button>'
-      +'</div>';
-  }).join('');
-}
-
-// ── OBJECTIFS TABS ────────────────────────────────────────────
-window.switchObjTab = tab => {
-  document.getElementById('obj-achat-panel').style.display = tab==='achat'?'block':'none';
-  document.getElementById('obj-commande-panel').style.display = tab==='commande'?'block':'none';
-  document.getElementById('otab-achat').classList.toggle('active', tab==='achat');
-  document.getElementById('otab-commande').classList.toggle('active', tab==='commande');
-};
-
-// ── COMMANDES ─────────────────────────────────────────────────
-window.addCommande = async () => {
-  const client = document.getElementById('cmdClient').value.trim();
-  const qty = parseInt(document.getElementById('cmdQty').value)||0;
-  const produit = document.getElementById('cmdProduit').value;
-  if(!client||!qty){ showToast('Client et quantité requis', false); return; }
-  state.commandes = state.commandes||[];
-  state.commandes.push({
-    id: Date.now(),
-    client, produit, qty,
-    priorite: document.getElementById('cmdPriorite').value,
-    note: document.getElementById('cmdNote').value,
-    date: today()
-  });
-  await saveState();
-  document.getElementById('cmdClient').value='';
-  document.getElementById('cmdQty').value='';
-  document.getElementById('cmdNote').value='';
-  showToast('Commande ajoutée !');
-};
-
-window.livrerCommande = async id => {
-  const cmd = (state.commandes||[]).find(c=>c.id===id);
-  if(!cmd) return;
-  if(!confirm('Livrer la commande "'+cmd.client+'" - '+cmd.qty+'kg de '+cmd.produit+' ?')) return;
-  // Déduire du stock salvia
-  state.salviaStock = state.salviaStock||{feuilles:0,tetes:0};
-  if(cmd.produit==='salvia') state.salviaStock.tetes = Math.max(0, state.salviaStock.tetes - cmd.qty);
-  state.commandes = state.commandes.filter(c=>c.id!==id);
-  await saveState();
-  showToast('Commande livrée - '+cmd.qty+'kg de '+cmd.produit+' déduits du stock !');
-};
-
-window.delCommande = async id => {
-  if(!confirm('Supprimer cette commande ?')) return;
-  state.commandes = state.commandes.filter(c=>c.id!==id);
-  await saveState();
-  showToast('Commande supprimée');
-};
-
-const PRIO_COLORS = {haute:'#d85a30', normale:'#ef9f27', basse:'#1d9e75'};
-const PRIO_LABELS = {haute:'🔴 Haute', normale:'🟡 Normale', basse:'🟢 Basse'};
-
-function renderCommandes(){
-  const el = document.getElementById('cmdList');
-  if(!el) return;
-  const cmds = (state.commandes||[]).sort((a,b)=>{
-    const order={haute:0,normale:1,basse:2};
-    return (order[a.priorite]||1)-(order[b.priorite]||1);
-  });
-  if(!cmds.length){ el.innerHTML='<div class="empty-state">Aucune commande en cours</div>'; return; }
-  const stock = state.salviaStock||{feuilles:0,tetes:0};
-  el.innerHTML = cmds.map(cmd=>{
-    const stockDisp = cmd.produit==='salvia' ? stock.tetes : 0;
-    const pct = cmd.qty>0 ? Math.min(100, Math.round(stockDisp/cmd.qty*100)) : 0;
-    const col = pct>=100?'#1d9e75':pct>50?'#ef9f27':'#6c6fcf';
-    const canDeliver = stockDisp >= cmd.qty;
-    return '<div style="padding:14px 0;border-bottom:0.5px solid var(--border)">'
-      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
-      +'<span style="font-size:18px">'+(cmd.produit==='salvia'?'🌿':'📦')+'</span>'
-      +'<div style="flex:1">'
-      +'<div style="font-size:13px;font-weight:500;color:var(--txt)">'+cmd.client+'</div>'
-      +'<div style="font-size:11px;color:var(--txt3)">'+cmd.qty+'kg  .  '+PRIO_LABELS[cmd.priorite]+(cmd.note?'  .  '+cmd.note:'')+'</div>'
-      +'</div>'
-      +(canDeliver?'<button class="btn btn-primary" onclick="livrerCommande('+cmd.id+')" style="padding:5px 12px;font-size:12px">Livrer</button>':'')
-      +'<button class="btn-del" onclick="delCommande('+cmd.id+')">✕</button>'
-      +'</div>'
-      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
-      +'<div class="progress-bg" style="flex:1;height:6px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:6px"></div></div>'
-      +'<span style="font-size:12px;color:var(--txt2);min-width:80px;text-align:right">'+stockDisp+'kg / '+cmd.qty+'kg ('+pct+'%)</span>'
-      +'</div>'
-      +'</div>';
-  }).join('');
-}
-
-// -- PLANTATION ---------------------------------------------------
-const PLANT_MAX = {entrepot:700, vanSun:300, vanMoon:300, appart:700};
-const PRIX_BRANCHE = 70;
-const POIDS_BRANCHE = 0.5;
-
-window.switchPlantationTab = tab => {
-  $('plantation-stats').style.display = tab==='stats'?'block':'none';
-  $('plantation-saisie').style.display = tab==='saisie'?'block':'none';
-  $('ptab-stats').classList.toggle('active', tab==='stats');
-  $('ptab-saisie').classList.toggle('active', tab==='saisie');
-};
-
-window.addCommande = async () => {
-  const nom = $('cmdNom').value.trim();
-  const qty = parseInt($('cmdQty').value)||0;
-  if(!nom||!qty){ showToast('Nom et quantite requis', false); return; }
-  state.commandes = state.commandes||[];
-  state.commandes.push({id:Date.now(), nom, qty, date:today(), livree:false});
+window.addCommande = async ()=>{
+  const nom=$('cmdNom').value.trim(), qty=parseInt($('cmdQty').value)||0;
+  if(!nom||!qty){showToast('Nom et quantite requis',false);return;}
+  state.commandes=state.commandes||[];
+  state.commandes.push({id:Date.now(),nom,qty,date:today(),livree:false});
   await saveState();
   $('cmdNom').value=''; $('cmdQty').value='';
   showToast('Commande ajoutee : '+nom+' ('+qty+' branches)');
 };
-
-window.cloturerCommande = async id => {
-  if(!confirm('Marquer cette commande comme livree ?')) return;
-  state.commandes = (state.commandes||[]).map(c=>c.id===id?{...c,livree:true,dateLivraison:today()}:c);
-  await saveState();
-  showToast('Commande cloturee !');
+window.cloturerCommande = async id=>{
+  if(!confirm('Marquer comme livree ?'))return;
+  state.commandes=(state.commandes||[]).map(c=>c.id===id?{...c,livree:true,dateLivraison:today()}:c);
+  await saveState(); showToast('Commande cloturee !');
 };
-
-window.supprimerCommande = async id => {
-  if(!confirm('Supprimer cette commande ?')) return;
-  state.commandes = (state.commandes||[]).filter(c=>c.id!==id);
-  await saveState();
-  showToast('Commande supprimee');
+window.supprimerCommande = async id=>{
+  if(!confirm('Supprimer ?'))return;
+  state.commandes=(state.commandes||[]).filter(c=>c.id!==id);
+  await saveState(); showToast('Commande supprimee');
 };
-
-window.fixPlantRessource = async type => {
-  const val = parseInt(type==='eau'?$('fixEau').value:$('fixFert').value);
-  if(isNaN(val)||val<0){ showToast('Quantite invalide', false); return; }
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  state.plantationStock[type==='eau'?'eau':'fert'] = val;
+window.fixPlantRessource = async type=>{
+  const val=parseInt(type==='eau'?$('fixEau').value:$('fixFert').value);
+  if(isNaN(val)||val<0){showToast('Invalide',false);return;}
+  state.plantationStock=state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+  state.plantationStock[type==='eau'?'eau':'fert']=val;
   await saveState();
   if(type==='eau') $('fixEau').value=''; else $('fixFert').value='';
   showToast((type==='eau'?'Eau':'Fertilisant')+' corrige : '+val);
 };
-
-window.fixPlantStock = async type => {
-  const ids = {entrepot:'fixEntrepot',vanSun:'fixVanSun',vanMoon:'fixVanMoon',appart:'fixAppart'};
-  const val = parseInt($(ids[type]).value);
-  if(isNaN(val)||val<0){ showToast('Quantite invalide', false); return; }
-  if(val > PLANT_MAX[type]){ showToast('Max '+PLANT_MAX[type]+' branches', false); return; }
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  state.plantationStock[type] = val;
+window.fixPlantStock = async type=>{
+  const ids={entrepot:'fixEntrepot',vanSun:'fixVanSun',vanMoon:'fixVanMoon',appart:'fixAppart'};
+  const val=parseInt($(ids[type]).value);
+  if(isNaN(val)||val<0){showToast('Invalide',false);return;}
+  if(val>PLANT_MAX[type]){showToast('Max '+PLANT_MAX[type]+' branches',false);return;}
+  state.plantationStock=state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+  state.plantationStock[type]=val;
   await saveState();
   $(ids[type]).value='';
   showToast('Stock '+type+' : '+val+' branches');
 };
-
-window.updatePlantAchatEstim = () => {
-  const eau = parseInt($('plantAchatEau').value)||0;
-  const graines = parseInt($('plantAchatGraines').value)||0;
-  const pots = parseInt($('plantAchatPots').value)||0;
-  const total = (eau*5)+(graines*75)+(pots*75);
-  const el = $('plantAchatEstim');
-  if(!eau&&!graines&&!pots){ el.innerHTML=''; return; }
-  el.innerHTML = 'Eau : '+fmt(eau*5)+' · Graines : '+fmt(graines*75)+' · Pots : '+fmt(pots*75)+' = <strong style="color:#d85a30">'+fmt(total)+'</strong>';
+window.updatePlantAchatEstim = ()=>{
+  const eau=parseInt($('plantAchatEau').value)||0, g=parseInt($('plantAchatGraines').value)||0, p=parseInt($('plantAchatPots').value)||0;
+  const total=(eau*5)+(g*75)+(p*75);
+  const el=$('plantAchatEstim');
+  if(!eau&&!g&&!p){el.innerHTML='';return;}
+  el.innerHTML='Eau : '+fmt(eau*5)+' - Graines : '+fmt(g*75)+' - Pots : '+fmt(p*75)+' = <strong style="color:#d85a30">'+fmt(total)+'</strong>';
 };
-
-window.updatePlantCycleEstim = () => {
-  const pieds = parseInt($('plantNbPieds').value)||0;
-  const branches = parseInt($('plantBranches').value)||0;
-  const el = $('plantCycleEstim');
-  if(!pieds){ el.innerHTML=''; return; }
-  const eauNeed = pieds*6, fertNeed = pieds*6;
-  const stock = state.plantationStock||{eau:0,fert:0};
-  const eauOk = stock.eau>=eauNeed, fertOk = stock.fert>=fertNeed;
-  const rendement = pieds>0&&branches>0 ? ((branches/(pieds*9))*100).toFixed(0) : null;
-  el.innerHTML =
-    'Eau : <strong style="color:'+(eauOk?'#1d9e75':'#d85a30')+'">'+eauNeed+'</strong> (stock: '+stock.eau+') · '+
-    'Fert : <strong style="color:'+(fertOk?'#1d9e75':'#d85a30')+'">'+fertNeed+'</strong> (stock: '+stock.fert+')'+
-    (rendement?' · Rendement : <strong style="color:#ef9f27">'+rendement+'%</strong> ('+branches+'/'+(pieds*9)+' max)':'');
+window.updatePlantCycleEstim = ()=>{
+  const pieds=parseInt($('plantNbPieds').value)||0, branches=parseInt($('plantBranches').value)||0;
+  const el=$('plantCycleEstim');
+  if(!pieds){el.innerHTML='';return;}
+  const eauNeed=pieds*6, fertNeed=pieds*6, stock=state.plantationStock||{eau:0,fert:0};
+  const eauOk=stock.eau>=eauNeed, fertOk=stock.fert>=fertNeed;
+  const rendement=pieds>0&&branches>0?((branches/(pieds*9))*100).toFixed(0):null;
+  el.innerHTML='Eau : <strong style="color:'+(eauOk?'#1d9e75':'#d85a30')+'">'+eauNeed+'</strong> (stock: '+stock.eau+') - Fert : <strong style="color:'+(fertOk?'#1d9e75':'#d85a30')+'">'+fertNeed+'</strong> (stock: '+stock.fert+')'+(rendement?' - Rendement : <strong style="color:#ef9f27">'+rendement+'%</strong>':'');
 };
-
-window.updatePlantVenteEstim = () => {
-  const branches = parseInt($('plantVenteBranches').value)||0;
-  const revenu = parseFloat($('plantVenteRevenu').value)||(branches*PRIX_BRANCHE);
-  const el = $('plantVenteEstim');
-  if(!branches){ el.innerHTML=''; return; }
-  el.innerHTML = 'Poids : '+(branches*POIDS_BRANCHE).toFixed(0)+'kg · Prix moy : '+fmt(Math.round(revenu/branches))+'/branche · Total : <strong style="color:#ef9f27">'+fmt(revenu)+'</strong>';
-  if(!$('plantVenteRevenu').value) $('plantVenteRevenu').placeholder = String(branches*PRIX_BRANCHE);
+window.updatePlantVenteEstim = ()=>{
+  const branches=parseInt($('plantVenteBranches').value)||0, revenu=parseFloat($('plantVenteRevenu').value)||(branches*PRIX_BRANCHE);
+  const el=$('plantVenteEstim');
+  if(!branches){el.innerHTML='';return;}
+  el.innerHTML='Poids : '+(branches*POIDS_BRANCHE).toFixed(0)+'kg - Prix moy : '+fmt(Math.round(revenu/branches))+'/branche - Total : <strong style="color:#ef9f27">'+fmt(revenu)+'</strong>';
+  if(!$('plantVenteRevenu').value) $('plantVenteRevenu').placeholder=String(branches*PRIX_BRANCHE);
 };
-
-window.savePlantAchat = async () => {
-  const eau = parseInt($('plantAchatEau').value)||0;
-  const graines = parseInt($('plantAchatGraines').value)||0;
-  const pots = parseInt($('plantAchatPots').value)||0;
-  const fert = parseInt($('plantAchatFert').value)||0;
-  if(!eau&&!graines&&!pots&&!fert){ showToast('Rien a enregistrer', false); return; }
-  const taxe = parseFloat($('plantFertTaxe').value)||0;
-  const total = (eau*5)+(graines*75)+(pots*75)+taxe;
-  const acheteur = $('plantAcheteur').value;
-  await addDoc(collection(db,'plantation'), {type:'achat',eau,graines,pots,fert,taxeFert:taxe,totalCout:total,acheteur,ts:serverTimestamp(),date:today()});
-  state.plantationStock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  state.plantationStock.eau += eau;
-  state.plantationStock.fert += fert;
+window.savePlantAchat = async ()=>{
+  const eau=parseInt($('plantAchatEau').value)||0, g=parseInt($('plantAchatGraines').value)||0, p=parseInt($('plantAchatPots').value)||0, fert=parseInt($('plantAchatFert').value)||0;
+  if(!eau&&!g&&!p&&!fert){showToast('Rien a enregistrer',false);return;}
+  const taxe=parseFloat($('plantFertTaxe').value)||0, total=(eau*5)+(g*75)+(p*75)+taxe;
+  const acheteur=$('plantAcheteur').value;
+  await addDoc(collection(db,'plantation'),{type:'achat',eau,graines:g,pots:p,fert,taxeFert:taxe,totalCout:total,acheteur,ts:serverTimestamp(),date:today()});
+  state.plantationStock=state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+  state.plantationStock.eau+=eau; state.plantationStock.fert+=fert;
   if(total>0){
-    state.ajustements = state.ajustements||{sun:0,moon:0};
-    const part = acheteur==='both'?total/2:total;
-    if(acheteur==='sun'||acheteur==='both') state.ajustements.sun -= part;
-    if(acheteur==='moon'||acheteur==='both') state.ajustements.moon -= part;
+    state.ajustements=state.ajustements||{sun:0,moon:0};
+    const part=acheteur==='both'?total/2:total;
+    if(acheteur==='sun'||acheteur==='both') state.ajustements.sun-=part;
+    if(acheteur==='moon'||acheteur==='both') state.ajustements.moon-=part;
   }
   await saveState();
   ['plantAchatEau','plantAchatGraines','plantAchatPots','plantAchatFert','plantFertTaxe'].forEach(id=>$(id).value='');
   $('plantAchatEstim').innerHTML='';
-  showToast('Achat enregistre'+( total>0?' - '+fmt(total)+' deduits !':'!'));
-  switchPlantationTab('stats');
+  showToast('Achat enregistre'+(total>0?' - '+fmt(total)+' deduits !':'!')); switchPlantationTab('stats');
 };
-
-window.savePlantCycle = async () => {
-  const pieds = parseInt($('plantNbPieds').value)||0;
-  const branches = parseInt($('plantBranches').value)||0;
-  if(!pieds||!branches){ showToast('Pieds et branches requis', false); return; }
-  const eauNeed = pieds*6, fertNeed = pieds*6;
-  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  if(stock.eau<eauNeed){ showToast('Eau insuffisante - besoin '+eauNeed+', stock '+stock.eau, false); return; }
-  if(stock.fert<fertNeed){ showToast('Fert insuffisant - besoin '+fertNeed+', stock '+stock.fert, false); return; }
-  const dest = $('plantDest').value;
-  if((stock[dest]||0)+branches>PLANT_MAX[dest]){ showToast('Capacite depassee pour '+dest, false); return; }
-  const rendement = parseFloat(((branches/(pieds*9))*100).toFixed(1));
-  await addDoc(collection(db,'plantation'), {type:'cycle',pieds,branches,rendement,jardinier:$('plantJardinier').value,dest,note:$('plantNote').value,eauUtilisee:eauNeed,fertUtilise:fertNeed,ts:serverTimestamp(),date:today()});
-  state.plantationStock.eau -= eauNeed;
-  state.plantationStock.fert -= fertNeed;
-  state.plantationStock[dest] = (stock[dest]||0)+branches;
+window.savePlantCycle = async ()=>{
+  const pieds=parseInt($('plantNbPieds').value)||0, branches=parseInt($('plantBranches').value)||0;
+  if(!pieds||!branches){showToast('Pieds et branches requis',false);return;}
+  const eauNeed=pieds*6, fertNeed=pieds*6;
+  const stock=state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+  if(stock.eau<eauNeed){showToast('Eau insuffisante - besoin '+eauNeed+', stock '+stock.eau,false);return;}
+  if(stock.fert<fertNeed){showToast('Fert insuffisant - besoin '+fertNeed+', stock '+stock.fert,false);return;}
+  const dest=$('plantDest').value;
+  if((stock[dest]||0)+branches>PLANT_MAX[dest]){showToast('Capacite depassee pour '+dest,false);return;}
+  const rendement=parseFloat(((branches/(pieds*9))*100).toFixed(1));
+  await addDoc(collection(db,'plantation'),{type:'cycle',pieds,branches,rendement,jardinier:$('plantJardinier').value,dest,note:$('plantNote').value,eauUtilisee:eauNeed,fertUtilise:fertNeed,ts:serverTimestamp(),date:today()});
+  state.plantationStock.eau-=eauNeed; state.plantationStock.fert-=fertNeed;
+  state.plantationStock[dest]=(stock[dest]||0)+branches;
   await saveState();
   ['plantNbPieds','plantBranches','plantNote'].forEach(id=>$(id).value='');
   $('plantCycleEstim').innerHTML='';
-  showToast('Cycle enregistre - '+branches+' branches (rendement '+rendement+'%)');
-  switchPlantationTab('stats');
+  showToast('Cycle enregistre - '+branches+' branches (rendement '+rendement+'%)'); switchPlantationTab('stats');
 };
-
-window.savePlantVente = async () => {
-  const branches = parseInt($('plantVenteBranches').value)||0;
-  const revenu = parseFloat($('plantVenteRevenu').value)||(branches*PRIX_BRANCHE);
-  if(!branches){ showToast('Branches requises', false); return; }
-  const src = $('plantVenteSrc').value;
-  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  const totalStock = stock.entrepot+stock.vanSun+stock.vanMoon+stock.appart;
-  if(src==='all'&&branches>totalStock){ showToast('Stock insuffisant - '+totalStock+' branches', false); return; }
-  if(src!=='all'&&branches>(stock[src]||0)){ showToast('Stock insuffisant dans '+src, false); return; }
-  await addDoc(collection(db,'plantation'), {type:'vente',branches,revenu,src,monnaie:'sale',note:$('plantVenteNote').value,ts:serverTimestamp(),date:today()});
-  if(src==='all'){
-    let reste=branches;
-    for(const loc of ['entrepot','vanSun','vanMoon','appart']){
-      const pris=Math.min(reste,stock[loc]||0);
-      state.plantationStock[loc]=(stock[loc]||0)-pris;
-      reste-=pris;
-      if(reste<=0) break;
-    }
-  } else {
-    state.plantationStock[src]=(stock[src]||0)-branches;
-  }
+window.savePlantVente = async ()=>{
+  const branches=parseInt($('plantVenteBranches').value)||0, revenu=parseFloat($('plantVenteRevenu').value)||(branches*PRIX_BRANCHE);
+  if(!branches){showToast('Branches requises',false);return;}
+  const src=$('plantVenteSrc').value;
+  const stock=state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
+  const totalStock=stock.entrepot+stock.vanSun+stock.vanMoon+stock.appart;
+  if(src==='all'&&branches>totalStock){showToast('Stock insuffisant - '+totalStock+' branches',false);return;}
+  if(src!=='all'&&branches>(stock[src]||0)){showToast('Stock insuffisant dans '+src,false);return;}
+  await addDoc(collection(db,'plantation'),{type:'vente',branches,revenu,src,monnaie:'sale',note:$('plantVenteNote').value,ts:serverTimestamp(),date:today()});
+  if(src==='all'){let reste=branches;for(const loc of ['entrepot','vanSun','vanMoon','appart']){const pris=Math.min(reste,stock[loc]||0);state.plantationStock[loc]=(stock[loc]||0)-pris;reste-=pris;if(reste<=0)break;}}
+  else{state.plantationStock[src]=(stock[src]||0)-branches;}
   state.soldes=state.soldes||{sun:0,moon:0,potCommun:0};
   state.soldes.potCommun=(state.soldes.potCommun||0)+revenu;
   await saveState();
   ['plantVenteBranches','plantVenteRevenu','plantVenteNote'].forEach(id=>$(id).value='');
   $('plantVenteEstim').innerHTML='';
-  showToast('Vente enregistree - '+fmt(revenu)+' en sale !');
-  switchPlantationTab('stats');
+  showToast('Vente enregistree - '+fmt(revenu)+' en sale !'); switchPlantationTab('stats');
 };
+window.delPlantOp = async id=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'plantation',id));showToast('Supprime');};
 
-window.delPlantOp = async id => {
-  if(!confirm('Supprimer ?')) return;
-  await deleteDoc(doc(db,'plantation',id));
-  showToast('Supprime');
+window.addObjectif = async ()=>{
+  const name=$('objName').value.trim(), target=parseFloat($('objTarget').value)||0;
+  if(!name||!target){showToast('Nom et montant requis',false);return;}
+  state.objectifs.push({id:Date.now(),name,target,cat:$('objCat').value,monnaie:$('objMonnaie').value,joueur:$('objJoueur').value});
+  await saveState(); $('objName').value=''; $('objTarget').value=''; showToast('Objectif ajoute !');
 };
-
-function renderPlantation(){
-  const ops = state.plantation||[];
-  const stock = state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000};
-  const commandes = state.commandes||[];
-  const totalBranches = stock.entrepot+stock.vanSun+stock.vanMoon+stock.appart;
-  const totalVentes = ops.filter(o=>o.type==='vente').reduce((a,o)=>a+o.revenu,0);
-  const totalCouts = ops.filter(o=>o.type==='achat').reduce((a,o)=>a+o.totalCout,0);
-  const totalBranchesRecoltees = ops.filter(o=>o.type==='cycle').reduce((a,o)=>a+o.branches,0);
-  const totalBranchesVendues = ops.filter(o=>o.type==='vente').reduce((a,o)=>a+o.branches,0);
-  const piedsPossibles = Math.floor(Math.min(stock.eau, stock.fert)/6);
-
-  // KPIs
-  const ki=$('plantationKpis');
-  if(ki) ki.innerHTML=
-    '<div class="kpi"><div class="kpi-label">CA (sale)</div><div class="kpi-val amber">'+fmt(totalVentes)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Couts</div><div class="kpi-val red">'+fmt(totalCouts)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Benefice net</div><div class="kpi-val amber">'+fmt(totalVentes-totalCouts)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Branches prod.</div><div class="kpi-val">'+totalBranchesRecoltees+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Branches vend.</div><div class="kpi-val">'+totalBranchesVendues+'</div></div>';
-
-  // Ressources
-  const eauPct=Math.min(100,stock.eau>0?Math.round(stock.eau/324*100):0);
-  const fertPct=Math.min(100,stock.fert>0?Math.round(stock.fert/324*100):0);
-  const ev=$('plantEauVal'); if(ev) ev.textContent=stock.eau;
-  const eb=$('plantEauBar'); if(eb) eb.style.width=eauPct+'%';
-  const fv=$('plantFertVal'); if(fv) fv.textContent=stock.fert;
-  const fb=$('plantFertBar'); if(fb) fb.style.width=fertPct+'%';
-  const pp=$('plantPiedsPossibles'); if(pp) pp.textContent=piedsPossibles;
-  const ps=$('plantPiedsSub'); if(ps) ps.textContent=' / 54 max'+(piedsPossibles>=54?' - cycle complet possible !':'');
-
-  // Stock branches
-  const sb=$('plantStockBlock');
-  if(sb){
-    const locs=[{key:'entrepot',label:'Entrepot',max:700},{key:'vanSun',label:'Moon Beam',max:300},{key:'vanMoon',label:'Van Moon',max:300},{key:'appart',label:'Appart',max:700}];
-    sb.innerHTML=locs.map(l=>{
-      const qty=stock[l.key]||0, pct=Math.round(qty/l.max*100), col=pct>90?'#d85a30':pct>60?'#ef9f27':'#1d9e75';
-      return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--border)">'+
-        '<span style="font-size:11px;color:var(--txt2);min-width:70px">'+l.label+'</span>'+
-        '<div class="progress-bg" style="flex:1;height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div>'+
-        '<span style="font-size:12px;font-weight:500;color:var(--txt);min-width:60px;text-align:right">'+qty+'/'+l.max+'</span></div>';
-    }).join('')+
-    '<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:12px">'+
-    '<span style="color:var(--txt3)">Total</span>'+
-    '<span style="color:var(--txt);font-weight:500">'+totalBranches+' branches ('+( totalBranches*POIDS_BRANCHE).toFixed(0)+'kg)</span></div>';
+window.delObj = async id=>{state.objectifs=state.objectifs.filter(o=>o.id!==id);await saveState();};
+window.validerAchat = async id=>{
+  const o=state.objectifs.find(x=>x.id===id);
+  if(!o)return;
+  if(!confirm('Valider l\'achat "'+o.name+'" pour '+fmt(o.target)+' ?'))return;
+  await enregistrerDepense({nom:o.name,montant:o.target,cat:o.cat,monnaie:o.monnaie||'propre',joueur:o.joueur||'both',note:'Objectif atteint',fromObjectif:true});
+  state.objectifs=state.objectifs.filter(x=>x.id!==id);
+  await saveState();
+  showToast('Achat "'+o.name+'" valide - '+fmt(o.target)+' deduits !');
+};
+window.toggleDepenseForm = ()=>{ const f=$('depenseForm'),icon=$('depenseToggleIcon'),open=f.style.display==='none'; f.style.display=open?'block':'none'; icon.textContent=open?'fermer':'ouvrir'; };
+window.saveDepenseDirecte = async ()=>{
+  const nom=$('depNom').value.trim(), montant=parseFloat($('depMontant').value)||0;
+  if(!nom||!montant){showToast('Nom et montant requis',false);return;}
+  await enregistrerDepense({nom,montant,cat:$('depCat').value,monnaie:$('depMonnaie').value,joueur:$('depJoueur').value,note:$('depNote').value});
+  $('depNom').value=''; $('depMontant').value=''; $('depNote').value='';
+  showToast('Depense enregistree !');
+};
+async function enregistrerDepense({nom,montant,cat,monnaie,joueur,note,fromObjectif=false}){
+  await addDoc(collection(db,'depenses'),{nom,montant,cat,monnaie,joueur,note:note||'',fromObjectif,ts:serverTimestamp(),date:today()});
+  state.soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  if(monnaie==='sale'){state.soldes.potCommun=Math.max(0,(state.soldes.potCommun||0)-montant);}
+  else {
+    if(joueur==='sun'||joueur==='both'){const part=joueur==='both'?montant/2:montant;state.ajustements=state.ajustements||{sun:0,moon:0};state.ajustements.sun=(state.ajustements.sun||0)-part;}
+    if(joueur==='moon'||joueur==='both'){const part=joueur==='both'?montant/2:montant;state.ajustements=state.ajustements||{sun:0,moon:0};state.ajustements.moon=(state.ajustements.moon||0)-part;}
   }
+  await saveState();
+}
+window.delDepense = async id=>{if(!confirm('Supprimer ?'))return;await deleteDoc(doc(db,'depenses',id));showToast('Supprime');};
 
-  // Saisie : stock dispo
-  const ed=$('plantEauDisp'); if(ed) ed.textContent=stock.eau;
-  const fd=$('plantFertDisp'); if(fd) fd.textContent=stock.fert;
-  const st=$('plantStockTotal'); if(st) st.textContent=totalBranches;
-
-  // Commandes
-  const cl=$('plantCommandesList');
-  if(cl){
-    const actives = commandes.filter(c=>!c.livree);
-    const livrees = commandes.filter(c=>c.livree);
-    if(!commandes.length){ cl.innerHTML='<div class="empty-state" style="padding:1rem">Aucune commande</div>'; }
-    else {
-      cl.innerHTML = actives.map(cmd=>{
-        const pct=Math.min(100,Math.round(totalBranches/cmd.qty*100));
-        const col=pct>=100?'#1d9e75':pct>50?'#ef9f27':'#6c6fcf';
-        return '<div style="padding:8px 0;border-bottom:0.5px solid var(--border)">'+
-          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'+
-          '<span style="flex:1;font-size:13px;font-weight:500;color:var(--txt)">'+cmd.nom+'</span>'+
-          '<span style="font-size:12px;color:'+col+';font-weight:500">'+pct+'%</span>'+
-          (pct>=100?'<button class="btn btn-primary" onclick="cloturerCommande('+cmd.id+')" style="padding:3px 8px;font-size:11px">Livrer</button>':'')+
-          '<button class="btn-del" onclick="supprimerCommande('+cmd.id+')">x</button></div>'+
-          '<div style="font-size:11px;color:var(--txt3);margin-bottom:4px">'+totalBranches+' / '+cmd.qty+' branches</div>'+
-          '<div class="progress-bg" style="height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div></div>';
-      }).join('')+
-      (livrees.length?'<div style="font-size:11px;color:var(--txt3);margin-top:8px">'+livrees.length+' commande(s) livree(s)</div>':'');
-    }
-  }
-
-  // Historique cycles
-  const ho=$('plantCyclesHisto');
-  if(!ho) return;
-  const cycles = ops.filter(o=>o.type==='cycle');
-  if(!cycles.length){ ho.innerHTML='<div class="empty-state">Aucun cycle enregistre</div>'; return; }
-  ho.innerHTML=cycles.slice(0,10).map(op=>{
-    const rendCol = op.rendement>=90?'#1d9e75':op.rendement>=70?'#ef9f27':'#d85a30';
-    return '<div class="row">'+
-      '<span style="font-size:16px">🌱</span>'+
-      '<div style="flex:1;margin-left:6px">'+
-      '<div style="font-size:13px;font-weight:500;color:var(--txt)">'+op.pieds+' pieds - '+op.branches+' branches - '+op.dest+'</div>'+
-      '<div style="font-size:11px;color:var(--txt3)">'+(op.jardinier||'')+(op.note?' · '+op.note:'')+'</div></div>'+
-      '<div style="text-align:right">'+
-      '<div style="font-size:13px;font-weight:500;color:'+rendCol+'">'+op.rendement+'%</div>'+
-      '<div style="font-size:10px;color:var(--txt3)">rendement</div></div>'+
-      '<span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span>'+
-      '<button class="btn-del" onclick="delPlantOp(''+op._id+'')">x</button></div>';
-  }).join('');
+function renderAll(){
+  renderHQ();
+  renderPechePage();
+  renderSaisieCounters();
+  renderSalvia();
+  renderPlantation();
+  renderHistorique();
+  renderEmplois();
+  renderObjectifs();
+  renderAchatsHisto();
 }
 
-shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
+function renderHQ(){
+  const shifts=state.shifts||[], soldes=state.soldes||{sun:0,moon:0,potCommun:0};
+  const soldeSun=calcSoldeAuto('sun'), soldeMoon=calcSoldeAuto('moon');
+  const totalPropre=soldeSun+soldeMoon, totalSale=soldes.potCommun||0, totalApollo=totalPropre+totalSale;
+  const sunPartic=state.sessions.reduce((a,s)=>a+(s.peche==='sun'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0);
+  const moonPartic=state.sessions.reduce((a,s)=>a+(s.peche==='moon'?s.revenu:s.peche==='both'?s.revenu/2:0),0)+shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0);
+  const totalPartic=sunPartic+moonPartic, sunPct=totalPartic>0?Math.round(sunPartic/totalPartic*100):50, moonPct=totalPartic>0?Math.round(moonPartic/totalPartic*100):50;
+  const todaySess=state.sessions.filter(s=>s.date===today()), todayShifts=shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===today());
   const propreJour=todaySess.reduce((a,s)=>a+s.revenu,0)+todayShifts.reduce((a,s)=>a+s.gains,0), depJour=todayAchats.reduce((a,x)=>a+x.cost,0), netJour=propreJour-depJour;
 
   $('totalApolloVal').textContent=fmt(totalApollo); $('totalPropreVal').textContent=fmt(totalPropre); $('totalSaleVal').textContent=fmt(totalSale);
@@ -1532,50 +959,49 @@ shifts.filter(s=>s.date===today()), todayAchats=state.achats.filter(a=>a.date===
       <div class="progress-bg"><div class="progress-fill" style="width:${moonPct}%;background:#7fc8f8"></div></div>
     </div>`;
 
-  if($('hqPieChart')){ if(CH.pie) CH.pie.destroy(); CH.pie=new Chart($('hqPieChart'),{type:'doughnut',data:{labels:['Sun '+sunPct+'%','Moon '+moonPct+'%'],datasets:[{data:totalPartic>0?[sunPartic,moonPartic]:[1,1],backgroundColor:['rgba(245,200,66,0.75)','rgba(127,200,248,0.75)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>totalPartic>0?' '+ctx.label+' - '+fmt(ctx.raw):ctx.label}}}}}); }
+  if($('hqPieChart')){ if(CH.pie) CH.pie.destroy(); CH.pie=new Chart($('hqPieChart'),{type:'doughnut',data:{labels:['Sun '+sunPct+'%','Moon '+moonPct+'%'],datasets:[{data:totalPartic>0?[sunPartic,moonPartic]:[1,1],backgroundColor:['rgba(245,200,66,0.75)','rgba(127,200,248,0.75)'],borderColor:['#f5c842','#7fc8f8'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}}); }
 
   const last14=[]; for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().split('T')[0]);}
   const comboLabels=last14.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
   const netParJour=last14.map(day=>{const rev=state.sessions.filter(s=>s.date===day).reduce((a,s)=>a+s.revenu,0)+shifts.filter(s=>s.date===day).reduce((a,s)=>a+s.gains,0);const dep=state.achats.filter(a=>a.date===day).reduce((a,x)=>a+x.cost,0);return Math.round(rev-dep);});
   const allOps=[...state.sessions.map(s=>({date:s.date,val:s.revenu})),...shifts.map(s=>({date:s.date,val:s.gains})),...state.achats.map(a=>({date:a.date,val:-a.cost}))];
   const totalParJour=last14.map(day=>allOps.filter(o=>o.date<=day).reduce((a,o)=>a+o.val,0));
-  if($('hqComboChart')){ if(CH.combo) CH.combo.destroy(); CH.combo=new Chart($('hqComboChart'),{type:'bar',data:{labels:comboLabels,datasets:[{type:'bar',label:'Net du jour',data:netParJour,backgroundColor:netParJour.map(v=>v>=0?'rgba(29,158,117,0.55)':'rgba(216,90,48,0.55)'),borderColor:netParJour.map(v=>v>=0?'#1d9e75':'#d85a30'),borderWidth:1,yAxisID:'y'},{type:'line',label:'Total cumulé',data:totalParJour,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.08)',fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#7f77dd',yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#8b90a8',font:{size:10},autoSkip:false,maxRotation:0}},y:{position:'left',grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#1d9e75',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}},y2:{position:'right',grid:{display:false},ticks:{color:'#7f77dd',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}}}}}); }
+  if($('hqComboChart')){ if(CH.combo) CH.combo.destroy(); CH.combo=new Chart($('hqComboChart'),{type:'bar',data:{labels:comboLabels,datasets:[{type:'bar',label:'Net du jour',data:netParJour,backgroundColor:netParJour.map(v=>v>=0?'rgba(29,158,117,0.55)':'rgba(216,90,48,0.55)'),borderColor:netParJour.map(v=>v>=0?'#1d9e75':'#d85a30'),borderWidth:1,yAxisID:'y'},{type:'line',label:'Total cumule',data:totalParJour,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.08)',fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#7f77dd',yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#8b90a8',font:{size:10},autoSkip:false,maxRotation:0}},y:{position:'left',grid:{color:'rgba(128,128,128,0.06)'},ticks:{color:'#1d9e75',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}},y2:{position:'right',grid:{display:false},ticks:{color:'#7f77dd',font:{size:10},callback:v=>'$'+Math.round(v/1000)+'k'}}}}}); }
 
   let alerts='';
-  if(state.stock.appats===0) alerts+='<div class="alert-box alert-danger">Rupture appâts !</div>';
-  else if(state.stock.appats<50) alerts+=`<div class="alert-box alert-danger">Appâts critiques - ${state.stock.appats} restants</div>`;
-  else if(state.stock.appats<100) alerts+=`<div class="alert-box alert-warn">Appâts à renouveler - ${state.stock.appats}</div>`;
-  else alerts+=`<div class="alert-box alert-ok">Appâts OK - ${state.stock.appats}</div>`;
+  if(state.stock.appats===0) alerts+='<div class="alert-box alert-danger">Rupture appats !</div>';
+  else if(state.stock.appats<50) alerts+=`<div class="alert-box alert-danger">Appats critiques - ${state.stock.appats}</div>`;
+  else if(state.stock.appats<100) alerts+=`<div class="alert-box alert-warn">Appats a renouveler - ${state.stock.appats}</div>`;
+  else alerts+=`<div class="alert-box alert-ok">Appats OK - ${state.stock.appats}</div>`;
   if(state.stock.cannes===0) alerts+='<div class="alert-box alert-danger">Plus de cannes !</div>';
   else if(state.stock.cannes<3) alerts+=`<div class="alert-box alert-warn">Cannes basses - ${state.stock.cannes}</div>`;
   else alerts+=`<div class="alert-box alert-ok">Cannes OK - ${state.stock.cannes}</div>`;
   $('alertsBlock').innerHTML=alerts;
 
   const recent=[...state.sessions.map(s=>({...s,kind:'session',_ts:s.ts?.seconds||0})),...state.achats.map(a=>({...a,kind:'achat',_ts:a.ts?.seconds||0})),...shifts.map(s=>({...s,kind:'shift',_ts:s.ts?.seconds||0}))].sort((a,b)=>b._ts-a._ts).slice(0,6);
-  if(!recent.length){$('recentOps').innerHTML='<div class="empty-state">Aucune opération - commencez à saisir !</div>';return;}
+  if(!recent.length){$('recentOps').innerHTML='<div class="empty-state">Aucune operation - commencez a saisir !</div>';return;}
   $('recentOps').innerHTML=recent.map(op=>{
-    if(op.kind==='session') return `<div class="row">${playerTag(op.peche)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">Session pêche${op.note?'  .  '+op.note:''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.revenu)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
-    if(op.kind==='shift') return `<div class="row">${playerTag(op.player)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">${op.activite}${op.runs?'  .  '+op.runs+' run(s)':''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
-    return `<div class="row"><span class="tag tag-depense">${op.person}</span><span style="flex:1;font-size:13px;color:var(--txt2)">Achat ${op.matType==='appat'?'appâts':'cannes'} ×${op.qty}</span><span class="${op.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:4px">${op.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(op.cost)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+    if(op.kind==='session') return `<div class="row">${playerTag(op.peche)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">Session peche${op.note?' - '+op.note:''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.revenu)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+    if(op.kind==='shift') return `<div class="row">${playerTag(op.player)}<span style="flex:1;font-size:13px;color:var(--txt2);margin-left:4px">${op.activite}${op.runs?' - '+op.runs+' run(s)':''}</span><span class="badge-propre" style="margin-right:4px">propre</span><span style="color:#1d9e75;font-weight:500">${fmt(op.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
+    return `<div class="row"><span class="tag tag-depense">${op.person}</span><span style="flex:1;font-size:13px;color:var(--txt2)">Achat ${op.matType==='appat'?'appats':'cannes'} x${op.qty}</span><span class="${op.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:4px">${op.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(op.cost)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span></div>`;
   }).join('');
 }
 
 function renderPechePage(){
-  const FISH_BY_VALUE=[...FISH].sort((a,b)=>{if(a.price===null&&b.price===null)return 0;if(a.price===null)return 1;if(b.price===null)return -1;return b.price-a.price;});
-  $('fishCatalog').innerHTML=FISH.map(f=>'<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">'+f.icon+'</div><div class="fish-name">'+f.name+'</div><div class="fish-price">'+fmt(f.price)+(f.priceNote?' <span style="font-size:10px;color:var(--txt3)">('+f.priceNote+')</span>':'')+'</div><div class="fish-type" style="color:'+(f.type==='illegal'?'#f0997b':'#5dcaa5')+'">'+(f.type==='illegal'?'LTD Cayo':'PNJ Canal')+'</div></div>').join('');
+  $('fishCatalog').innerHTML=FISH.map(f=>`<div class="fish-card"><div style="font-size:18px;margin-bottom:4px">${f.icon}</div><div class="fish-name">${f.name}</div><div class="fish-price">${fmt(f.price)}${f.priceNote?' <span style="font-size:10px;color:var(--txt3)">('+f.priceNote+')</span>':''}</div><div class="fish-type" style="color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD Cayo':'PNJ Canal'}</div></div>`).join('');
   const totalRev=state.sessions.reduce((a,s)=>a+s.revenu,0), totalDep=state.achats.reduce((a,x)=>a+x.cost,0), net=totalRev-totalDep;
   const totalPoissons=state.sessions.reduce((a,s)=>{FISH.forEach(f=>{a+=(s.fish?.[f.id]||0);});return a;},0);
-  $('pecheKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts</div><div class="kpi-val green">${fmt(totalRev)}</div></div><div class="kpi"><div class="kpi-label">Dépenses</div><div class="kpi-val red">${fmt(totalDep)}</div></div><div class="kpi"><div class="kpi-label">Bénéfice net</div><div class="kpi-val ${net>=0?'green':'red'}">${fmt(net)}</div></div><div class="kpi"><div class="kpi-label">Poissons pêchés</div><div class="kpi-val">${totalPoissons}</div></div><div class="kpi"><div class="kpi-label">Moy. / session</div><div class="kpi-val" style="color:#7ab8f5">${fmt(state.sessions.length?totalRev/state.sessions.length:0)}</div></div>`;
+  $('pecheKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts</div><div class="kpi-val green">${fmt(totalRev)}</div></div><div class="kpi"><div class="kpi-label">Depenses</div><div class="kpi-val red">${fmt(totalDep)}</div></div><div class="kpi"><div class="kpi-label">Benefice net</div><div class="kpi-val ${net>=0?'green':'red'}">${fmt(net)}</div></div><div class="kpi"><div class="kpi-label">Poissons peches</div><div class="kpi-val">${totalPoissons}</div></div><div class="kpi"><div class="kpi-label">Moy. / session</div><div class="kpi-val amber">${fmt(state.sessions.length?totalRev/state.sessions.length:0)}</div></div>`;
   const ap=Math.min(100,state.stock.appats>0?Math.round(state.stock.appats/300*100):0), cp=Math.min(100,state.stock.cannes>0?Math.round(state.stock.cannes/12*100):0);
-  $('stockBlock').innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Appâts</span><span style="color:var(--txt);font-weight:500">${state.stock.appats} restants</span></div><div class="progress-bg"><div class="progress-fill" style="width:${ap}%;background:${ap<20?'#d85a30':ap<40?'#ef9f27':'#1d9e75'}"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Cannes</span><span style="color:var(--txt);font-weight:500">${state.stock.cannes} restantes</span></div><div class="progress-bg"><div class="progress-fill" style="width:${cp}%;background:${cp<20?'#d85a30':cp<40?'#ef9f27':'#1d9e75'}"></div></div></div>`;
-  const sr=$('stockResume'); if(sr) sr.textContent=`${state.stock.appats} appâts  .  ${state.stock.cannes} cannes`;
+  $('stockBlock').innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Appats</span><span style="color:var(--txt);font-weight:500">${state.stock.appats} restants</span></div><div class="progress-bg"><div class="progress-fill" style="width:${ap}%;background:${ap<20?'#d85a30':ap<40?'#ef9f27':'#1d9e75'}"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Cannes</span><span style="color:var(--txt);font-weight:500">${state.stock.cannes} restantes</span></div><div class="progress-bg"><div class="progress-fill" style="width:${cp}%;background:${cp<20?'#d85a30':cp<40?'#ef9f27':'#1d9e75'}"></div></div></div>`;
+  const sr=$('stockResume'); if(sr) sr.textContent=`${state.stock.appats} appats - ${state.stock.cannes} cannes`;
 }
 
 function renderPecheCharts(){
   const last8=[...state.sessions].slice(0,8).reverse(), labels=last8.map((_,i)=>'S'+(state.sessions.length-last8.length+i+1)), nets=last8.map(s=>Math.round(s.revenu));
   if(CH.line) CH.line.destroy();
-  CH.line=new Chart($('lineChart'),{type:'line',data:{labels,datasets:[{label:'Revenu',data:nets,borderColor:'#2a6db5',backgroundColor:'rgba(42,109,181,0.12)',fill:true,tension:0.3,pointBackgroundColor:'#2a6db5',pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}});
-  const ft={};FISH.forEach(f=>{ft[f.id]=state.sessions.reduce((a,s)=>a+(s.fish?.[f.id]||0),0);});const hF=Object.values(ft).some(v=>v>0);
+  CH.line=new Chart($('lineChart'),{type:'line',data:{labels,datasets:[{label:'Revenu',data:nets,borderColor:'#7f77dd',backgroundColor:'rgba(127,119,221,0.12)',fill:true,tension:0.3,pointBackgroundColor:'#7f77dd',pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}});
+  const ft={}; FISH.forEach(f=>{ft[f.id]=state.sessions.reduce((a,s)=>a+(s.fish?.[f.id]||0),0);}); const hF=Object.values(ft).some(v=>v>0);
   $('pieLegend').innerHTML=FISH.map(f=>`<span><span class="ldot" style="background:${FC[f.id]}"></span>${f.name} ${hF?ft[f.id]:0}</span>`).join('');
   if(CH.pie2) CH.pie2.destroy();
   CH.pie2=new Chart($('pieChart'),{type:'doughnut',data:{labels:FISH.map(f=>f.name),datasets:[{data:hF?FISH.map(f=>ft[f.id]):FISH.map(()=>1),backgroundColor:FISH.map(f=>FC[f.id]),borderWidth:2,borderColor:'rgba(0,0,0,0.2)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
@@ -1586,107 +1012,112 @@ function renderPecheCharts(){
 
 function renderSaisieCounters(){
   const el=$('fishCounters');
-  const FISH_SORTED = [...FISH]; // déjà trié par valeur décroissante
-  if(el&&!el.children.length) el.innerHTML=FISH_SORTED.map(f=>`<div class="fish-counter"><span style="font-size:15px;margin-right:4px">${f.icon}</span><span style="flex:1;font-size:13px;color:var(--txt)">${f.name} <span style="font-size:10px;color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD':'PNJ'}</span></span><div style="display:flex;align-items:center;gap:6px"><button class="cbtn" onclick="chg('${f.id}',-1)">−</button><span class="cval" id="fc-${f.id}">0</span><button class="cbtn" onclick="chg('${f.id}',1)">+</button></div></div>`).join('');
+  if(el&&!el.children.length) el.innerHTML=FISH.map(f=>`<div class="fish-counter"><span style="font-size:15px;margin-right:4px">${f.icon}</span><span style="flex:1;font-size:13px;color:var(--txt)">${f.name} <span style="font-size:10px;color:${f.type==='illegal'?'#f0997b':'#5dcaa5'}">${f.type==='illegal'?'LTD':'PNJ'}</span></span><div style="display:flex;align-items:center;gap:6px"><button class="cbtn" onclick="chg('${f.id}',-1)">-</button><span class="cval" id="fc-${f.id}">0</span><button class="cbtn" onclick="chg('${f.id}',1)">+</button></div></div>`).join('');
+}
+
+function renderSalvia(){
+  const ops=state.salvia||[], stock=state.salviaStock||{feuilles:0,tetes:0};
+  const totalVentes=ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.revenu,0);
+  const totalTaxes=ops.reduce((a,s)=>a+(s.taxe||0),0);
+  const totalFeuilles=ops.filter(s=>s.type==='cueillette').reduce((a,s)=>a+s.feuilles,0);
+  const totalTetes=ops.filter(s=>s.type==='vente').reduce((a,s)=>a+s.tetes,0);
+  const moy=totalTetes>0?Math.round(totalVentes/totalTetes):0;
+  const ki=$('salviaKpis');
+  if(ki) ki.innerHTML=`<div class="kpi"><div class="kpi-label">Revenus bruts (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div><div class="kpi"><div class="kpi-label">Taxes payees</div><div class="kpi-val red">${fmt(totalTaxes)}</div></div><div class="kpi"><div class="kpi-label">Benefice net</div><div class="kpi-val amber">${fmt(totalVentes-totalTaxes)}</div></div><div class="kpi"><div class="kpi-label">Feuilles recoltees</div><div class="kpi-val">${totalFeuilles}</div></div><div class="kpi"><div class="kpi-label">Prix moy./tete</div><div class="kpi-val">${moy?fmt(moy):'-'}</div></div>`;
+  const fPct=Math.min(100,stock.feuilles>0?Math.round(stock.feuilles/200*100):0), tPct=Math.min(100,stock.tetes>0?Math.round(stock.tetes/200*100):0);
+  const ss=$('salviaStock');
+  if(ss) ss.innerHTML=`<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Feuilles</span><span style="color:var(--txt);font-weight:500">${stock.feuilles} kg</span></div><div class="progress-bg"><div class="progress-fill" style="width:${fPct}%;background:#1d9e75"></div></div></div><div style="padding:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--txt2)">Tetes pretes</span><span style="color:var(--txt);font-weight:500">${stock.tetes} kg</span></div><div class="progress-bg"><div class="progress-fill" style="width:${tPct}%;background:#6c6fcf"></div></div></div>`;
+  const fd=$('salviaFeuillesDisp'); if(fd) fd.textContent=stock.feuilles+' kg';
+  const td=$('salviaTetesDisp'); if(td) td.textContent=stock.tetes+' kg';
+  const ho=$('salviaOpsHisto');
+  if(!ho) return;
+  if(!ops.length){ho.innerHTML='<div class="empty-state">Aucune operation enregistree</div>';return;}
+  const icons={cueillette:'🌿',transformation:'🔥',vente:'💰'}, labels={cueillette:'Cueillette',transformation:'Transformation',vente:'Vente'};
+  ho.innerHTML=ops.slice(0,10).map(op=>`<div class="row"><span style="font-size:16px">${icons[op.type]}</span><div style="flex:1;margin-left:6px"><div style="font-size:13px;font-weight:500;color:var(--txt)">${labels[op.type]}${op.type==='cueillette'?' - '+op.feuilles+' feuilles':''}${op.type==='transformation'?' - '+op.feuilles+'f > '+op.tetes+' tetes':''}${op.type==='vente'?' - '+op.tetes+' tetes':''}</div><div style="font-size:11px;color:var(--txt3)">${op.note||''}${op.taxe?' taxe: '+fmt(op.taxe):''}</div></div>${op.type==='vente'?'<span class="badge-sale" style="margin-right:6px">sale</span><span style="color:#ef9f27;font-weight:500">'+fmt(op.revenu)+'</span>':''}${op.taxe&&op.type!=='vente'?'<span style="color:#d85a30;font-size:12px">-'+fmt(op.taxe)+'</span>':''}<span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(op.ts)}</span><button class="btn-del" onclick="delSalviaOp('${op._id}')">x</button></div>`).join('');
+  if(CH.salvia) CH.salvia.destroy();
+  const ventes=ops.filter(s=>s.type==='vente').slice(0,8).reverse();
+  CH.salvia=new Chart($('salviaChart'),{type:'bar',data:{labels:ventes.map((_,i)=>'V'+(i+1)),datasets:[{label:'Revenus',data:ventes.map(s=>s.revenu),backgroundColor:'rgba(108,111,207,0.6)',borderColor:'#6c6fcf',borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#8b90a8',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}});
+}
+
+function renderPlantation(){
+  const ops=state.plantation||[], stock=state.plantationStock||{entrepot:0,vanSun:0,vanMoon:0,appart:0,eau:0,fert:0,commande:1000}, commandes=state.commandes||[];
+  const totalBranches=stock.entrepot+stock.vanSun+stock.vanMoon+stock.appart;
+  const totalVentes=ops.filter(o=>o.type==='vente').reduce((a,o)=>a+o.revenu,0);
+  const totalCouts=ops.filter(o=>o.type==='achat').reduce((a,o)=>a+o.totalCout,0);
+  const totalBranchesRecoltees=ops.filter(o=>o.type==='cycle').reduce((a,o)=>a+o.branches,0);
+  const totalBranchesVendues=ops.filter(o=>o.type==='vente').reduce((a,o)=>a+o.branches,0);
+  const piedsPossibles=Math.floor(Math.min(stock.eau,stock.fert)/6);
+  const ki=$('plantationKpis');
+  if(ki) ki.innerHTML=`<div class="kpi"><div class="kpi-label">CA (sale)</div><div class="kpi-val amber">${fmt(totalVentes)}</div></div><div class="kpi"><div class="kpi-label">Couts</div><div class="kpi-val red">${fmt(totalCouts)}</div></div><div class="kpi"><div class="kpi-label">Benefice net</div><div class="kpi-val amber">${fmt(totalVentes-totalCouts)}</div></div><div class="kpi"><div class="kpi-label">Branches prod.</div><div class="kpi-val">${totalBranchesRecoltees}</div></div><div class="kpi"><div class="kpi-label">Branches vend.</div><div class="kpi-val">${totalBranchesVendues}</div></div>`;
+  const eauPct=Math.min(100,stock.eau>0?Math.round(stock.eau/324*100):0), fertPct=Math.min(100,stock.fert>0?Math.round(stock.fert/324*100):0);
+  const ev=$('plantEauVal'); if(ev) ev.textContent=stock.eau;
+  const eb=$('plantEauBar'); if(eb) eb.style.width=eauPct+'%';
+  const fv=$('plantFertVal'); if(fv) fv.textContent=stock.fert;
+  const fb=$('plantFertBar'); if(fb) fb.style.width=fertPct+'%';
+  const pp=$('plantPiedsPossibles'); if(pp) pp.textContent=piedsPossibles;
+  const ps=$('plantPiedsSub'); if(ps) ps.textContent=' / 54 max'+(piedsPossibles>=54?' - cycle complet possible !':'');
+  const sb=$('plantStockBlock');
+  if(sb){
+    const locs=[{key:'entrepot',label:'Entrepot',max:700},{key:'vanSun',label:'Moon Beam',max:300},{key:'vanMoon',label:'Van Moon',max:300},{key:'appart',label:'Appart',max:700}];
+    sb.innerHTML=locs.map(l=>{const qty=stock[l.key]||0,pct=Math.round(qty/l.max*100),col=pct>90?'#d85a30':pct>60?'#ef9f27':'#1d9e75';return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--border)"><span style="font-size:11px;color:var(--txt2);min-width:70px">'+l.label+'</span><div class="progress-bg" style="flex:1;height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div><span style="font-size:12px;font-weight:500;color:var(--txt);min-width:60px;text-align:right">'+qty+'/'+l.max+'</span></div>';}).join('')+'<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:12px"><span style="color:var(--txt3)">Total</span><span style="color:var(--txt);font-weight:500">'+totalBranches+' branches ('+(totalBranches*POIDS_BRANCHE).toFixed(0)+'kg)</span></div>';
+  }
+  const ed=$('plantEauDisp'); if(ed) ed.textContent=stock.eau;
+  const fd=$('plantFertDisp'); if(fd) fd.textContent=stock.fert;
+  const st=$('plantStockTotal'); if(st) st.textContent=totalBranches;
+  const cl=$('plantCommandesList');
+  if(cl){
+    const actives=commandes.filter(c=>!c.livree), livrees=commandes.filter(c=>c.livree);
+    if(!commandes.length){cl.innerHTML='<div class="empty-state" style="padding:1rem">Aucune commande</div>';}
+    else{cl.innerHTML=actives.map(cmd=>{const pct=Math.min(100,Math.round(totalBranches/cmd.qty*100)),col=pct>=100?'#1d9e75':pct>50?'#ef9f27':'#6c6fcf';return '<div style="padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><span style="flex:1;font-size:13px;font-weight:500;color:var(--txt)">'+cmd.nom+'</span><span style="font-size:12px;color:'+col+';font-weight:500">'+pct+'%</span>'+(pct>=100?'<button class="btn btn-primary" onclick="cloturerCommande('+cmd.id+')" style="padding:3px 8px;font-size:11px">Livrer</button>':'')+'<button class="btn-del" onclick="supprimerCommande('+cmd.id+')">x</button></div><div style="font-size:11px;color:var(--txt3);margin-bottom:4px">'+totalBranches+' / '+cmd.qty+' branches</div><div class="progress-bg" style="height:4px"><div class="progress-fill" style="width:'+pct+'%;background:'+col+';height:4px"></div></div></div>';}).join('')+(livrees.length?'<div style="font-size:11px;color:var(--txt3);margin-top:8px">'+livrees.length+' commande(s) livree(s)</div>':'');}
+  }
+  const ho=$('plantCyclesHisto');
+  if(!ho) return;
+  const cycles=ops.filter(o=>o.type==='cycle');
+  if(!cycles.length){ho.innerHTML='<div class="empty-state">Aucun cycle enregistre</div>';return;}
+  ho.innerHTML=cycles.slice(0,10).map(op=>{const rendCol=op.rendement>=90?'#1d9e75':op.rendement>=70?'#ef9f27':'#d85a30';return '<div class="row"><span style="font-size:16px">🌱</span><div style="flex:1;margin-left:6px"><div style="font-size:13px;font-weight:500;color:var(--txt)">'+op.pieds+' pieds - '+op.branches+' branches - '+op.dest+'</div><div style="font-size:11px;color:var(--txt3)">'+(op.jardinier||'')+(op.note?' - '+op.note:'')+'</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:500;color:'+rendCol+'">'+op.rendement+'%</div><div style="font-size:10px;color:var(--txt3)">rendement</div></div><span style="font-size:11px;color:var(--txt3);margin-left:8px">'+fmtDate(op.ts)+'</span><button class="btn-del" onclick="delPlantOp(\''+op._id+'\')">x</button></div>';}).join('');
 }
 
 function renderEmplois(){
   const shifts=state.shifts||[], tS=shifts.filter(s=>s.player==='sun').reduce((a,s)=>a+s.gains,0), tM=shifts.filter(s=>s.player==='moon').reduce((a,s)=>a+s.gains,0), tdS=shifts.filter(s=>s.date===today()).reduce((a,s)=>a+s.gains,0);
   $('emploisKpis').innerHTML=`<div class="kpi"><div class="kpi-label">Total emplois</div><div class="kpi-val green">${fmt(tS+tM)}</div><div class="kpi-sub">${shifts.length} shifts</div></div><div class="kpi"><div class="kpi-label">Sun - Horizon</div><div class="kpi-val" style="color:var(--sun)">${fmt(tS)}</div><div class="kpi-sub">${shifts.filter(s=>s.player==='sun').length} shifts</div></div><div class="kpi"><div class="kpi-label">Moon - Club 77</div><div class="kpi-val" style="color:var(--moon)">${fmt(tM)}</div></div><div class="kpi"><div class="kpi-label">Aujourd'hui</div><div class="kpi-val green">${fmt(tdS)}</div></div>`;
   const el=$('shiftsHisto');
-  if(!shifts.length){el.innerHTML='<div class="empty-state">Aucun shift enregistré</div>';return;}
-  el.innerHTML=[...shifts].sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0)).slice(0,10).map(s=>`<div class="row"><div class="av ${s.player==='sun'?'av-sun':'av-moon'}" style="width:28px;height:28px;font-size:10px">${s.player==='sun'?'SU':'MO'}</div><span style="flex:1;font-size:13px;color:var(--txt2)">${s.activite}${s.runs?'  .  '+s.runs+' run(s)':''}${s.note?'  .  '+s.note:''}</span><span class="badge-propre">propre</span><span style="color:#1d9e75;font-weight:500;margin-left:8px">${fmt(s.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(s.ts)}</span><button class="btn-del" onclick="delShift('${s._id}')">✕</button></div>`).join('');
+  if(!shifts.length){el.innerHTML='<div class="empty-state">Aucun shift enregistre</div>';return;}
+  el.innerHTML=[...shifts].sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0)).slice(0,10).map(s=>`<div class="row"><div class="av ${s.player==='sun'?'av-sun':'av-moon'}" style="width:28px;height:28px;font-size:10px">${s.player==='sun'?'SU':'MO'}</div><span style="flex:1;font-size:13px;color:var(--txt2)">${s.activite}${s.runs?' - '+s.runs+' run(s)':''}${s.note?' - '+s.note:''}</span><span class="badge-propre">propre</span><span style="color:#1d9e75;font-weight:500;margin-left:8px">${fmt(s.gains)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(s.ts)}</span><button class="btn-del" onclick="delShift('${s._id}')">x</button></div>`).join('');
 }
 
 function renderHistorique(){
-  const fT=$('filtType').value,fP=$('filtPerson').value;let rows=[];
+  const fT=$('filtType').value, fP=$('filtPerson').value; let rows=[];
   if(!fT||fT==='session'){let s=[...state.sessions];if(fP)s=s.filter(x=>x.peche===fP);rows.push(...s.map(x=>({...x,kind:'session'})));}
   if(!fT||fT==='achat'){let a=[...state.achats];if(fP&&fP!=='both')a=a.filter(x=>x.person===fP);rows.push(...a.map(x=>({...x,kind:'achat'})));}
   rows.sort((a,b)=>(b.ts?.seconds||0)-(a.ts?.seconds||0));
-  if(!rows.length){$('histoBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txt3)">Aucune entrée</td></tr>';return;}
+  if(!rows.length){$('histoBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txt3)">Aucune entree</td></tr>';return;}
   $('histoBody').innerHTML=rows.map(r=>{
-    if(r.kind==='session') return `<tr><td>${fmtDate(r.ts)}</td><td><span class="badge-propre">Pêche</span></td><td>${PNAMES[r.peche]||r.peche}</td><td style="color:#1d9e75">${fmt(r.revenu)}</td><td style="color:var(--txt3)">-</td><td style="color:#1d9e75;font-weight:500">${fmt(r.revenu)}</td><td style="color:var(--txt3)">${r.note||'-'}</td><td><button class="btn-del" onclick="delSession('${r._id}')">✕</button></td></tr>`;
-    return `<tr><td>${fmtDate(r.ts)}</td><td><span class="tag tag-depense">Achat</span></td><td>${r.person}</td><td style="color:var(--txt3)">-</td><td style="color:#d85a30">-${fmt(r.cost)}</td><td style="color:#d85a30;font-weight:500">-${fmt(r.cost)}</td><td style="color:var(--txt3)">${r.matType==='appat'?'Appâts':'Cannes'} ×${r.qty} <span class="${r.monnaie==='sale'?'badge-sale':'badge-propre'}">${r.monnaie||'propre'}</span></td><td><button class="btn-del" onclick="delAchat('${r._id}')">✕</button></td></tr>`;
+    if(r.kind==='session') return `<tr><td>${fmtDate(r.ts)}</td><td><span class="badge-propre">Peche</span></td><td>${PNAMES[r.peche]||r.peche}</td><td style="color:#1d9e75">${fmt(r.revenu)}</td><td style="color:var(--txt3)">-</td><td style="color:#1d9e75;font-weight:500">${fmt(r.revenu)}</td><td style="color:var(--txt3)">${r.note||'-'}</td><td><button class="btn-del" onclick="delSession('${r._id}')">x</button></td></tr>`;
+    return `<tr><td>${fmtDate(r.ts)}</td><td><span class="tag tag-depense">Achat</span></td><td>${r.person}</td><td style="color:var(--txt3)">-</td><td style="color:#d85a30">-${fmt(r.cost)}</td><td style="color:#d85a30;font-weight:500">-${fmt(r.cost)}</td><td style="color:var(--txt3)">${r.matType==='appat'?'Appats':'Cannes'} x${r.qty} <span class="${r.monnaie==='sale'?'badge-sale':'badge-propre'}">${r.monnaie||'propre'}</span></td><td><button class="btn-del" onclick="delAchat('${r._id}')">x</button></td></tr>`;
   }).join('');
 }
 
-const CAT_ICONS = {vehicule:'🚗',immobilier:'🏠',business:'🏭',equipement:'🔫',divers:'📦',peche:'🎣',cagnotte:'💰'};
-const JOUEUR_LABELS = {both:'Sun + Moon', sun:'Sun', moon:'Moon'};
-
 function renderAchatsHisto(){
-  const el = $('achatsHisto');
-  if(!el) return;
-  const deps = state.depenses||[];
-  if(!deps.length){ el.innerHTML='<div class="empty-state">Aucun achat enregistré</div>'; return; }
-  el.innerHTML = deps.slice(0,20).map(d=>`
-    <div class="row">
-      <span style="font-size:18px">${CAT_ICONS[d.cat]||'📦'}</span>
-      <div style="flex:1;margin-left:6px">
-        <div style="font-size:13px;font-weight:500;color:var(--txt)">${d.nom}</div>
-        <div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur}${d.note?'  .  '+d.note:''}</div>
-      </div>
-      <span class="${d.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:6px">${d.monnaie||'propre'}</span>
-      <span style="color:#d85a30;font-weight:500">-${fmt(d.montant)}</span>
-      <span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(d.ts)}</span>
-      <button class="btn-del" onclick="delDepense('${d._id}')" style="margin-left:6px">✕</button>
-    </div>`).join('');
+  const el=$('achatsHisto'); if(!el) return;
+  const deps=state.depenses||[];
+  if(!deps.length){el.innerHTML='<div class="empty-state">Aucun achat enregistre</div>';return;}
+  el.innerHTML=deps.slice(0,20).map(d=>`<div class="row"><span style="font-size:18px">${CAT_ICONS[d.cat]||'📦'}</span><div style="flex:1;margin-left:6px"><div style="font-size:13px;font-weight:500;color:var(--txt)">${d.nom}</div><div style="font-size:11px;color:var(--txt3)">${JOUEUR_LABELS[d.joueur]||d.joueur}${d.note?' - '+d.note:''}</div></div><span class="${d.monnaie==='sale'?'badge-sale':'badge-propre'}" style="margin-right:6px">${d.monnaie||'propre'}</span><span style="color:#d85a30;font-weight:500">-${fmt(d.montant)}</span><span style="font-size:11px;color:var(--txt3);margin-left:8px">${fmtDate(d.ts)}</span><button class="btn-del" onclick="delDepense('${d._id}')">x</button></div>`).join('');
 }
 
 function renderObjectifs(){
-  const soldeSun  = calcSoldeAuto('sun');
-  const soldeMoon = calcSoldeAuto('moon');
-  const potSale   = (state.soldes||{}).potCommun||0;
-  const totalPropre = soldeSun + soldeMoon;
-  const totalSale   = potSale;
-
-  if(!state.objectifs.length){$('objList').innerHTML='<div class="empty-state">Aucun objectif défini</div>';return;}
+  const soldeSun=calcSoldeAuto('sun'), soldeMoon=calcSoldeAuto('moon'), potSale=(state.soldes||{}).potCommun||0;
+  const totalPropre=soldeSun+soldeMoon, totalSale=potSale;
+  if(!state.objectifs.length){$('objList').innerHTML='<div class="empty-state">Aucun objectif defini</div>';return;}
   $('objList').innerHTML=state.objectifs.map(o=>{
-    const monnaie = o.monnaie||'propre';
-    const joueur  = o.joueur||'both';
-    const budget  = monnaie==='sale' ? totalSale : totalPropre;
-    const budgetLabel = monnaie==='sale' ? 'Propre total' : 'Propre total';
-
-    const pct      = o.target > 0 ? Math.round(budget / o.target * 100) : 0;
-    const barWidth = Math.min(100, Math.round(Math.min(pct,120) / 120 * 100));
-    const resteApres = budget - o.target;
-
-    let col, label, labelCol;
-    if(pct >= 120){
-      col='#1d9e75'; label='Prêt à acheter ✓'; labelCol='#1d9e75';
-    } else if(pct >= 100){
-      col='#ef9f27'; label='Finançable - cash limité'; labelCol='#ef9f27';
-    } else {
-      col='#7f77dd'; label='En cours'; labelCol='var(--txt3)';
-    }
-
-    const monnaieTag = monnaie==='sale'
-      ? '<span class="badge-sale">sale</span>'
-      : '<span class="badge-propre">propre</span>';
-    const joueurTag = joueur==='both'
-      ? '<span style="font-size:11px;color:var(--txt3)">Sun + Moon</span>'
-      : joueur==='sun'
-        ? '<span style="font-size:11px;color:var(--sun)">Sun</span>'
-        : '<span style="font-size:11px;color:var(--moon)">Moon</span>';
-
-    return `<div style="padding:12px 0;border-bottom:0.5px solid var(--border)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-        <span style="font-size:18px">${CAT_ICONS[o.cat]||'📦'}</span>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:500;color:var(--txt)">${o.name}</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:2px">${monnaieTag}${joueurTag}<span style="font-size:11px;color:var(--txt3)">${o.cat}</span></div>
-        </div>
-        <div style="font-size:11px;font-weight:500;color:${labelCol};padding:2px 8px;border-radius:999px;border:0.5px solid ${labelCol};white-space:nowrap">${label}</div>
-        ${pct>=120?'<button class="btn btn-primary" onclick="validerAchat('+o.id+')" style="padding:5px 12px;font-size:12px">Valider l\'achat</button>':''}
-        <button class="btn-del" onclick="delObj(${o.id})">✕</button>
-      </div>
-      <div class="progress-bg" style="height:6px;margin-bottom:8px">
-        <div class="progress-fill" style="width:${barWidth}%;background:${col};height:6px"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:4px">
-        <span style="color:var(--txt3)">Disponible : <span style="color:var(--txt);font-weight:500">${fmt(budget)}</span> / <span style="font-weight:500">${fmt(o.target)}</span> <span style="color:${labelCol}">(${pct}%)</span></span>
-        <span style="color:var(--txt3)">Reste après : <span style="color:${resteApres>=0?'#1d9e75':'#d85a30'};font-weight:500">${fmt(resteApres)}</span></span>
-      </div>
-    </div>`;
+    const monnaie=o.monnaie||'propre', budget=monnaie==='sale'?totalSale:totalPropre;
+    const pct=o.target>0?Math.round(budget/o.target*100):0, barWidth=Math.min(100,Math.round(Math.min(pct,120)/120*100)), resteApres=budget-o.target;
+    let col,label,labelCol;
+    if(pct>=120){col='#1d9e75';label='Pret a acheter';labelCol='#1d9e75';}
+    else if(pct>=100){col='#ef9f27';label='Finançable - cash limite';labelCol='#ef9f27';}
+    else{col='#7f77dd';label='En cours';labelCol='var(--txt3)';}
+    const monnaieTag=monnaie==='sale'?'<span class="badge-sale">sale</span>':'<span class="badge-propre">propre</span>';
+    const joueurTag=o.joueur==='both'?'<span style="font-size:11px;color:var(--txt3)">Sun + Moon</span>':o.joueur==='sun'?'<span style="font-size:11px;color:var(--sun)">Sun</span>':'<span style="font-size:11px;color:var(--moon)">Moon</span>';
+    return `<div style="padding:12px 0;border-bottom:0.5px solid var(--border)"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:18px">${CAT_ICONS[o.cat]||'📦'}</span><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--txt)">${o.name}</div><div style="display:flex;align-items:center;gap:6px;margin-top:2px">${monnaieTag}${joueurTag}<span style="font-size:11px;color:var(--txt3)">${o.cat}</span></div></div><div style="font-size:11px;font-weight:500;color:${labelCol};padding:2px 8px;border-radius:999px;border:0.5px solid ${labelCol};white-space:nowrap">${label}</div>${pct>=120?'<button class="btn btn-primary" onclick="validerAchat('+o.id+')" style="padding:5px 12px;font-size:12px">Valider l\'achat</button>':''}<button class="btn-del" onclick="delObj(${o.id})">x</button></div><div class="progress-bg" style="height:6px;margin-bottom:8px"><div class="progress-fill" style="width:${barWidth}%;background:${col};height:6px"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:4px"><span style="color:var(--txt3)">Disponible : <span style="color:var(--txt);font-weight:500">${fmt(budget)}</span> / <span style="font-weight:500">${fmt(o.target)}</span> <span style="color:${labelCol}">(${pct}%)</span></span><span style="color:var(--txt3)">Reste apres : <span style="color:${resteApres>=0?'#1d9e75':'#d85a30'};font-weight:500">${fmt(resteApres)}</span></span></div></div>`;
   }).join('');
 }
 
